@@ -35,6 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            cursor: pointer;
         }
         .plan-card h2 {
             margin-top: 10px;
@@ -123,6 +124,17 @@
 
             window.location.href = url;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const planCards = document.querySelectorAll('.plan-card');
+            planCards.forEach(function(card) {
+                card.addEventListener('click', function() {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    updateTotalPrice();  // チェックボックスの状態が変わるたびに合計金額を更新
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -161,7 +173,7 @@
             <img src="fm_quote_farmer.png" alt="馬鈴薯・甜菜のプラン">
             <h2>馬鈴薯・甜菜</h2>
             <h5>スタートプラン</h5>
-            <h3>￥6,000</h3>
+            <h3>￥6,000</h5>
             <h5>365日間有効</h5>
         </div>
     </div>
