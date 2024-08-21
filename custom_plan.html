@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>追加する機能の面積を設定してください</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .plan-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .plan-card {
+            position: relative;
+            width: 220px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .plan-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+        .plan-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .input-container label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .input-container input {
+            width: 100px;
+            padding: 5px;
+            font-size: 16px;
+            text-align: right;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .next-button {
+            background-color: #007bff;
+            color: white;
+        }
+        #totalPrice {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // 前のページから引き継いだ合計金額を取得して表示
+            const basePrice = parseInt(localStorage.getItem('totalPrice')) || 0;
+            document.getElementById('totalPrice').textContent = "合計金額: ￥" + basePrice.toLocaleString();
+            calculateTotal(); // 初期計算を行う
+        };
+
+        function calculateTotal() {
+            const growthMapHa = parseInt(document.getElementById('growthMapHa').value) || 0;
+            const forecastHa = parseInt(document.getElementById('forecastHa').value) || 0;
+            const variableFertilizationHa = parseInt(document.getElementById('variableFertilizationHa').value) || 0;
+
+            const growthMapCost = growthMapHa * 500;
+            const forecastCost = forecastHa * 500;
+            const variableFertilizationCost = variableFertilizationHa * 1000;
+
+            const additionalCost = growthMapCost + forecastCost + variableFertilizationCost;
+            const basePrice = parseInt(localStorage.getItem('totalPrice')) || 0;
+            const totalPrice = basePrice + additionalCost;
+
+            document.getElementById('totalPrice').textContent = "合計金額: ￥" + totalPrice.toLocaleString();
+
+            // 合計金額と面積情報をlocalStorageに保存
+            localStorage.setItem('currentTotalPrice', totalPrice);
+            localStorage.setItem('selectedGrowthMapArea', growthMapHa);
+            localStorage.setItem('selectedForecastArea', forecastHa);
+            localStorage.setItem('selectedVariableFertilizationArea', variableFertilizationHa);
+        }
+
+        function navigateToNext() {
+            // 内容確認ページに遷移
+            window.location.href = "confirmation.html";
+        }
+    </script>
+</head>
+<body>
+
+    <h1>追加する機能の面積を設定してください</h1>
+
+    <div id="totalPrice">合計金額: ￥0</div>
+
+    <div class="plan-container">
+        <div class="plan-card">
+            <h3>生育・地力マップ</h3>
+            <img src="/SHOP/global-en_xFM_seeding_712px_2x.png" alt="生育・地力マップ">
+            <div class="input-container">
+                <label for="growthMapHa">面積 (ha):</label>
+                <input type="number" id="growthMapHa" value="0" min="0" oninput="calculateTotal()">
+            </div>
+        </div>
+        <div class="plan-card">
+            <h3>予測機能</h3>
+            <img src="/SHOP/global-en_xFM_spray-timer_protection-detail_712px_2x.png" alt="予測機能">
+            <div class="input-container">
+                <label for="forecastHa">面積 (ha):</label>
+                <input type="number" id="forecastHa" value="0" min="0" oninput="calculateTotal()">
+            </div>
+        </div>
+        <div class="plan-card">
+            <h3>可変施肥・散布マップ</h3>
+            <img src="/SHOP/in-en_xFM_vra-maps_2x.png" alt="可変施肥・散布マップ">
+            <div class="input-container">
+                <label for="variableFertilizationHa">面積 (ha):</label>
+                <input type="number" id="variableFertilizationHa" value="0" min="0" oninput="calculateTotal()">
+            </div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button type="button" class="back-button" onclick="history.back();">戻る</button>
+        <button type="button" class="next-button" onclick="navigateToNext()">次へ進む</button>
+    </div>
+
+</body>
+</html>

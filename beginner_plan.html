@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初級プラン：機能を購入する農場の面積を設定してください</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .plan-card {
+            position: relative;
+            width: 220px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .plan-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+        .plan-card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .input-container label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .input-container input {
+            width: 100px;
+            padding: 5px;
+            font-size: 16px;
+            text-align: right;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .next-button {
+            background-color: #007bff;
+            color: white;
+        }
+        #totalPrice {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // 前のページから引き継いだ合計金額を取得して表示
+            const basePrice = parseInt(localStorage.getItem('totalPrice')) || 0;
+            document.getElementById('totalPrice').textContent = "合計金額: ￥" + basePrice.toLocaleString();
+        };
+
+        function calculateTotal() {
+            const ha = parseInt(document.getElementById('haInput').value) || 0;
+            const additionalCost = ha * 500;  // 初級プランは500円/ha
+            const basePrice = parseInt(localStorage.getItem('totalPrice')) || 0;
+            const totalPrice = basePrice + additionalCost;
+            document.getElementById('totalPrice').textContent = "合計金額: ￥" + totalPrice.toLocaleString();
+
+            // 合計金額と面積をlocalStorageに保存
+            localStorage.setItem('currentTotalPrice', totalPrice);
+            localStorage.setItem('selectedArea', ha);
+        }
+
+        function navigateToNext() {
+            // 内容確認ページに遷移
+            window.location.href = "confirmation.html";
+        }
+    </script>
+</head>
+<body>
+
+    <h1>初級者向けプラン：機能を購入する農場の面積を設定してください</h1>
+
+    <div id="totalPrice">合計金額: ￥0</div>
+
+    <div class="plan-card">
+        <img src="/SHOP/rice-778aba17.jpg" alt="初級者プラン">
+        <h3>￥500/ha</h3>
+        <div class="input-container">
+            <label for="haInput">農場の面積 (ha):</label>
+            <input type="number" id="haInput" value="0" min="0" oninput="calculateTotal()">
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button type="button" class="back-button" onclick="history.back();">戻る</button>
+        <button type="button" class="next-button" onclick="navigateToNext()">次へ進む</button>
+    </div>
+
+</body>
+</html>

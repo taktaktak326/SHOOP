@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容確認</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #totalPrice, #selectedArea {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .confirm-button {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // localStorageから合計金額と面積を取得して表示
+            const totalPrice = localStorage.getItem('currentTotalPrice');
+            const selectedArea = localStorage.getItem('selectedArea');
+
+            document.getElementById('totalPrice').textContent = "最終合計金額: ￥" + parseInt(totalPrice).toLocaleString();
+            document.getElementById('selectedArea').textContent = "選択された面積: " + selectedArea + " ha";
+        }
+
+        function confirmPurchase() {
+            alert("購入が確定しました。");
+            // ここに購入確定の処理を追加します
+        }
+    </script>
+</head>
+<body>
+
+    <h1>内容確認</h1>
+
+    <div id="totalPrice">最終合計金額: ￥0</div>
+    <div id="selectedArea">選択された面積: 0 ha</div>
+
+    <div class="button-container">
+        <button type="button" class="back-button" onclick="history.back();">戻る</button>
+        <button type="button" class="confirm-button" onclick="confirmPurchase()">購入を確定する</button>
+    </div>
+
+</body>
+</html>

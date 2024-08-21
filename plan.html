@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お好みのプランを選択してください</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .plan-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .plan-card {
+            position: relative;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .plan-card h2 {
+            margin-top: 10px;
+        }
+        .plan-card input[type="radio"] {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .plan-card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .next-button {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+    <script>
+        function navigateToPlan() {
+            const selectedPlan = document.querySelector('input[name="plan"]:checked').value;
+
+            // 選択されたプラン情報をlocalStorageに保存
+            localStorage.setItem('selectedPlan', selectedPlan);
+
+            // スタートプラン選択画面へのURL
+            const url = "start_plan.html";
+            window.location.href = url;
+        }
+    </script>
+</head>
+<body>
+
+    <h1>お好みのプランを選択してください</h1>
+
+    <div class="plan-container">
+        <div class="plan-card">
+            <input type="radio" name="plan" value="beginner" required>
+            <img src="/SHOP/global-en_xFM_seeding_712px_2x.png" alt="初級者プラン">
+            <h2>初級者プラン</h2>
+            <p>初心者向けのプランです。</p>
+        </div>
+        <div class="plan-card">
+            <input type="radio" name="plan" value="intermediate" required>
+            <img src="/SHOP/global-en_xFM_spray-timer_protection-detail_712px_2x.png" alt="中級者プラン">
+            <h2>中級者プラン</h2>
+            <p>中級者向けのプランです。</p>
+        </div>
+        <div class="plan-card">
+            <input type="radio" name="plan" value="advanced" required>
+            <img src="/SHOP/in-en_xFM_vra-maps_2x.png" alt="上級者プラン">
+            <h2>上級者プラン</h2>
+            <p>上級者向けのプランです。</p>
+        </div>
+        <div class="plan-card">
+            <input type="radio" name="plan" value="custom" required>
+            <img src="/SHOP/fm_quote_farmer.png" alt="カスタムプラン">
+            <h2>カスタムプラン</h2>
+            <p>カスタマイズ可能なプランです。</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button type="button" class="back-button" onclick="history.back();">戻る</button>
+        <button type="button" class="next-button" onclick="navigateToPlan()">次へ進む</button>
+    </div>
+
+</body>
+</html>
