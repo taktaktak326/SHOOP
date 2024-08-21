@@ -22,6 +22,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         .plan-card {
             position: relative;
@@ -91,6 +92,13 @@
         }
 
         function navigateToPlan() {
+            // チェックボックスが少なくとも1つ選択されているか確認
+            const checkboxes = document.querySelectorAll('.plan-card input[type="checkbox"]:checked');
+            if (checkboxes.length === 0) {
+                alert("少なくとも1つのプランを選択してください。");
+                return;
+            }
+
             // localStorageから選択されたプランを取得
             const selectedPlan = localStorage.getItem('selectedPlan');
             let url = "";
@@ -126,7 +134,7 @@
     <div class="plan-container">
         <div class="plan-card">
             <input type="checkbox" name="startPlan" value="12000" onclick="updateTotalPrice()">
-            <img src="rice-778aba17.jpg" alt="初級者プラン">
+            <img src="rice-778aba17.jpg" alt="稲のプラン">
             <h2>稲</h2>
             <h5>スタートプラン</h5>
             <h3>￥12,000</h3>
@@ -134,7 +142,7 @@
         </div>
         <div class="plan-card">
             <input type="checkbox" name="startPlan" value="12000" onclick="updateTotalPrice()">
-            <img src="soy-2fc9220c.jpg" alt="中級者プラン">
+            <img src="soy-2fc9220c.jpg" alt="大豆のプラン">
             <h2>大豆</h2>
             <h5>スタートプラン</h5>
             <h3>￥12,000</h3>
@@ -142,7 +150,7 @@
         </div>
         <div class="plan-card">
             <input type="checkbox" name="startPlan" value="12000" onclick="updateTotalPrice()">
-            <img src="monitoring-df8443de.jpg" alt="上級者プラン">
+            <img src="monitoring-df8443de.jpg" alt="秋まき小麦・秋まき大麦のプラン">
             <h2>秋まき小麦・秋まき大麦</h2>
             <h5>スタートプラン</h5>
             <h3>￥12,000</h3>
@@ -150,10 +158,10 @@
         </div>
         <div class="plan-card">
             <input type="checkbox" name="startPlan" value="6000" onclick="updateTotalPrice()">
-            <img src="fm_quote_farmer.png" alt="カスタムプラン">
+            <img src="fm_quote_farmer.png" alt="馬鈴薯・甜菜のプラン">
             <h2>馬鈴薯・甜菜</h2>
             <h5>スタートプラン</h5>
-            <h3>￥6,000</h5>
+            <h3>￥6,000</h3>
             <h5>365日間有効</h5>
         </div>
     </div>
