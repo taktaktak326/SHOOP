@@ -22,6 +22,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         .plan-card {
             position: relative;
@@ -74,14 +75,18 @@
     </style>
     <script>
         function navigateToPlan() {
-            const selectedPlan = document.querySelector('input[name="plan"]:checked').value;
+            const selectedPlan = document.querySelector('input[name="plan"]:checked');
+            
+            if (selectedPlan) {
+                // 選択されたプラン情報をlocalStorageに保存
+                localStorage.setItem('selectedPlan', selectedPlan.value);
 
-            // 選択されたプラン情報をlocalStorageに保存
-            localStorage.setItem('selectedPlan', selectedPlan);
-
-            // スタートプラン選択画面へのURL
-            const url = "start_plan.html";
-            window.location.href = url;
+                // スタートプラン選択画面へのURL
+                const url = "start_plan.html";
+                window.location.href = url;
+            } else {
+                alert("プランを選択してください。");
+            }
         }
     </script>
 </head>
@@ -91,28 +96,36 @@
 
     <div class="plan-container">
         <div class="plan-card">
-            <input type="radio" name="plan" value="beginner" required>
-            <img src="global-en_xFM_seeding_712px_2x.png" alt="初級者プラン">
-            <h2>初級者プラン</h2>
-            <p>初心者向けのプランです。</p>
+            <input type="radio" id="plan-beginner" name="plan" value="beginner" required>
+            <label for="plan-beginner">
+                <img src="global-en_xFM_seeding_712px_2x.png" alt="種を蒔く初級者プランの画像">
+                <h2>初級者プラン</h2>
+                <p>初心者向けのプランです。</p>
+            </label>
         </div>
         <div class="plan-card">
-            <input type="radio" name="plan" value="intermediate" required>
-            <img src="/SHOOP/global-en_xFM_spray-timer_protection-detail_712px_2x.png" alt="中級者プラン">
-            <h2>中級者プラン</h2>
-            <p>中級者向けのプランです。</p>
+            <input type="radio" id="plan-intermediate" name="plan" value="intermediate" required>
+            <label for="plan-intermediate">
+                <img src="/SHOOP/global-en_xFM_spray-timer_protection-detail_712px_2x.png" alt="スプレータイマーを使った中級者プランの画像">
+                <h2>中級者プラン</h2>
+                <p>中級者向けのプランです。</p>
+            </label>
         </div>
         <div class="plan-card">
-            <input type="radio" name="plan" value="advanced" required>
-            <img src="in-en_xFM_vra-maps_2x.png" alt="上級者プラン">
-            <h2>上級者プラン</h2>
-            <p>上級者向けのプランです。</p>
+            <input type="radio" id="plan-advanced" name="plan" value="advanced" required>
+            <label for="plan-advanced">
+                <img src="in-en_xFM_vra-maps_2x.png" alt="マップを使った上級者プランの画像">
+                <h2>上級者プラン</h2>
+                <p>上級者向けのプランです。</p>
+            </label>
         </div>
         <div class="plan-card">
-            <input type="radio" name="plan" value="custom" required>
-            <img src="fm_quote_farmer.png" alt="カスタムプラン">
-            <h2>カスタムプラン</h2>
-            <p>カスタマイズ可能なプランです。</p>
+            <input type="radio" id="plan-custom" name="plan" value="custom" required>
+            <label for="plan-custom">
+                <img src="fm_quote_farmer.png" alt="農家の見積もりカスタムプランの画像">
+                <h2>カスタムプラン</h2>
+                <p>カスタマイズ可能なプランです。</p>
+            </label>
         </div>
     </div>
 
