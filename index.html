@@ -9,6 +9,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
+      flex-direction: column;
       height: 100vh;
     }
     .sidebar {
@@ -42,6 +43,30 @@
       color: #007bff;
     }
 
+    /* モバイル対応 */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        box-shadow: none;
+        padding: 10px;
+      }
+      .content {
+        flex: none;
+        height: calc(100vh - 60px);
+      }
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .main-content {
+        padding: 10px;
+      }
+    }
+
     /* df-messenger スタイル */
     df-messenger {
       z-index: 999;
@@ -54,6 +79,28 @@
       --df-messenger-message-actor-image-size: 60px; 
       bottom: 16px;
       right: 16px;
+    }
+
+    /* チャットボットウィンドウのレスポンシブ対応 */
+    @media (max-width: 768px) {
+      df-messenger-chat-bubble {
+        --df-messenger-chat-width: 100%;
+        --df-messenger-chat-height: 70vh; /* 画面の高さの70% */
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      df-messenger-chat-bubble {
+        --df-messenger-chat-width: 80%;
+        --df-messenger-chat-height: 70vh; /* 画面の高さの70% */
+      }
+    }
+
+    @media (min-width: 1025px) {
+      df-messenger-chat-bubble {
+        --df-messenger-chat-width: 620px;
+        --df-messenger-chat-height: 880px;
+      }
     }
   </style>
 </head>
@@ -71,8 +118,8 @@
     <df-messenger-chat-bubble
       chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
-      chat-width = "620"
-      chat-height = "880" > 
+      chat-width="620"
+      chat-height="880">
     </df-messenger-chat-bubble>
   </df-messenger>
 
