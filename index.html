@@ -41,6 +41,22 @@
             text-decoration: none;
             color: #007bff;
         }
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            bottom: 16px;
+            right: 16px;
+        }
+        df-messenger .df-messenger-message-actor img {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%; /* Optional: to make the image circular */
+        }
     </style>
 </head>
 <body>
@@ -59,20 +75,6 @@
       allow-fullscreen="always">
   </df-messenger-chat-bubble>
 </df-messenger>
-<style>
-  df-messenger {
-    z-index: 999;
-    position: fixed;
-    --df-messenger-font-color: #000;
-    --df-messenger-font-family: Google Sans;
-    --df-messenger-chat-background: #f3f6fc;
-    --df-messenger-message-user-background: #d3e3fd;
-    --df-messenger-message-bot-background: #fff;
-    bottom: 16px;
-    right: 16px;
-  }
-</style>
-
 <script>
   // WelcomeEvent イベントのイベントリスナーを登録
   document.addEventListener('Start_Conversation', function (event) {
