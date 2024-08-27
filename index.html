@@ -10,7 +10,6 @@
       font-family: Arial, sans-serif;
       display: flex;
       height: 100vh;
-      flex-direction: column;
     }
     .sidebar {
       width: 20%;
@@ -56,36 +55,6 @@
       bottom: 16px;
       right: 16px;
     }
-
-    /* モバイル対応のスタイル */
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        padding: 10px;
-        box-shadow: none;
-      }
-      .content {
-        flex: 1;
-        flex-direction: column;
-      }
-      .header {
-        padding: 20px;
-      }
-      .main-content {
-        padding: 10px;
-      }
-      df-messenger {
-        right: 10px;
-        bottom: 10px;
-      }
-      df-messenger-chat-bubble {
-        --df-messenger-chat-width: 100%;
-        --df-messenger-chat-height: 60vh; /* 高さを画面の60%に設定 */
-      }
-    }
   </style>
 </head>
 <body>
@@ -102,8 +71,8 @@
     <df-messenger-chat-bubble
       chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
-      chat-width="620"
-      chat-height="880">
+      chat-width = "620"
+      chat-height = "880" > 
     </df-messenger-chat-bubble>
   </df-messenger>
 
