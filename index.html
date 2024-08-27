@@ -1,93 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メインレイアウト</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-        }
-        .sidebar {
-            width: 20%;
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        }
-        .content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .link {
-            margin: 10px 0;
-        }
-        .link a {
-            text-decoration: none;
-            color: #007bff;
-        }
-            
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メインレイアウト</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 20%;
+      background-color: #f4f4f4;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .link {
+      margin: 10px 0;
+    }
+    .link a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    /* df-messenger スタイル */
+    df-messenger {
+      z-index: 999;
+      position: fixed;
+      --df-messenger-font-color: #000;
+      --df-messenger-font-family: Google Sans;
+      --df-messenger-chat-background: #f3f6fc;
+      --df-messenger-message-user-background: #d3e3fd;
+      --df-messenger-message-bot-background: #fff;
+      --df-messenger-message-actor-image-size: 60px; 
+      bottom: 16px;
+      right: 16px;
+    }
+  </style>
 </head>
 <body>
-<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-<df-messenger
-  project-id="prj-basf-xarviobot-dev"
-  agent-id="a1665471-9343-46bb-a513-398bfaaca268"
-  language-code="ja"
-  max-query-length="-1"
-  allow-feedback="all"
-  intent="Start_Conversation">
-  <df-messenger-chat-bubble
-   chat-title="04 Feature Test (former creative)"
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+  <df-messenger
+    project-id="prj-basf-xarviobot-dev"
+    agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+    language-code="ja"
+    max-query-length="-1"
+    allow-feedback="all"
+    intent="Start_Conversation">
+    <df-messenger-chat-bubble
+      chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
-      chat-width="620px"
-      chat-height="880px">
-  </df-messenger-chat-bubble>
-</df-messenger>
-<style>
-  df-messenger {
-    z-index: 999;
-    position: fixed;
-    --df-messenger-font-color: #000;
-    --df-messenger-font-family: Google Sans;
-    --df-messenger-chat-background: #f3f6fc;
-    --df-messenger-message-user-background: #d3e3fd;
-    --df-messenger-message-bot-background: #fff;
-    --df-messenger-message-actor-image-size: 60px; 
-    bottom: 16px;
-    right: 16px;
-  }
-</style>
+      style="width: 620px; height: 880px;"> 
+    </df-messenger-chat-bubble>
+  </df-messenger>
 
-<script>
-  // WelcomeEvent イベントのイベントリスナーを登録
-  document.addEventListener('Start_Conversation', function (event) {
-    // イベント発生時の処理
-    console.log('Start_Conversation が発生しました');
+  <script>
+    // Start_Conversation イベントのイベントリスナーを登録
+    document.addEventListener('Start_Conversation', function (event) {
+      console.log('Start_Conversation が発生しました');
+      event.detail.dfMessenger.renderCustomText('ようこそ！');
+    });
+  </script>
 
-    event.detail.dfMessenger.renderCustomText('ようこそ！');
-  });
-</script>
-
-    
-<div class="sidebar">
+  <div class="sidebar">
     <h3>メニュー</h3>
     <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
     <div class="link"><a href="add_plan.html" target="contentFrame">プラン・機能を追加する</a></div>
@@ -96,17 +93,16 @@
     <div class="link"><a href="index5.html" target="contentFrame">チャットボット</a></div>
     <div class="link"><a href="renew.html" target="contentFrame">自動更新</a></div>
     <div class="link"><a href="rule.html" target="contentFrame">特定商取引法に基づく表記</a></div>
-</div>
+  </div>
 
-<div class="content">
+  <div class="content">
     <div class="header">
-        <h2>ショップ</h2>
-        <!-- ステータスやタスクの情報をここに追加 -->
+      <h2>ショップ</h2>
     </div>
     <div class="main-content">
-        <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
-</div>
+  </div>
 
 </body>
 </html>
