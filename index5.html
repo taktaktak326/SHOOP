@@ -6,22 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー</title>
     <meta name="description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
-    <meta property="og:title" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="https://www.xarvio-japan.jp/chat/index.html">
-    <meta property="og:image" content="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png">
-    <meta property="og:site_name" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
-    <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
-    <link rel="stylesheet" href="../public/styles/style.css">
-    <link rel="stylesheet" href="/public/styles/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 </head>
 
 <body>
     <header>
-        <a href="/" class="c-header__logo">
-            <img src="../img/common/logo.svg" alt="ロゴ">
-        </a>
     </header>
 
     <main>
@@ -31,30 +19,16 @@
                 <p class="text-center mb-50">AIがあなたの質問に24時間365日、お答えいたします。</p>
 
                 <!-- Chatbody -->
-                <df-messenger project-id="prj-basf-xarviobot-dev" agent-id="a1665471-9343-46bb-a513-398bfaaca268" language-code="ja" allow-feedback="all">
-                    <df-messenger-chat chat-title="04 Feature Test (former creative)"></df-messenger-chat>
+                <df-messenger 
+                    project-id="prj-basf-xarviobot-dev" 
+                    agent-id="a1665471-9343-46bb-a513-398bfaaca268" 
+                    language-code="ja"
+                    allow-feedback="all">
                 </df-messenger>
 
-                <button id="clear-storage-button">会話履歴を削除</button>
             </div>
         </section>
     </main>
-
-    <script>
-        document.getElementById('clear-storage-button').addEventListener('click', function() {
-            const dfMessenger = document.querySelector('df-messenger');
-            if (dfMessenger) {
-                dfMessenger.clearStorage();
-                alert('会話の履歴を削除します');
-            }
-        });
-
-        window.onload = function() {
-            const currentUrl = window.location.href;
-            const dfMessenger = document.querySelector('df-messenger');
-            dfMessenger.setQueryParameters({ parameters: { url: currentUrl } });
-        };
-    </script>
 </body>
 
 </html>
