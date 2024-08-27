@@ -70,6 +70,20 @@
     right: 16px;
   }
 </style>
+
+<script>
+    document.querySelector('df-messenger').addEventListener('df-chat-opened', function() {
+        const event = new CustomEvent('df-messenger-intent', { detail: { intent: 'Start_Conversation' } });
+        document.querySelector('df-messenger').dispatchEvent(event);
+    });
+
+    document.querySelector('df-messenger').addEventListener('df-messenger-intent', function(event) {
+        if (event.detail.intent === 'WELCOME_INTENT') {
+            const chatWindow = document.querySelector('df-messenger');
+            chatWindow.renderCustomText('ごきげんよう。');
+        }
+    });
+</script>
     <div class="sidebar">
         <h3>メニュー</h3>
         <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
