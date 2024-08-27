@@ -73,16 +73,21 @@
 
 <script>
     document.querySelector('df-messenger').addEventListener('df-chat-opened', function() {
-        const event = new CustomEvent('df-messenger-intent', { detail: { intent: 'Start_Conversation' } });
-        document.querySelector('df-messenger').dispatchEvent(event);
-    });
+    console.log('Chat opened event triggered');
+    const event = new CustomEvent('df-messenger-intent', { detail: { intent: 'Start_Conversation' } });
+    document.querySelector('df-messenger').dispatchEvent(event);
+});
 
-    document.querySelector('df-messenger').addEventListener('df-messenger-intent', function(event) {
-        if (event.detail.intent === 'Start_Conversation') {
-            const chatWindow = document.querySelector('df-messenger');
-            chatWindow.renderCustomText('ごきげんよう。');
-        }
-    });
+document.querySelector('df-messenger').addEventListener('df-messenger-intent', function(event) {
+    console.log('Intent event triggered:', event.detail.intent);
+    if (event.detail.intent === 'Start_Conversation') {
+        const chatWindow = document.querySelector('df-messenger');
+        chatWindow.renderCustomText('ごきげんよう。');
+    } else {
+        console.log('Unexpected intent:', event.detail.intent);
+    }
+});
+
 </script>
 
 <div class="sidebar">
