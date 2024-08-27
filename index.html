@@ -17,6 +17,7 @@
       background-color: #f4f4f4;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      display: block;
     }
     .content {
       flex: 1;
@@ -29,6 +30,7 @@
       padding: 10px;
       text-align: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
     }
     .main-content {
       flex: 1;
@@ -42,6 +44,18 @@
       text-decoration: none;
       color: #007bff;
     }
+    .menu-button {
+      display: none;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
     /* モバイル対応 */
     @media (max-width: 768px) {
@@ -52,18 +66,19 @@
         width: 100%;
         padding: 10px;
         box-shadow: none;
+        display: none; /* 初期状態で非表示 */
       }
       .content {
         height: calc(100vh - 60px);
       }
       .header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
         padding: 15px;
       }
       .main-content {
         padding: 10px;
+      }
+      .menu-button {
+        display: block; /* メニューボタンを表示 */
       }
     }
 
@@ -108,7 +123,12 @@
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
-  <div class="sidebar">
+  <div class="header">
+    <button class="menu-button" onclick="toggleMenu()">メニュー</button>
+    <h2>ショップ</h2>
+  </div>
+
+  <div class="sidebar" id="sidebar">
     <h3>メニュー</h3>
     <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
     <div class="link"><a href="add_plan.html" target="contentFrame">プラン・機能を追加する</a></div>
@@ -120,9 +140,6 @@
   </div>
 
   <div class="content">
-    <div class="header">
-      <h2>ショップ</h2>
-    </div>
     <div class="main-content">
       <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
@@ -144,12 +161,14 @@
   </df-messenger>
 
   <script>
-    // Start_Conversation イベントのイベントリスナーを登録
-    document.addEventListener('Start_Conversation', function (event) {
-      console.log('Start_Conversation が発生しました');
-      event.detail.dfMessenger.renderCustomText('ようこそ！');
-    });
+    function toggleMenu() {
+      var sidebar = document.getElementById('sidebar');
+      if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+        sidebar.style.display = 'block';
+      } else {
+        sidebar.style.display = 'none';
+      }
+    }
   </script>
-
 </body>
 </html>
