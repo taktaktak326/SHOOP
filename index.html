@@ -5,49 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>メインレイアウト</title>
   <style>
+    /* 全体のスタイル */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       min-height: 100vh;
     }
-    .sidebar {
-      width: 20%;
-      background-color: #f4f4f4;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      display: block;
-    }
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
+
+    /* ヘッダーのスタイル */
     .header {
       background-color: #007bff;
       color: white;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .main-content {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
+
+    .header h2 {
+      margin: 0;
     }
-    .link {
-      margin: 10px 0;
-    }
-    .link a {
-      text-decoration: none;
-      color: #007bff;
-    }
+
+    /* モバイル用メニューボタンのスタイル */
     .menu-button {
       display: none;
       position: absolute;
-      top: 10px;
       left: 10px;
       background-color: #007bff;
       color: white;
@@ -57,28 +43,78 @@
       border-radius: 5px;
     }
 
-    /* モバイル対応 */
+    /* メニューのスタイル */
+    .menu {
+      background-color: #f4f4f4;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .menu .link {
+      margin: 10px 0;
+    }
+
+    .menu .link a {
+      text-decoration: none;
+      color: #007bff;
+      display: block;
+    }
+
+    /* メインコンテンツのスタイル */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* PC用スタイル */
+    @media (min-width: 769px) {
+      /* メニューボタンを非表示 */
+      .menu-button {
+        display: none;
+      }
+
+      /* メニューを水平に表示 */
+      .menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .menu .link {
+        margin: 0 15px;
+      }
+
+      .menu .link a {
+        display: inline;
+      }
+    }
+
+    /* モバイル用スタイル */
     @media (max-width: 768px) {
-      body {
+      /* メニューボタンを表示 */
+      .menu-button {
+        display: block;
+      }
+
+      /* メニューを初期状態で非表示 */
+      .menu {
+        display: none;
         flex-direction: column;
       }
-      .sidebar {
-        width: 100%;
-        padding: 10px;
-        box-shadow: none;
-        display: none; /* 初期状態で非表示 */
+
+      /* メニューがアクティブな時に表示 */
+      .menu.active {
+        display: block;
       }
-      .content {
-        height: calc(100vh - 60px);
+
+      /* メニューリンクを垂直に表示 */
+      .menu .link {
+        margin: 10px 0;
       }
-      .header {
-        padding: 15px;
-      }
-      .main-content {
-        padding: 10px;
-      }
-      .menu-button {
-        display: block; /* メニューボタンを表示 */
+
+      .menu .link a {
+        display: block;
       }
     }
 
@@ -120,16 +156,18 @@
   </style>
 </head>
 <body>
+  <!-- Dialogflow Messenger のスタイルとスクリプト -->
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
+  <!-- ヘッダー -->
   <div class="header">
     <button class="menu-button" onclick="toggleMenu()">メニュー</button>
     <h2>ショップ</h2>
   </div>
 
-  <div class="sidebar" id="sidebar">
-    <h3>メニュー</h3>
+  <!-- メニュー -->
+  <nav class="menu" id="menu">
     <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
     <div class="link"><a href="add_plan.html" target="contentFrame">プラン・機能を追加する</a></div>
     <div class="link"><a href="purchased_plan.html" target="contentFrame">購入済みプラン・機能</a></div>
@@ -137,14 +175,14 @@
     <div class="link"><a href="index5.html" target="contentFrame">チャットボット</a></div>
     <div class="link"><a href="renew.html" target="contentFrame">自動更新</a></div>
     <div class="link"><a href="rule.html" target="contentFrame">特定商取引法に基づく表記</a></div>
+  </nav>
+
+  <!-- メインコンテンツ -->
+  <div class="main-content">
+    <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
   </div>
 
-  <div class="content">
-    <div class="main-content">
-      <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
-  </div>
-
+  <!-- Dialogflow Messenger -->
   <df-messenger
     project-id="prj-basf-xarviobot-dev"
     agent-id="a1665471-9343-46bb-a513-398bfaaca268"
@@ -160,14 +198,11 @@
     </df-messenger-chat-bubble>
   </df-messenger>
 
+  <!-- メニューのトグルスクリプト -->
   <script>
     function toggleMenu() {
-      var sidebar = document.getElementById('sidebar');
-      if (sidebar.style.display === 'none' || sidebar.style.display === '') {
-        sidebar.style.display = 'block';
-      } else {
-        sidebar.style.display = 'none';
-      }
+      var menu = document.getElementById('menu');
+      menu.classList.toggle('active');
     }
   </script>
 </body>
