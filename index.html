@@ -44,7 +44,31 @@
     </style>
 </head>
 <body>
-
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+<df-messenger
+  project-id="prj-basf-xarviobot-dev"
+  agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+  language-code="ja"
+  max-query-length="-1"
+  allow-feedback="all">
+  <df-messenger-chat-bubble
+   chat-title="04 Feature Test (former creative)">
+  </df-messenger-chat-bubble>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    --df-messenger-font-color: #000;
+    --df-messenger-font-family: Google Sans;
+    --df-messenger-chat-background: #f3f6fc;
+    --df-messenger-message-user-background: #d3e3fd;
+    --df-messenger-message-bot-background: #fff;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>
     <div class="sidebar">
         <h3>メニュー</h3>
         <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
