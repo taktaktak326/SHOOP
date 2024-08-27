@@ -72,24 +72,17 @@
 </style>
 
 <script>
-    document.querySelector('df-messenger').addEventListener('df-chat-opened', function() {
-    console.log('Chat opened event triggered');
-    const event = new CustomEvent('df-messenger-intent', { detail: { intent: 'Start_Conversation' } });
-    document.querySelector('df-messenger').dispatchEvent(event);
-});
+  // WelcomeEvent イベントのイベントリスナーを登録
+  document.addEventListener('Start_Conversation', function (event) {
+    // イベント発生時の処理
+    console.log('Start_Conversation が発生しました');
 
-document.querySelector('df-messenger').addEventListener('df-messenger-intent', function(event) {
-    console.log('Intent event triggered:', event.detail.intent);
-    if (event.detail.intent === 'Start_Conversation') {
-        const chatWindow = document.querySelector('df-messenger');
-        chatWindow.renderCustomText('ごきげんよう。');
-    } else {
-        console.log('Unexpected intent:', event.detail.intent);
-    }
-});
-
+    // 例: チャットウィンドウにメッセージを表示
+    // event.detail.dfMessenger.renderCustomText('ようこそ！');
+  });
 </script>
 
+    
 <div class="sidebar">
     <h3>メニュー</h3>
     <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
