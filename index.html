@@ -78,32 +78,33 @@
     });
 
     document.querySelector('df-messenger').addEventListener('df-messenger-intent', function(event) {
-        if (event.detail.intent === 'WELCOME_INTENT') {
+        if (event.detail.intent === 'Start_Conversation') {
             const chatWindow = document.querySelector('df-messenger');
             chatWindow.renderCustomText('ごきげんよう。');
         }
     });
 </script>
-    <div class="sidebar">
-        <h3>メニュー</h3>
-        <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
-        <div class="link"><a href="add_plan.html" target="contentFrame">プラン・機能を追加する</a></div>
-        <div class="link"><a href="purchased_plan.html" target="contentFrame">購入済みプラン・機能</a></div>
-        <div class="link"><a href="purchase_history.html" target="contentFrame">購入履歴</a></div>
-        <div class="link"><a href="index5.html" target="contentFrame">チャットボット</a></div>
-        <div class="link"><a href="renew.html" target="contentFrame">自動更新</a></div>
-        <div class="link"><a href="rule.html" target="contentFrame">特定商取引法に基づく表記</a></div>
-    </div>
 
-    <div class="content">
-        <div class="header">
-            <h2>ショップ</h2>
-            <!-- ステータスやタスクの情報をここに追加 -->
-        </div>
-        <div class="main-content">
-            <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
-        </div>
+<div class="sidebar">
+    <h3>メニュー</h3>
+    <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
+    <div class="link"><a href="add_plan.html" target="contentFrame">プラン・機能を追加する</a></div>
+    <div class="link"><a href="purchased_plan.html" target="contentFrame">購入済みプラン・機能</a></div>
+    <div class="link"><a href="purchase_history.html" target="contentFrame">購入履歴</a></div>
+    <div class="link"><a href="index5.html" target="contentFrame">チャットボット</a></div>
+    <div class="link"><a href="renew.html" target="contentFrame">自動更新</a></div>
+    <div class="link"><a href="rule.html" target="contentFrame">特定商取引法に基づく表記</a></div>
+</div>
+
+<div class="content">
+    <div class="header">
+        <h2>ショップ</h2>
+        <!-- ステータスやタスクの情報をここに追加 -->
     </div>
+    <div class="main-content">
+        <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+</div>
 
 </body>
 </html>
