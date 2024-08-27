@@ -42,21 +42,9 @@
             color: #007bff;
         }
         df-messenger {
-            z-index: 999;
-            position: fixed;
-            --df-messenger-font-color: #000;
-            --df-messenger-font-family: Google Sans;
-            --df-messenger-chat-background: #f3f6fc;
-            --df-messenger-message-user-background: #d3e3fd;
-            --df-messenger-message-bot-background: #fff;
-            bottom: 16px;
-            right: 16px;
-        }
-        df-messenger-message-actor img {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%; /* Optional: to make the image circular */
-        }
+      --df-messenger-message-actor-image-size: 60px; 
+    }
+            
     </style>
 </head>
 <body>
@@ -67,13 +55,28 @@
   agent-id="a1665471-9343-46bb-a513-398bfaaca268"
   language-code="ja"
   max-query-length="-1"
-  allow-feedback="all">
+  allow-feedback="all"
+  intent="Start_Conversation">
   <df-messenger-chat-bubble
    chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
       allow-fullscreen="always">
   </df-messenger-chat-bubble>
 </df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    --df-messenger-font-color: #000;
+    --df-messenger-font-family: Google Sans;
+    --df-messenger-chat-background: #f3f6fc;
+    --df-messenger-message-user-background: #d3e3fd;
+    --df-messenger-message-bot-background: #fff;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>
+
 <script>
   // WelcomeEvent イベントのイベントリスナーを登録
   document.addEventListener('Start_Conversation', function (event) {
