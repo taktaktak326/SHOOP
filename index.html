@@ -16,6 +16,12 @@
       background-color: #f4f4f4;
       padding: 20px;
       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      transition: width 0.3s ease;
+    }
+    .sidebar.hidden {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
     }
     .content {
       flex: 1;
@@ -40,6 +46,24 @@
     .link a {
       text-decoration: none;
       color: #007bff;
+    }
+
+    /* メニュー切り替えボタン */
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: left 0.3s ease;
+    }
+    .sidebar.hidden + .content .toggle-btn {
+      left: 0;
     }
 
     /* df-messenger スタイル */
@@ -71,8 +95,8 @@
     <df-messenger-chat-bubble
       chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
-      chat-width = "620"
-      chat-height = "880" > 
+      chat-width="620"
+      chat-height="880">
     </df-messenger-chat-bubble>
   </df-messenger>
 
@@ -82,7 +106,15 @@
       console.log('Start_Conversation が発生しました');
       event.detail.dfMessenger.renderCustomText('ようこそ！');
     });
+
+    // メニューの表示/非表示を切り替える
+    function toggleMenu() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('hidden');
+    }
   </script>
+
+  <button class="toggle-btn" onclick="toggleMenu()">メニュー</button>
 
   <div class="sidebar">
     <h3>メニュー</h3>
