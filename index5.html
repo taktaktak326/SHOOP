@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー</title>
+    <meta name="description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
+    <meta property="og:title" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="https://www.xarvio-japan.jp/chat/index.html">
+    <meta property="og:image" content="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png">
+    <meta property="og:site_name" content="お困りごとは何ですか。｜xarvio（ザルビオ）フィールドマネージャー">
+    <meta property="og:description" content="ザルビオフィールドマネージャーでスマート農業を取り組んでいる事例を紹介しています。">
+    <meta property="og:locale" content="ja_JP">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
+    <link rel="shortcut icon" href="../img/common/favicon.png">
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5KGNCRF');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <link rel="stylesheet" href="../public/styles/style.css">
+  <!-- Chat -->
+  <link rel="stylesheet" href="/public/styles/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <!-- End Chat -->
+
+</head>
+
+<body>
+    <header class="c-header">
+        <div class="c-header__inner">
+             <a href="/" class="c-header__logo">
+                 <img src="../img/common/logo.svg" alt="">
+             </a>
+        </div>
+    </header>
+
+    <main class="">
+        <section class="section-page--case">
+            <div class="container container-option1130">
+                <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
+                <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
+                    AIがあなたの質問に24時間365日、お答えいたします。
+                </div>
+                
+  <!-- Chatbody -->
+<df-messenger
+  project-id="prj-basf-xarviobot-dev"
+  agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+  language-code="ja"
+  max-query-length="-1"
+  allow-feedback="all">
+  <df-messenger-chat
+   chat-title="04 Feature Test (former creative)">
+  </df-messenger-chat>
+</df-messenger>
+
+
+<script>
+  class CustomFeedbackElement extends HTMLElement {
+    constructor() {
+      super();
+      this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = 'irrelevant';
+    }
+ 
+    connectedCallback() {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
+ 
+      // 回答フォームを作成
+      const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
+ 
+      // 低評価の理由選択
+      const reasonLabel = document.createElement('label');
+      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white';
+      reasonSelect.style.cursor = 'pointer';
+      const reasonOptions = [
+        { value: 'irrelevant', label: '求めている回答ではない' },
+        { value: 'incorrect', label: '間違った情報' },
+        { value: 'not_enough_information', label: '情報が少ない' },
+        { value: 'other', label: 'その他' },
+      ];
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+ 
+        if (option.value === this.selectedReason) {
+          optionElement.selected = true;
+        }
+        reasonSelect.appendChild(optionElement);
+      });
+ 
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+ 
+      form.appendChild(reasonLabel);
+      form.appendChild(reasonSelect);
+ 
+      // フリーテキスト入力
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
+      const commentInput = document.createElement('textarea');
+      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
+      form.appendChild(commentLabel);
+      form.appendChild(commentInput);
+ 
+      // Submit ボタンを作成
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#009fe3';
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
+      });
+ 
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+ 
+      wrapper.appendChild(form);
+      wrapper.appendChild(submitButtonContainer);
+ 
+      this.renderRoot.appendChild(wrapper);
+ 
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        console.log('Feedback:', feedbackData);
+      });
+    }
+ 
+    _reasonSelected(value) {
+      this.selectedReason = value;
+    }
+ 
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          reason: this.selectedReason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+  }
+ 
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+  
+  window.onload = function () {
+    var currentUrl = window.location.href;
+    dfMessenger = document.querySelector('df-messenger');
+    const queryParameters = {
+      parameters: {
+        url: currentUrl
+      }
+    };
+    dfMessenger.setQueryParameters(queryParameters);
+  };
+</script>
+
+                <!-- Clear Storage Button -->
+<button id="clear-storage-button">会話履歴を削除</button>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const clearButton = document.getElementById('clear-storage-button');
+                        clearButton.addEventListener('click', function() {
+                            const dfMessenger = document.querySelector('df-messenger');
+                            if (dfMessenger) {
+                                dfMessenger.clearStorage();
+                                alert('会話の履歴を削除します');
+                            }
+                        });
+                    });
+
+                    // An example of handling events: Navigate to the first suggested URL.
+                    document.addEventListener('df-url-suggested', (event) => {
+                        if (Array.isArray(event.detail.suggestedUrls) &&
+                            event.detail.suggestedUrls.length) {
+                            window.location.href = event.detail.suggestedUrls[0];
+                        }
+                    });
+                </script>
+                <!-- End Chat body -->
+
+  <!-- End Chat body -->
+                <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
+                    <span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span>
+                </div>
+  
+            </div>
+        </section>
+        
+
+  
+    </main>
+    <!--<footer class="c-footer">
+        <div data-includeHTML="../footer.html"></div>
+        <div data-includeHTML="../footer-copyright.html"></div>
+    </footer>-->
+
+    <!--<div class="modal"></div>-->
+
+    <!-- JS -->
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+
+</html>
+
+
+
+
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+
+
