@@ -65,30 +65,6 @@
       left: 0;
     }
 
-    #privacy-dialog {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      border: 1px solid #ccc;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 1001;
-      display: none;
-    }
-
-    #privacy-dialog-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      display: none;
-    }
-
     df-messenger {
       z-index: 999;
       position: fixed;
@@ -100,7 +76,6 @@
       --df-messenger-message-actor-image-size: 60px; 
       bottom: 16px;
       right: 16px;
-      pointer-events: none; /* Initially disable interactions */
     }
   </style>
 </head>
@@ -113,7 +88,8 @@
     agent-id="a1665471-9343-46bb-a513-398bfaaca268"
     language-code="ja"
     max-query-length="-1"
-    allow-feedback="all">
+    allow-feedback="all"
+    intent="Start_Conversation">
     <df-messenger-chat-bubble
       chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
@@ -122,37 +98,33 @@
     </df-messenger-chat-bubble>
   </df-messenger>
 
-  <div id="privacy-dialog-overlay"></div>
-  <div id="privacy-dialog">
-    <p>プライバシーポリシーに同意してください。</p>
-    <button onclick="agreePrivacy()">同意する</button>
-  </div>
-
   <script>
+    document.addEventListener('Start_Conversation', function (event) {
+      console.log('Start_Conversation が発生しました');
+      event.detail.dfMessenger.renderCustomText('ようこそ！');
+    });
+
     function toggleMenu() {
       const sidebar = document.querySelector('.sidebar');
       sidebar.classList.toggle('hidden');
     }
 
-    function openPrivacyDialog() {
+    function openChat() {
       document.getElementById('privacy-dialog').style.display = 'block';
-      document.getElementById('privacy-dialog-overlay').style.display = 'block';
     }
 
     function agreePrivacy() {
       document.getElementById('privacy-dialog').style.display = 'none';
-      document.getElementById('privacy-dialog-overlay').style.display = 'none';
-      enableChat();
+      openChatWindow();
     }
 
-    function enableChat() {
+    function openChatWindow() {
       const dfMessenger = document.querySelector('df-messenger');
-      dfMessenger.style.pointerEvents = 'auto'; // Enable interactions
-      dfMessenger.setAttribute('open', 'true'); // Open the chat window
+      dfMessenger.setAttribute('open', 'true');
     }
 
-    document.querySelector('df-messenger').addEventListener('df-opened', function() {
-      openPrivacyDialog();
+    document.addEventListener('DOMContentLoaded', function() {
+      openChat();
     });
   </script>
 
@@ -177,5 +149,11 @@
       <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
   </div>
+
+<div id="privacy-dialog" style="display:none;">
+  <p>プライバシーポリシーに同意してください。</p>
+  <button onclick="agreePrivacy()">同意する</button>
+</div>
+
 </body>
 </html>
