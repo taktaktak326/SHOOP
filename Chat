@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャットボットサイト</title>
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            bottom: 16px;
+            right: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>チャットボットを埋め込んだシンプルなサイト</h1>
+    </header>
+    <main>
+        <p>このページでは、右下にチャットボットが表示されます。質問があれば、いつでもチャットボットに尋ねてください。</p>
+    </main>
+
+    <df-messenger
+        project-id="prj-basf-xarviobot-dev"
+        agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+        language-code="ja"
+        max-query-length="-1"
+        allow-feedback="all">
+        <df-messenger-chat-bubble
+        chat-title="04 Feature Test (former creative)">
+        </df-messenger-chat-bubble>
+    </df-messenger>
+</body>
+</html>
