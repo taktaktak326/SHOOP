@@ -78,6 +78,17 @@
       display: none;
     }
 
+    #privacy-dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+    }
+
     df-messenger {
       z-index: 999;
       position: fixed;
@@ -89,6 +100,7 @@
       --df-messenger-message-actor-image-size: 60px; 
       bottom: 16px;
       right: 16px;
+      pointer-events: none; /* Initially disable interactions */
     }
   </style>
 </head>
@@ -101,8 +113,7 @@
     agent-id="a1665471-9343-46bb-a513-398bfaaca268"
     language-code="ja"
     max-query-length="-1"
-    allow-feedback="all"
-    intent="Start_Conversation">
+    allow-feedback="all">
     <df-messenger-chat-bubble
       chat-title="04 Feature Test (former creative)"
       bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
@@ -111,14 +122,13 @@
     </df-messenger-chat-bubble>
   </df-messenger>
 
-  <script>
-    document.querySelector('df-messenger').addEventListener('df-messenger-loaded', function() {
-      const dfMessenger = document.querySelector('df-messenger');
-      dfMessenger.addEventListener('df-opened', function() {
-        openPrivacyDialog();
-      });
-    });
+  <div id="privacy-dialog-overlay"></div>
+  <div id="privacy-dialog">
+    <p>プライバシーポリシーに同意してください。</p>
+    <button onclick="agreePrivacy()">同意する</button>
+  </div>
 
+  <script>
     function toggleMenu() {
       const sidebar = document.querySelector('.sidebar');
       sidebar.classList.toggle('hidden');
@@ -126,14 +136,23 @@
 
     function openPrivacyDialog() {
       document.getElementById('privacy-dialog').style.display = 'block';
+      document.getElementById('privacy-dialog-overlay').style.display = 'block';
     }
 
     function agreePrivacy() {
       document.getElementById('privacy-dialog').style.display = 'none';
+      document.getElementById('privacy-dialog-overlay').style.display = 'none';
+      enableChat();
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // Nothing happens here initially
+    function enableChat() {
+      const dfMessenger = document.querySelector('df-messenger');
+      dfMessenger.style.pointerEvents = 'auto'; // Enable interactions
+      dfMessenger.setAttribute('open', 'true'); // Open the chat window
+    }
+
+    document.querySelector('df-messenger').addEventListener('df-opened', function() {
+      openPrivacyDialog();
     });
   </script>
 
@@ -158,11 +177,5 @@
       <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
   </div>
-
-  <div id="privacy-dialog">
-    <p>プライバシーポリシーに同意してください。</p>
-    <button onclick="agreePrivacy()">同意する</button>
-  </div>
-
 </body>
 </html>
