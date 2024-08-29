@@ -65,6 +65,19 @@
       left: 0;
     }
 
+    #privacy-dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+      display: none;
+    }
+
     df-messenger {
       z-index: 999;
       position: fixed;
@@ -99,9 +112,11 @@
   </df-messenger>
 
   <script>
-    document.addEventListener('Start_Conversation', function (event) {
-      console.log('Start_Conversation が発生しました');
-      event.detail.dfMessenger.renderCustomText('ようこそ！');
+    document.querySelector('df-messenger').addEventListener('df-messenger-loaded', function() {
+      const dfMessenger = document.querySelector('df-messenger');
+      dfMessenger.addEventListener('df-opened', function() {
+        openPrivacyDialog();
+      });
     });
 
     function toggleMenu() {
@@ -109,22 +124,16 @@
       sidebar.classList.toggle('hidden');
     }
 
-    function openChat() {
+    function openPrivacyDialog() {
       document.getElementById('privacy-dialog').style.display = 'block';
     }
 
     function agreePrivacy() {
       document.getElementById('privacy-dialog').style.display = 'none';
-      openChatWindow();
-    }
-
-    function openChatWindow() {
-      const dfMessenger = document.querySelector('df-messenger');
-      dfMessenger.setAttribute('open', 'true');
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      openChat();
+      // Nothing happens here initially
     });
   </script>
 
@@ -150,10 +159,10 @@
     </div>
   </div>
 
-<div id="privacy-dialog" style="display:none;">
-  <p>プライバシーポリシーに同意してください。</p>
-  <button onclick="agreePrivacy()">同意する</button>
-</div>
+  <div id="privacy-dialog">
+    <p>プライバシーポリシーに同意してください。</p>
+    <button onclick="agreePrivacy()">同意する</button>
+  </div>
 
 </body>
 </html>
