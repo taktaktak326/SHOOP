@@ -135,6 +135,23 @@
       <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
   </div>
+<script>
+  function openChat() {
+    // プライバシーポリシーダイアログを表示
+    document.getElementById('privacy-dialog').style.display = 'block';
+  }
+
+  function agreePrivacy() {
+    // プライバシーポリシーに同意した後、チャットウィンドウを開く
+    document.getElementById('privacy-dialog').style.display = 'none';
+    openChatWindow(); // チャットウィンドウを開く関数
+  }
+</script>
+
+<div id="privacy-dialog" style="display:none;">
+  <p>プライバシーポリシーに同意してください。</p>
+  <button onclick="agreePrivacy()">同意する</button>
+</div>
 
 </body>
 </html>
