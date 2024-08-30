@@ -6,6 +6,30 @@
     <title>チャットボットサイト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <script>
+  let inactivityTimer;
+
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      sendCustomEvent('your_event_name');
+    }, 10000); // 10 seconds
+  }
+
+  function sendCustomEvent(eventName) {
+    const requestPayload = {
+      event: {
+        name: eventName
+      }
+    };
+    window.dfMessenger.renderCustomText(requestPayload);
+  }
+
+  document.addEventListener('click', resetInactivityTimer);
+  document.addEventListener('keydown', resetInactivityTimer);
+
+  resetInactivityTimer();
+</script>
     <style>
         body {
             font-family: Arial, sans-serif;
