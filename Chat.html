@@ -91,28 +91,24 @@
                 }
 
                 function sendCustomEvent(eventName) {
-                    const requestPayload = {
-                        event: {
-                            name: eventName
-                        }
-                    };
-                    if (dfMessenger && dfMessenger.renderCustomText) {
-                        console.log('Sending custom event:', requestPayload);
-                        dfMessenger.renderCustomText(requestPayload);
-                    } else {
-                        console.error('dfMessenger is not initialized');
-                    }
-                }
+    const dfMessenger = document.querySelector('df-messenger');
 
-                resetInactivityTimer(); // 初期化時にカウントダウンを開始
-
-                // ユーザーの操作（クリックやキー押下）でタイマーをリセット
-                document.addEventListener('click', resetInactivityTimer);
-                document.addEventListener('keydown', resetInactivityTimer);
-            }).catch((error) => {
-                console.error('Error initializing dfMessenger:', error);
-            });
+    if (dfMessenger) {
+        const customEventPayload = JSON.stringify({
+            event: {
+                name: eventName,
+                languageCode: 'ja'
+            }
         });
+
+        console.log('Sending custom event:', customEventPayload);
+        
+        // ここで適切な方法でカスタムイベントを送信する
+        dfMessenger.renderCustomText(customEventPayload);
+    } else {
+        console.error('dfMessenger is not initialized');
+    }
+}
     </script>
 </head>
 <body>
