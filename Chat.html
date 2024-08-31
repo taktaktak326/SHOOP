@@ -60,46 +60,7 @@
             }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let inactivityTimer;
-            let countdownValue = 10;
-            let countdownInterval;
 
-            function resetInactivityTimer() {
-                clearTimeout(inactivityTimer);
-                clearInterval(countdownInterval); // カウントダウンをリセット
-                countdownValue = 10;
-                document.getElementById('countdown').textContent = countdownValue;
-
-                countdownInterval = setInterval(() => {
-                    countdownValue--;
-                    document.getElementById('countdown').textContent = countdownValue;
-                    console.log('Countdown value:', countdownValue);
-                    if (countdownValue <= 0) {
-                        clearInterval(countdownInterval);
-                        // カウントダウンが0になったら、Webhookのシグナルとしてコンソールにメッセージを表示
-                        console.log('Webhook signal: Executing Webhook functionality.');
-                    }
-                }, 1000); // 1秒ごとにカウントダウンを更新
-            }
-
-            // df-messenger のイベントを監視してカウントダウンを開始
-            const dfMessenger = document.querySelector('df-messenger');
-
-            dfMessenger.addEventListener('dfResponseReceived', (event) => {
-                console.log('User input sent, starting countdown...');
-                resetInactivityTimer();
-            });
-
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-    const dfMessenger = document.querySelector('df-messenger');
-
-    dfMessenger.renderCustomText('Start_Conversation');
-});
-    </script>
 </head>
 <body>
     <header>
