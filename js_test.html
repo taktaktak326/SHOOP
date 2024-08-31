@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test IP Fetching</title>
+</head>
+<body>
+    <!-- Assume df-messenger is a custom element or iframe -->
+    <df-messenger></df-messenger>
+
+    <script>
+        // Insert the JavaScript code here
+        var ip;
+
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                ip = data.ip;
+            } catch (error) {
+                ip = null;
+                console.error('Error fetching IP:', error);
+            }
+        }
+
+        async function passParamsToMessenger() {
+            await getIP();
+
+            dfMessenger = document.querySelector('df-messenger');
+
+            const queryParameters = {
+                parameters: {
+                    url: window.location.href,
+                    ip: ip
+                }
+            };
+
+            if (dfMessenger) {
+                dfMessenger.setQueryParameters(queryParameters);
+            } else {
+                console.error('df-messenger not found');
+            }
+        }
+
+        // Call the function to test
+        passParamsToMessenger();
+    </script>
+</body>
+</html>
