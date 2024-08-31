@@ -84,11 +84,14 @@
                 }, 1000); // 1秒ごとにカウントダウンを更新
             }
 
-            resetInactivityTimer(); // 初期化時にカウントダウンを開始
+            // df-messenger のイベントを監視してカウントダウンを開始
+            const dfMessenger = document.querySelector('df-messenger');
 
-            // ユーザーの操作（クリックやキー押下）でタイマーをリセット
-            document.addEventListener('click', resetInactivityTimer);
-            document.addEventListener('keydown', resetInactivityTimer);
+            dfMessenger.addEventListener('dfResponseReceived', (event) => {
+                console.log('User input sent, starting countdown...');
+                resetInactivityTimer();
+            });
+
         });
     </script>
 </head>
