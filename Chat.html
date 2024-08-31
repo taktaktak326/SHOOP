@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャットボットサイト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
     <style>
@@ -65,40 +66,44 @@
             let countdownValue = 10;
             let countdownInterval;
 
-            function resetInactivityTimer() {
-                clearTimeout(inactivityTimer);
-                clearInterval(countdownInterval); // カウントダウンをリセット
-                countdownValue = 10;
-                document.getElementById('countdown').textContent = countdownValue;
-
-                countdownInterval = setInterval(() => {
-                    countdownValue--;
-                    document.getElementById('countdown').textContent = countdownValue;
-                    console.log('Countdown value:', countdownValue);
-                    if (countdownValue <= 0) {
-                        clearInterval(countdownInterval);
-                        sendCustomEvent('your_event_name');
-                    }
-                }, 1000); // 1秒ごとにカウントダウンを更新
-            }
-
-            function sendCustomEvent(eventName) {
-                const requestPayload = {
-                    event: {
-                        name: eventName
-                    }
-                };
-                if (window.dfMessenger) {
-                    console.log('Sending custom event:', requestPayload);
-                    window.dfMessenger.renderCustomText(requestPayload);
-                } else {
-                    console.error('dfMessenger is not initialized');
-                }
-            }
-
             // dfMessengerが完全にロードされるまで待つ
             customElements.whenDefined('df-messenger').then(() => {
                 console.log('dfMessenger is initialized.');
+
+                // dfMessengerを取得する
+                const dfMessenger = document.querySelector('df-messenger');
+
+                function resetInactivityTimer() {
+                    clearTimeout(inactivityTimer);
+                    clearInterval(countdownInterval); // カウントダウンをリセット
+                    countdownValue = 10;
+                    document.getElementById('countdown').textContent = countdownValue;
+
+                    countdownInterval = setInterval(() => {
+                        countdownValue--;
+                        document.getElementById('countdown').textContent = countdownValue;
+                        console.log('Countdown value:', countdownValue);
+                        if (countdownValue <= 0) {
+                            clearInterval(countdownInterval);
+                            sendCustomEvent('your_event_name');
+                        }
+                    }, 1000); // 1秒ごとにカウントダウンを更新
+                }
+
+                function sendCustomEvent(eventName) {
+                    const requestPayload = {
+                        event: {
+                            name: eventName
+                        }
+                    };
+                    if (dfMessenger && dfMessenger.renderCustomText) {
+                        console.log('Sending custom event:', requestPayload);
+                        dfMessenger.renderCustomText(requestPayload);
+                    } else {
+                        console.error('dfMessenger is not initialized');
+                    }
+                }
+
                 resetInactivityTimer(); // 初期化時にカウントダウンを開始
 
                 // ユーザーの操作（クリックやキー押下）でタイマーをリセット
@@ -111,9 +116,6 @@
     </script>
 </head>
 <body>
-    <header>
-        <h1>チャットボットサイト</h1>
-    </header>
     <main>
         <div id="countdown">10</div> <!-- カウントダウンを表示する要素 -->
     </main>
