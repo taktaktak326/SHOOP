@@ -66,40 +66,46 @@
             let countdownValue = 10;
             let countdownInterval;
 
-            function resetInactivityTimer() {
-                clearTimeout(inactivityTimer);
-                clearInterval(countdownInterval); // カウントダウンをリセット
-                countdownValue = 10;
-                document.getElementById('countdown').textContent = countdownValue;
-
-                countdownInterval = setInterval(() => {
-                    countdownValue--;
+            // Wait for df-messenger to be fully initialized
+            const dfMessengerElement = document.querySelector('df-messenger');
+            dfMessengerElement.addEventListener('dfMessengerLoaded', function() {
+                console.log('dfMessenger is now initialized');
+                
+                function resetInactivityTimer() {
+                    clearTimeout(inactivityTimer);
+                    clearInterval(countdownInterval); // カウントダウンをリセット
+                    countdownValue = 10;
                     document.getElementById('countdown').textContent = countdownValue;
-                    if (countdownValue <= 0) {
-                        clearInterval(countdownInterval);
-                        sendCustomEvent('your_event_name');
-                    }
-                }, 1000); // 1秒ごとにカウントダウンを更新
-            }
 
-            function sendCustomEvent(eventName) {
-                const requestPayload = {
-                    event: {
-                        name: eventName
-                    }
-                };
-                if (window.dfMessenger) {
-                    console.log('Sending custom event:', requestPayload);
-                    window.dfMessenger.renderCustomText(requestPayload);
-                } else {
-                    console.error('dfMessenger is not initialized');
+                    countdownInterval = setInterval(() => {
+                        countdownValue--;
+                        document.getElementById('countdown').textContent = countdownValue;
+                        if (countdownValue <= 0) {
+                            clearInterval(countdownInterval);
+                            sendCustomEvent('your_event_name');
+                        }
+                    }, 1000); // 1秒ごとにカウントダウンを更新
                 }
-            }
 
-            document.addEventListener('click', resetInactivityTimer);
-            document.addEventListener('keydown', resetInactivityTimer);
+                function sendCustomEvent(eventName) {
+                    const requestPayload = {
+                        event: {
+                            name: eventName
+                        }
+                    };
+                    if (window.dfMessenger) {
+                        console.log('Sending custom event:', requestPayload);
+                        window.dfMessenger.renderCustomText(requestPayload);
+                    } else {
+                        console.error('dfMessenger is not initialized');
+                    }
+                }
 
-            resetInactivityTimer(); // 初期化時にカウントダウンを開始
+                document.addEventListener('click', resetInactivityTimer);
+                document.addEventListener('keydown', resetInactivityTimer);
+
+                resetInactivityTimer(); // 初期化時にカウントダウンを開始
+            });
         });
     </script>
 </head>
