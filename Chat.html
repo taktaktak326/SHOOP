@@ -11,7 +11,69 @@
 
   function resetInactivityTimer() {
     clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
+    inactivityTimer = setTimeout(() => {<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャットボットサイト</title>
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Wait for the df-messenger element to be defined
+          customElements.whenDefined('df-messenger').then(() => {
+              let inactivityTimer;
+
+              function resetInactivityTimer() {
+                  clearTimeout(inactivityTimer);
+                  inactivityTimer = setTimeout(() => {
+                      sendCustomEvent('your_event_name');
+                  }, 10000); // 10 seconds
+              }
+
+              function sendCustomEvent(eventName) {
+                  const requestPayload = {
+                      event: {
+                          name: eventName
+                      }
+                  };
+                  if (window.dfMessenger) {
+                      console.log('Sending custom event:', requestPayload);
+                      window.dfMessenger.renderCustomText(requestPayload);
+                  } else {
+                      console.error('dfMessenger is not initialized');
+                  }
+              }
+
+              document.addEventListener('click', resetInactivityTimer);
+              document.addEventListener('keydown', resetInactivityTimer);
+
+              resetInactivityTimer();
+          });
+      });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            width: 100%; /* Responsive width */
+            height: 50vh; /* Responsive height, 50% of viewport height */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-mess
+
       sendCustomEvent('your_event_name');
     }, 10000); // 10 seconds
   }
