@@ -22,6 +22,7 @@
         name: eventName
       }
     };
+    console.log('Sending custom event:', requestPayload);  // イベント送信前にログを出力
     window.dfMessenger.renderCustomText(requestPayload);
   }
 
@@ -29,6 +30,7 @@
   document.addEventListener('keydown', resetInactivityTimer);
 
   resetInactivityTimer();
+
 </script>
     <style>
         body {
