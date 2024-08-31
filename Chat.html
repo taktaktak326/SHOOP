@@ -66,52 +66,36 @@
             let countdownValue = 10;
             let countdownInterval;
 
-            // dfMessengerが完全にロードされるまで待つ
-            customElements.whenDefined('df-messenger').then(() => {
-                console.log('dfMessenger is initialized.');
+            function resetInactivityTimer() {
+                clearTimeout(inactivityTimer);
+                clearInterval(countdownInterval); // カウントダウンをリセット
+                countdownValue = 10;
+                document.getElementById('countdown').textContent = countdownValue;
 
-                // dfMessengerを取得する
-                const dfMessenger = document.querySelector('df-messenger');
-
-                function resetInactivityTimer() {
-                    clearTimeout(inactivityTimer);
-                    clearInterval(countdownInterval); // カウントダウンをリセット
-                    countdownValue = 10;
+                countdownInterval = setInterval(() => {
+                    countdownValue--;
                     document.getElementById('countdown').textContent = countdownValue;
-
-                    countdownInterval = setInterval(() => {
-                        countdownValue--;
-                        document.getElementById('countdown').textContent = countdownValue;
-                        console.log('Countdown value:', countdownValue);
-                        if (countdownValue <= 0) {
-                            clearInterval(countdownInterval);
-                            sendCustomEvent('your_event_name');
-                        }
-                    }, 1000); // 1秒ごとにカウントダウンを更新
-                }
-
-                function sendCustomEvent(eventName) {
-    const dfMessenger = document.querySelector('df-messenger');
-
-    if (dfMessenger) {
-        const customEventPayload = JSON.stringify({
-            event: {
-                name: eventName,
-                languageCode: 'ja'
+                    console.log('Countdown value:', countdownValue);
+                    if (countdownValue <= 0) {
+                        clearInterval(countdownInterval);
+                        // カウントダウンが0になったら、Webhookのシグナルとしてコンソールにメッセージを表示
+                        console.log('Webhook signal: Executing Webhook functionality.');
+                    }
+                }, 1000); // 1秒ごとにカウントダウンを更新
             }
-        });
 
-        console.log('Sending custom event:', customEventPayload);
-        
-        // ここで適切な方法でカスタムイベントを送信する
-        dfMessenger.renderCustomText(customEventPayload);
-    } else {
-        console.error('dfMessenger is not initialized');
-    }
-}
+            resetInactivityTimer(); // 初期化時にカウントダウンを開始
+
+            // ユーザーの操作（クリックやキー押下）でタイマーをリセット
+            document.addEventListener('click', resetInactivityTimer);
+            document.addEventListener('keydown', resetInactivityTimer);
+        });
     </script>
 </head>
 <body>
+    <header>
+        <h1>チャットボットサイト</h1>
+    </header>
     <main>
         <div id="countdown">10</div> <!-- カウントダウンを表示する要素 -->
     </main>
