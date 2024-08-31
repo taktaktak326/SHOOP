@@ -6,91 +6,6 @@
     <title>チャットボットサイト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <script>
-  let inactivityTimer;
-
-  function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チャットボットサイト</title>
-    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <script>
-    let inactivityTimer;
-
-    function resetInactivityTimer() {
-        clearTimeout(inactivityTimer);
-        inactivityTimer = setTimeout(() => {
-            // カスタムイベントを送信する関数を呼び出す
-            sendCustomEvent('your_event_name');
-        }, 10000); // 10秒間の非アクティビティでイベントを送信
-    }
-
-    function sendCustomEvent(eventName) {
-        const requestPayload = {
-            event: {
-                name: eventName
-            }
-        };
-        if (window.dfMessenger) {
-            console.log('Sending custom event:', requestPayload);
-            window.dfMessenger.renderCustomText(requestPayload);
-        } else {
-            console.error('dfMessenger is not initialized');
-        }
-    }
-
-    document.addEventListener('click', resetInactivityTimer);
-    document.addEventListener('keydown', resetInactivityTimer);
-
-    resetInactivityTimer();
-</script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f3f3;
-        }
-
-        df-messenger {
-            z-index: 999;
-            position: fixed;
-            width: 100%; /* Responsive width */
-            height: 50vh; /* Responsive height, 50% of viewport height */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            --df-messenger-font-color: #000;
-            --df-messenger-font-family: Google Sans;
-            --df-messenger-chat-background: #f3f6fc;
-            --df-messenger-mess
-
-      sendCustomEvent('your_event_name');
-    }, 10000); // 10 seconds
-  }
-
-  function sendCustomEvent(eventName) {
-    const requestPayload = {
-      event: {
-        name: eventName
-      }
-    };
-    console.log('Sending custom event:', requestPayload);  // イベント送信前にログを出力
-    window.dfMessenger.renderCustomText(requestPayload);
-  }
-
-  document.addEventListener('click', resetInactivityTimer);
-  document.addEventListener('keydown', resetInactivityTimer);
-
-  resetInactivityTimer();
-
-</script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -111,36 +26,90 @@
             text-align: center;
         }
 
-df-messenger {
-    z-index: 999;
-    position: fixed;
-    width: 100%; /* Responsive width */
-    height: 50vh; /* Responsive height, 50% of viewport height */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    --df-messenger-font-color: #000;
-    --df-messenger-font-family: Google Sans;
-    --df-messenger-chat-background: #f3f6fc;
-    --df-messenger-message-user-background: #d3e3fd;
-    --df-messenger-message-bot-background: #fff;
-    --df-messenger-message-actor-image-size: 60px;
-}
+        #countdown {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+            margin-top: 20px;
+        }
 
-@media (max-width: 600px) {
-    df-messenger {
-        width: 100%;
-        height: 40vh; /* Adjust height for mobile */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            width: 100%; /* Responsive width */
+            height: 50vh; /* Responsive height, 50% of viewport height */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            --df-messenger-message-actor-image-size: 60px;
+        }
 
+        @media (max-width: 600px) {
+            df-messenger {
+                width: 100%;
+                height: 40vh; /* Adjust height for mobile */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let inactivityTimer;
+            let countdownValue = 10;
+            let countdownInterval;
+
+            function resetInactivityTimer() {
+                clearTimeout(inactivityTimer);
+                clearInterval(countdownInterval); // カウントダウンをリセット
+                countdownValue = 10;
+                document.getElementById('countdown').textContent = countdownValue;
+
+                countdownInterval = setInterval(() => {
+                    countdownValue--;
+                    document.getElementById('countdown').textContent = countdownValue;
+                    if (countdownValue <= 0) {
+                        clearInterval(countdownInterval);
+                        sendCustomEvent('your_event_name');
+                    }
+                }, 1000); // 1秒ごとにカウントダウンを更新
+            }
+
+            function sendCustomEvent(eventName) {
+                const requestPayload = {
+                    event: {
+                        name: eventName
+                    }
+                };
+                if (window.dfMessenger) {
+                    console.log('Sending custom event:', requestPayload);
+                    window.dfMessenger.renderCustomText(requestPayload);
+                } else {
+                    console.error('dfMessenger is not initialized');
+                }
+            }
+
+            document.addEventListener('click', resetInactivityTimer);
+            document.addEventListener('keydown', resetInactivityTimer);
+
+            resetInactivityTimer(); // 初期化時にカウントダウンを開始
+        });
+    </script>
 </head>
 <body>
-
+    <header>
+        <h1>チャットボットサイト</h1>
+    </header>
+    <main>
+        <div id="countdown">10</div> <!-- カウントダウンを表示する要素 -->
+    </main>
     <df-messenger
         project-id="prj-basf-xarviobot-dev"
         agent-id="a1665471-9343-46bb-a513-398bfaaca268"
