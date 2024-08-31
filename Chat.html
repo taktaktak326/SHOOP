@@ -82,35 +82,6 @@
             bot-actor-image="DALL·E 2024-08-27 19.38.jpg">
         </df-messenger-chat>
     </df-messenger>
-    <script>
-        if (countdownNumber < 0) {
-    clearInterval(countdownInterval);
-    
-    // DialogflowカスタムイベントをトリガーするためのHTTPリクエスト
-    fetch('https://your-webhook-url.com/webhook', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            session: 'projects/your-project-id/agent/sessions/unique-session-id',
-            queryInput: {
-                event: {
-                    name: 'カウントダウン終了',
-                    languageCode: 'ja'
-                }
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Dialogflowカスタムイベントが送信されました:', data);
-    })
-    .catch(error => {
-        console.error('カスタムイベント送信中にエラーが発生しました:', error);
-    });
-}
-
-    </script>
+  
 </body>
 </html>
