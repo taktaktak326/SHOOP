@@ -20,38 +20,38 @@
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          // Wait for the df-messenger element to be defined
-          customElements.whenDefined('df-messenger').then(() => {
-              let inactivityTimer;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for the df-messenger element to be defined
+            customElements.whenDefined('df-messenger').then(() => {
+                let inactivityTimer;
 
-              function resetInactivityTimer() {
-                  clearTimeout(inactivityTimer);
-                  inactivityTimer = setTimeout(() => {
-                      sendCustomEvent('your_event_name');
-                  }, 10000); // 10 seconds
-              }
+                function resetInactivityTimer() {
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(() => {
+                        sendCustomEvent('your_event_name');
+                    }, 10000); // 10 seconds
+                }
 
-              function sendCustomEvent(eventName) {
-                  const requestPayload = {
-                      event: {
-                          name: eventName
-                      }
-                  };
-                  if (window.dfMessenger) {
-                      console.log('Sending custom event:', requestPayload);
-                      window.dfMessenger.renderCustomText(requestPayload);
-                  } else {
-                      console.error('dfMessenger is not initialized');
-                  }
-              }
+                function sendCustomEvent(eventName) {
+                    const requestPayload = {
+                        event: {
+                            name: eventName
+                        }
+                    };
+                    if (window.dfMessenger) {
+                        console.log('Sending custom event:', requestPayload);
+                        window.dfMessenger.renderCustomText(requestPayload);
+                    } else {
+                        console.error('dfMessenger is not initialized');
+                    }
+                }
 
-              document.addEventListener('click', resetInactivityTimer);
-              document.addEventListener('keydown', resetInactivityTimer);
+                document.addEventListener('click', resetInactivityTimer);
+                document.addEventListener('keydown', resetInactivityTimer);
 
-              resetInactivityTimer();
-          });
-      });
+                resetInactivityTimer();
+            });
+        });
     </script>
     <style>
         body {
