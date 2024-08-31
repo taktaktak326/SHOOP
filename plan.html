@@ -50,6 +50,38 @@
             margin-bottom: 10px;
             object-fit: cover;
         }
+        .plan-card a {
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .plan-card a:hover {
+            text-decoration: underline;
+        }
+        .detail-popup {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        .detail-popup:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent #ddd transparent;
+        }
         .button-container {
             display: flex;
             justify-content: space-between;
@@ -91,6 +123,24 @@
                     const radio = this.querySelector('input[type="radio"]');
                     radio.checked = true;
                 });
+
+                const detailLink = card.querySelector('a');
+                const detailPopup = card.querySelector('.detail-popup');
+                
+                detailLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (detailPopup.style.display === 'block') {
+                        detailPopup.style.display = 'none';
+                    } else {
+                        detailPopup.style.display = 'block';
+                    }
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!card.contains(event.target)) {
+                        detailPopup.style.display = 'none';
+                    }
+                });
             });
         });
     </script>
@@ -107,24 +157,40 @@
             <img src="global-en_xFM_seeding_712px_2x.png" alt="初級者プラン">
             <h2>初級者プラン</h2>
             <p>初心者向けのプランです。</p>
+            <a href="#">詳細はこちら</a>
+            <div class="detail-popup">
+                <p>初級者プランは、農業の基礎を学ぶのに最適です。</p>
+            </div>
         </div>
         <div class="plan-card">
             <input type="radio" name="plan" value="intermediate" required>
             <img src="global-en_xFM_spray-timer_protection-detail_712px_2x.png" alt="中級者プラン">
             <h2>中級者プラン</h2>
             <p>中級者向けのプランです。</p>
+            <a href="#">詳細はこちら</a>
+            <div class="detail-popup">
+                <p>中級者プランは、経験を積んだ農家向けの内容が含まれます。</p>
+            </div>
         </div>
         <div class="plan-card">
             <input type="radio" name="plan" value="advanced" required>
             <img src="in-en_xFM_vra-maps_2x.png" alt="上級者プラン">
             <h2>上級者プラン</h2>
             <p>上級者向けのプランです。</p>
+            <a href="#">詳細はこちら</a>
+            <div class="detail-popup">
+                <p>上級者プランは、最新技術を使った高度な農業テクニックを学べます。</p>
+            </div>
         </div>
         <div class="plan-card">
             <input type="radio" name="plan" value="custom" required>
             <img src="fm_quote_farmer.png" alt="カスタムプラン">
             <h2>カスタムプラン</h2>
             <p>カスタマイズ可能なプランです。</p>
+            <a href="#">詳細はこちら</a>
+            <div class="detail-popup">
+                <p>カスタムプランは、あなたのニーズに合わせてプランを設計できます。</p>
+            </div>
         </div>
     </div>
 
