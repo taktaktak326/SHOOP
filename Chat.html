@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チャットボットサイト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
     <style>
@@ -75,6 +74,7 @@
                 countdownInterval = setInterval(() => {
                     countdownValue--;
                     document.getElementById('countdown').textContent = countdownValue;
+                    console.log('Countdown value:', countdownValue);
                     if (countdownValue <= 0) {
                         clearInterval(countdownInterval);
                         sendCustomEvent('your_event_name');
@@ -96,12 +96,17 @@
                 }
             }
 
-            // ページがロードされたときにカウントダウンを開始
-            resetInactivityTimer();
+            // dfMessengerが完全にロードされるまで待つ
+            customElements.whenDefined('df-messenger').then(() => {
+                console.log('dfMessenger is initialized.');
+                resetInactivityTimer(); // 初期化時にカウントダウンを開始
 
-            // ユーザーの操作（クリックやキー押下）でタイマーをリセット
-            document.addEventListener('click', resetInactivityTimer);
-            document.addEventListener('keydown', resetInactivityTimer);
+                // ユーザーの操作（クリックやキー押下）でタイマーをリセット
+                document.addEventListener('click', resetInactivityTimer);
+                document.addEventListener('keydown', resetInactivityTimer);
+            }).catch((error) => {
+                console.error('Error initializing dfMessenger:', error);
+            });
         });
     </script>
 </head>
