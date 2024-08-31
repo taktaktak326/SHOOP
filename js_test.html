@@ -7,7 +7,18 @@
 </head>
 <body>
     <!-- Assume df-messenger is a custom element or iframe -->
-    <df-messenger></df-messenger>
+    <df-messenger
+        project-id="prj-basf-xarviobot-dev"
+        agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+        language-code="ja"
+        max-query-length="-1"
+        allow-feedback="all"
+        intent="Start_Conversation">
+        <df-messenger-chat
+            chat-title="チャットぼっとてすと"
+            bot-actor-image="DALL·E 2024-08-27 19.38.jpg">
+        </df-messenger-chat>
+    </df-messenger>
 
     <script>
         // Insert the JavaScript code here
