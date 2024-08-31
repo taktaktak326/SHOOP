@@ -26,38 +26,43 @@
         // Insert the JavaScript code here
         var ip;
 
-        async function getIP() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                ip = data.ip;
-            } catch (error) {
-                ip = null;
-                console.error('Error fetching IP:', error);
-            }
+async function getIP() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        ip = data.ip;
+        alert('IP Address Retrieved: ' + ip);  // IPアドレスをアラートで表示
+    } catch (error) {
+        ip = null;
+        console.error('Error fetching IP:', error);
+    }
+}
+
+async function passParamsToMessenger() {
+    // Wait until IP is retrieved by the API call
+    await getIP();
+
+    // Find the df-messenger element
+    const dfMessenger = document.querySelector('df-messenger');
+
+    // Add additional parameters via query parameters for the google messenger to handle additional input
+    const queryParameters = {
+        parameters: {
+            url: window.location.href,  // Retrieve the current URL
+            ip: ip  // Use the retrieved IP address
         }
+    };
 
-        async function passParamsToMessenger() {
-            await getIP();
+    if (dfMessenger) {
+        dfMessenger.setQueryParameters(queryParameters);
+        console.log('Query Parameters set in dfMessenger:', queryParameters);  // dfMessengerに設定されたパラメータを表示
+    } else {
+        console.error('df-messenger not found');
+    }
+}
 
-            dfMessenger = document.querySelector('df-messenger');
-
-            const queryParameters = {
-                parameters: {
-                    url: window.location.href,
-                    ip: ip
-                }
-            };
-
-            if (dfMessenger) {
-                dfMessenger.setQueryParameters(queryParameters);
-            } else {
-                console.error('df-messenger not found');
-            }
-        }
-
-        // Call the function to test
-        passParamsToMessenger();
+// Call the function to test
+passParamsToMessenger();
     </script>
 </body>
 </html>
