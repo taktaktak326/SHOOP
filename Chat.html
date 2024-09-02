@@ -69,40 +69,46 @@
         <div id="response-time">レスポンス時間: 0秒</div> <!-- レスポンス時間を表示する要素 -->
     </main>
     <df-messenger
-        project-id="prj-basf-xarviobot-dev"
+        intent="WELCOME"
+        chat-title="チャットボットテスト"
         agent-id="a1665471-9343-46bb-a513-398bfaaca268"
         language-code="ja"
+        chat-icon="https://your-image-hosting-site.com/path-to-icon.png"
+        bot-actor-image="https://your-image-hosting-site.com/path-to-image.jpg"
+        allow="microphone; geolocation"
+        mic-active="true"
+        agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+        session-id="unique-user-id"
+        min-session-timeout="3600"
+        user-id="unique-user-id"
+        project-id="prj-basf-xarviobot-dev"
         max-query-length="-1"
         allow-feedback="all"
-        url-allowlist="*"
-        intent="Start_Conversation">
-        <df-messenger-chat
-            chat-title="チャットボットテスト"
-            bot-actor-image="https://your-image-hosting-site.com/path-to-image.jpg">
-        </df-messenger-chat>
+        url-allowlist="*">
     </df-messenger>
 
     <script>
         let startTime;
         let timerInterval;
 
-        // チャットボットにメッセージが送信されたときのイベント
+        // メッセージが送信されるとき
         window.addEventListener('dfMessengerSendMessage', function() {
-            startTime = new Date(); // メッセージ送信時の時間を記録
-            clearInterval(timerInterval); // 以前のタイマーをクリア
-            timerInterval = setInterval(updateTimer, 100); // 100msごとにタイマーを更新
+            startTime = new Date();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 100); // 100msごとにカウントアップ
         });
 
-        // チャットボットからレスポンスが返却されたときのイベント
+        // チャットボットからレスポンスが返却されたとき
         window.addEventListener('dfMessengerResponseMessage', function() {
             if (startTime) {
-                const endTime = new Date(); // レスポンス受信時の時間を記録
-                const responseTime = ((endTime - startTime) / 1000).toFixed(2); // 秒単位に変換
+                const endTime = new Date();
+                const responseTime = ((endTime - startTime) / 1000).toFixed(2);
                 document.getElementById('response-time').textContent = `レスポンス時間: ${responseTime}秒`;
-                clearInterval(timerInterval); // タイマーを停止
+                clearInterval(timerInterval);
             }
         });
 
+        // タイマーを更新する関数
         function updateTimer() {
             const currentTime = new Date();
             const elapsedTime = ((currentTime - startTime) / 1000).toFixed(2);
