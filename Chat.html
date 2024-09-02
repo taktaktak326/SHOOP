@@ -129,21 +129,22 @@
         }
 
         function addTimeToHistory(time) {
-            history.push(time);
-            if (history.length > 5) {
-                history.shift();
-            }
-            updateHistoryDisplay();
-        }
+    history.push(time);
+    if (history.length > 5) {
+        history.shift();
+    }
+    updateHistoryDisplay();
+}
 
-        function updateHistoryDisplay() {
-    historyListElement.innerHTML = '';
-    history.slice(-5).forEach((time, index) => {
+function updateHistoryDisplay() {
+    historyListElement.innerHTML = '';  // ここでリスト全体をクリアするのではなく、追記していく
+    history.forEach((time, index) => {
         let listItem = document.createElement('li');
-        listItem.textContent = `計測 ${history.length - 5 + index + 1}: ${time}秒`;
+        listItem.textContent = `計測 ${index + 1}: ${time}秒`;
         historyListElement.appendChild(listItem);
     });
 }
+
 
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
             stopTimer();  // 前回の計測を停止して履歴に追加
