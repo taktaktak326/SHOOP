@@ -115,7 +115,7 @@
         let history = []; // ここでhistory配列を初期化
 
         function startTimer() {
-            secondsElapsed = 0;
+            secondsElapsed = 0;  // タイマーをリセット
             timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
             timerInterval = setInterval(() => {
                 secondsElapsed += 0.01;
@@ -147,7 +147,7 @@
 
         // チャットボットのメッセージ送信イベントを監視
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
-            stopTimer();  // タイマーを止める（前の質問があった場合）
+            stopTimer();  // 前回の計測を停止して履歴に追加
             startTimer(); // タイマーをリセットして再スタート
         });
 
