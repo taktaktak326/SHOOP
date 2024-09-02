@@ -34,8 +34,14 @@
             gap: 20px;
             margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
             overflow: hidden; /* 折りたたみ効果のために必要 */
-            transition: max-height 0.5s ease-out; /* 折りたたみアニメーション */
-            max-height: 100vh; /* 初期状態で全体を表示 */
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* 折りたたみアニメーション */
+            max-height: 0; /* 初期状態で折りたたみ */
+            padding: 0 20px; /* 初期状態でpaddingも折りたたみ */
+        }
+
+        main.expanded {
+            max-height: 100vh; /* 展開時に全体を表示 */
+            padding: 20px; /* 展開時にpaddingを元に戻す */
         }
 
         #timer {
@@ -179,11 +185,7 @@
 
         // ボタンがクリックされたときに実行される関数
         toggleMainBtn.addEventListener('click', () => {
-            if (mainContent.style.maxHeight === '0px' || mainContent.style.maxHeight === '') {
-                mainContent.style.maxHeight = '100vh'; // 展開する
-            } else {
-                mainContent.style.maxHeight = '0px'; // 折りたたむ
-            }
+            mainContent.classList.toggle('expanded');
         });
     </script>
 </body>
