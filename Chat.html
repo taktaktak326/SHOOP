@@ -184,6 +184,7 @@
         let timerInterval;
         let secondsElapsed = 0;
         let history = [];
+        let messages = [];  // メッセージを保存する配列
         let timerRunning = false;
 
         function startTimer() {
@@ -198,18 +199,20 @@
             }, 10);
         }
 
-        function stopTimer() {
+        function stopTimer(message) {  // メッセージを引数として受け取る
             if (!timerRunning) return;
             clearInterval(timerInterval);
             timerRunning = false;
             console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
-            addTimeToHistory(secondsElapsed.toFixed(2));
+            addTimeToHistory(secondsElapsed.toFixed(2), message);
         }
 
-        function addTimeToHistory(time) {
+        function addTimeToHistory(time, message) {  // メッセージも保存
             history.push(time);
+            messages.push(message);  // メッセージを配列に保存
             if (history.length > 5) {
                 history.shift();
+                messages.shift();  // 古いメッセージも削除
             }
             console.log("Current history array:", history);
             updateHistoryDisplay();
@@ -220,9 +223,9 @@
             historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `Time ${index + 1}: ${time} sec`;
+                listItem.textContent = `Time ${index + 1}: ${time} sec - ${messages[index]}`;  // メッセージも表示
                 historyListElement.appendChild(listItem);
-                console.log(`Appended: Time ${index + 1}: ${time} sec`);
+                console.log(`Appended: Time ${index + 1}: ${time} sec - ${messages[index]}`);
             });
         }
 
@@ -236,15 +239,16 @@
             averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
         }
 
-        document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
+        document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
+            const message = event.detail.query;  // ユーザーが入力したメッセージを取得
             console.log("Request sent. Stopping timer and starting new one.");
-            stopTimer();
+            stopTimer(message);  // メッセージを渡してタイマーを停止
             startTimer();
         });
 
         document.querySelector('df-messenger').addEventListener('df-response-received', function() {
             console.log("Response received. Stopping timer.");
-            stopTimer();
+            stopTimer('Response received');  // 応答があったことを示すメッセージ
         });
 
         const toggleMainBtn = document.getElementById('toggle-main-btn');
