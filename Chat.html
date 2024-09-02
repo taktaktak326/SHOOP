@@ -132,7 +132,7 @@
     <main id="main-content">
         <div id="timer">Execution time 0.00 Seconds</div>
         <div id="history">
-            <h2>過去の計測時間</h2>
+            <h2>Execution Time</h2>
             <ul id="history-list">
             </ul>
         </div>
@@ -148,6 +148,7 @@
         intent="Start_Conversation">
         <df-messenger-chat
             bot-actor-image="DALL·E 2024-08-27 19.38.jpg"
+            chat-title="AI CHAT"
             placeholder-text="個人情報やプライベートな情報は入力しないてください。">
         </df-messenger-chat>
     </df-messenger>
@@ -193,9 +194,9 @@
             historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `計測 ${index + 1}: ${time}秒`;
+                listItem.textContent = `Time ${index + 1}: ${time}秒`;
                 historyListElement.appendChild(listItem);
-                console.log(`Appended: 計測 ${index + 1}: ${time}秒`);
+                console.log(`Appended: Time ${index + 1}: ${time}秒`);
             });
         }
 
