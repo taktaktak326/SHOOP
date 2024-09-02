@@ -115,6 +115,7 @@
         let history = []; // ここでhistory配列を初期化
 
         function startTimer() {
+            clearInterval(timerInterval);  // 前のタイマーをクリア
             secondsElapsed = 0;  // タイマーをリセット
             timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
             timerInterval = setInterval(() => {
