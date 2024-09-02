@@ -33,6 +33,9 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
+            overflow: hidden; /* 折りたたみ効果のために必要 */
+            transition: max-height 0.5s ease-out; /* 折りたたみアニメーション */
+            max-height: 100vh; /* 初期状態で全体を表示 */
         }
 
         #timer {
@@ -176,10 +179,10 @@
 
         // ボタンがクリックされたときに実行される関数
         toggleMainBtn.addEventListener('click', () => {
-            if (mainContent.style.display === 'none' || mainContent.style.display === '') {
-                mainContent.style.display = 'flex'; // 表示する
+            if (mainContent.style.maxHeight === '0px' || mainContent.style.maxHeight === '') {
+                mainContent.style.maxHeight = '100vh'; // 展開する
             } else {
-                mainContent.style.display = 'none'; // 非表示にする
+                mainContent.style.maxHeight = '0px'; // 折りたたむ
             }
         });
     </script>
