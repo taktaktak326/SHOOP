@@ -108,27 +108,27 @@
 
     <script>
         let timerElement = document.getElementById('timer');
-        let historyListElement = document.getElementById('history-list');
-        let timerInterval;
-        let secondsElapsed = 0;
-        let history = [];
+let historyListElement = document.getElementById('history-list');
+let timerInterval;
+let secondsElapsed = 0;
+let history = [];
 
-        function startTimer() {
-            clearInterval(timerInterval);
-            secondsElapsed = 0;
-            timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-            timerInterval = setInterval(() => {
-                secondsElapsed += 0.01;
-                timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-            }, 10);
-        }
+function startTimer() {
+    clearInterval(timerInterval);
+    secondsElapsed = 0;
+    timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+    timerInterval = setInterval(() => {
+        secondsElapsed += 0.01;
+        timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+    }, 10);
+}
 
-        function stopTimer() {
-            clearInterval(timerInterval);
-            addTimeToHistory(secondsElapsed.toFixed(2));
-        }
+function stopTimer() {
+    clearInterval(timerInterval);
+    addTimeToHistory(secondsElapsed.toFixed(2));
+}
 
-        function addTimeToHistory(time) {
+function addTimeToHistory(time) {
     history.push(time);
     if (history.length > 5) {
         history.shift();
@@ -137,7 +137,7 @@
 }
 
 function updateHistoryDisplay() {
-    historyListElement.innerHTML = '';  // ここでリスト全体をクリアするのではなく、追記していく
+    historyListElement.innerHTML = ''; // リストをリセット
     history.forEach((time, index) => {
         let listItem = document.createElement('li');
         listItem.textContent = `計測 ${index + 1}: ${time}秒`;
@@ -145,15 +145,15 @@ function updateHistoryDisplay() {
     });
 }
 
+document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
+    stopTimer();  // 前回の計測を停止して履歴に追加
+    startTimer(); // タイマーをリセットして再スタート
+});
 
-        document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
-            stopTimer();  // 前回の計測を停止して履歴に追加
-            startTimer(); // タイマーをリセットして再スタート
-        });
+document.querySelector('df-messenger').addEventListener('df-response-received', function() {
+    stopTimer(); // タイマーを止める
+});
 
-        document.querySelector('df-messenger').addEventListener('df-response-received', function() {
-            stopTimer(); // タイマーを止める
-        });
     </script>
 </body>
 </html>
