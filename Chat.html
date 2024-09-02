@@ -54,7 +54,7 @@
             text-align: center;
             width: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 20px;
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
@@ -69,6 +69,16 @@
             visibility: visible;
         }
 
+        #timer, #history {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* 最大幅を設定 */
+            margin: 0 auto; /* 中央寄せ */
+        }
+
         #timer {
             font-size: 24px;
             font-weight: bold;
@@ -76,15 +86,17 @@
             text-align: center;
         }
 
+        #history h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
         #history {
             font-size: 18px;
             text-align: left;
             max-height: 50vh;
             overflow-y: auto;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         df-messenger {
@@ -118,6 +130,11 @@
 
             main.expanded {
                 max-height: 40vh;
+            }
+
+            #timer, #history {
+                max-width: 100%;
+                margin-bottom: 20px;
             }
         }
 
