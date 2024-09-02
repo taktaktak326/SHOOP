@@ -49,8 +49,8 @@
         df-messenger {
             z-index: 999;
             position: fixed;
-            width: 100%; /* Responsive width */
-            height: 50vh; /* Responsive height, 50% of viewport height */
+            width: 100%;
+            height: 50vh;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -65,7 +65,7 @@
         @media (max-width: 600px) {
             df-messenger {
                 width: 100%;
-                height: 40vh; /* Adjust height for mobile */
+                height: 40vh;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
@@ -84,11 +84,10 @@
         <h1>チャットボットサイト</h1>
     </header>
     <main>
-        <div id="timer">Execution time 0.00 Seconds</div> <!-- タイマーを表示する要素 -->
+        <div id="timer">Execution time 0.00 Seconds</div>
         <div id="history">
             <h2>過去の計測時間</h2>
             <ul id="history-list">
-                <!-- 計測結果がここに追加される -->
             </ul>
         </div>
     </main>
@@ -112,16 +111,16 @@
         let historyListElement = document.getElementById('history-list');
         let timerInterval;
         let secondsElapsed = 0;
-        let history = []; // ここでhistory配列を初期化
+        let history = [];
 
         function startTimer() {
-            clearInterval(timerInterval);  // 前のタイマーをクリア
-            secondsElapsed = 0;  // タイマーをリセット
+            clearInterval(timerInterval);
+            secondsElapsed = 0;
             timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
             timerInterval = setInterval(() => {
                 secondsElapsed += 0.01;
                 timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-            }, 10); // 10ミリ秒ごとに更新
+            }, 10);
         }
 
         function stopTimer() {
@@ -132,13 +131,13 @@
         function addTimeToHistory(time) {
             history.push(time);
             if (history.length > 5) {
-                history.shift(); // 古いものから削除
+                history.shift();
             }
             updateHistoryDisplay();
         }
 
         function updateHistoryDisplay() {
-            historyListElement.innerHTML = ''; // リストをクリア
+            historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
                 listItem.textContent = `計測 ${index + 1}: ${time}秒`;
@@ -146,13 +145,11 @@
             });
         }
 
-        // チャットボットのメッセージ送信イベントを監視
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
             stopTimer();  // 前回の計測を停止して履歴に追加
             startTimer(); // タイマーをリセットして再スタート
         });
 
-        // チャットボットの返答受信イベントを監視
         document.querySelector('df-messenger').addEventListener('df-response-received', function() {
             stopTimer(); // タイマーを止める
         });
