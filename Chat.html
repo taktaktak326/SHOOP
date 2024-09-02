@@ -32,7 +32,8 @@ main {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
+    margin-bottom: 60vh;
+    cursor: pointer; /* クリック可能なことを示すためにポインターを変更 */
 }
 
 #timer {
@@ -45,8 +46,8 @@ main {
 #history {
     font-size: 18px;
     text-align: left;
-    max-height: 50vh; /* リストが長くなりすぎないように最大高さを設定 */
-    overflow-y: auto; /* リストが長くなった場合にスクロールできるように設定 */
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 df-messenger {
@@ -54,9 +55,9 @@ df-messenger {
     position: fixed;
     width: 100%;
     height: 50vh;
-    bottom: 0; /* 画面下に配置 */
+    bottom: 0;
     left: 0;
-    transform: translate(0, 0); /* 左下に配置 */
+    transform: translate(0, 0);
     --df-messenger-font-color: #000;
     --df-messenger-font-family: Google Sans;
     --df-messenger-chat-background: #f3f6fc;
@@ -77,9 +78,10 @@ df-messenger {
     main {
         flex-direction: column;
         align-items: center;
-        margin-bottom: 40vh; /* スペースをモバイル版に合わせて調整 */
+        margin-bottom: 40vh;
     }
 }
+
 
     </style>
 
@@ -88,14 +90,25 @@ df-messenger {
     <header>
         <h1>チャットボットサイト</h1>
     </header>
-    <main>
-        <div id="timer">Execution time 0.00 Seconds</div>
-        <div id="history">
-            <h2>過去の計測時間</h2>
-            <ul id="history-list">
-            </ul>
-        </div>
-    </main>
+    <main id="main-content">
+    <div id="timer">Execution time 0.00 Seconds</div>
+    <div id="history">
+        <h2>過去の計測時間</h2>
+        <ul id="history-list">
+        </ul>
+    </div>
+</main>
+
+<script>
+    document.getElementById('main-content').addEventListener('click', function() {
+        const mainContent = document.getElementById('main-content');
+        if (mainContent.style.display === 'none') {
+            mainContent.style.display = 'block';
+        } else {
+            mainContent.style.display = 'none';
+        }
+    });
+</script>
     <df-messenger
         id="df-messenger"
         project-id="prj-basf-xarviobot-dev"
