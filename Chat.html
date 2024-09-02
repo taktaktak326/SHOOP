@@ -125,8 +125,21 @@ function startTimer() {
 
 function stopTimer() {
     clearInterval(timerInterval);
+    console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
     addTimeToHistory(secondsElapsed.toFixed(2));
 }
+
+document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
+    console.log("Request sent. Stopping timer and starting new one.");
+    stopTimer();  // 前回の計測を停止して履歴に追加
+    startTimer(); // タイマーをリセットして再スタート
+});
+
+document.querySelector('df-messenger').addEventListener('df-response-received', function() {
+    console.log("Response received. Stopping timer.");
+    stopTimer(); // タイマーを止める
+});
+
 
 function addTimeToHistory(time) {
     history.push(time);
