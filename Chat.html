@@ -207,7 +207,8 @@ function stopTimer() {
 }
 
 function addTimeToHistory(time, message) {
-    history.push({ time, message });
+    const parsedTime = parseFloat(time);  // Ensure the time is a number
+    history.push({ time: parsedTime, message });
     if (history.length > 5) {
         history.shift();
     }
@@ -220,9 +221,9 @@ function updateHistoryDisplay() {
     historyListElement.innerHTML = '';
     history.forEach((entry, index) => {
         let listItem = document.createElement('li');
-        listItem.textContent = `Time ${index + 1}: ${entry.time} sec - Message: "${entry.message}"`;
+        listItem.textContent = `Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}"`;
         historyListElement.appendChild(listItem);
-        console.log(`Appended: Time ${index + 1}: ${entry.time} sec - Message: "${entry.message}"`);
+        console.log(`Appended: Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}"`);
     });
 }
 
@@ -231,9 +232,10 @@ function updateAverageTime() {
         averageTimeElement.textContent = `Average time: 0.00 sec`;
         return;
     }
-    const sum = history.reduce((a, b) => parseFloat(a.time) + parseFloat(b.time), 0);
+    const sum = history.reduce((a, b) => a + b.time, 0);
     const average = sum / history.length;
     averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
+    console.log(`Calculated average: ${average.toFixed(2)} sec`);
 }
 
 document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
@@ -260,6 +262,7 @@ toggleMainBtn.addEventListener('click', () => {
     toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
     toggleMainBtn.classList.toggle('collapsed');
 });
+
 
 
     </script>
