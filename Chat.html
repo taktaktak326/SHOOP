@@ -8,78 +8,78 @@
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f3f3f3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-header {
-    background-color: #4CAF50;
-    padding: 10px 20px;
-    color: white;
-    text-align: center;
-    width: 100%;
-}
+        header {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
 
-main {
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
-}
+        main {
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
+        }
 
-#timer {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ff0000;
-    text-align: center;
-}
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+        }
 
-#history {
-    font-size: 18px;
-    text-align: left;
-    max-height: 50vh; /* リストが長くなりすぎないように最大高さを設定 */
-    overflow-y: auto; /* リストが長くなった場合にスクロールできるように設定 */
-}
+        #history {
+            font-size: 18px;
+            text-align: left;
+            max-height: 50vh; /* リストが長くなりすぎないように最大高さを設定 */
+            overflow-y: auto; /* リストが長くなった場合にスクロールできるように設定 */
+        }
 
-df-messenger {
-    z-index: 999;
-    position: fixed;
-    width: 100%;
-    height: 50vh;
-    bottom: 0; /* 画面下に配置 */
-    left: 0;
-    transform: translate(0, 0); /* 左下に配置 */
-    --df-messenger-font-color: #000;
-    --df-messenger-font-family: Google Sans;
-    --df-messenger-chat-background: #f3f6fc;
-    --df-messenger-message-user-background: #d3e3fd;
-    --df-messenger-message-bot-background: #fff;
-    --df-messenger-message-actor-image-size: 60px;
-}
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            width: 100%;
+            height: 50vh;
+            bottom: 0; /* 画面下に配置 */
+            left: 0;
+            transform: translate(0, 0); /* 左下に配置 */
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            --df-messenger-message-actor-image-size: 60px;
+        }
 
-@media (max-width: 600px) {
-    df-messenger {
-        width: 100%;
-        height: 40vh;
-        bottom: 0;
-        left: 0;
-        transform: translate(0, 0);
-    }
+        @media (max-width: 600px) {
+            df-messenger {
+                width: 100%;
+                height: 40vh;
+                bottom: 0;
+                left: 0;
+                transform: translate(0, 0);
+            }
 
-    main {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 40vh; /* スペースをモバイル版に合わせて調整 */
-    }
-}
+            main {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 40vh; /* スペースをモバイル版に合わせて調整 */
+            }
+        }
 
     </style>
 
@@ -87,8 +87,9 @@ df-messenger {
 <body>
     <header>
         <h1>チャットボットサイト</h1>
+        <button id="toggle-main-btn">Toggle Main Display</button> <!-- トグルボタン -->
     </header>
-    <main>
+    <main id="main-content">
         <div id="timer">Execution time 0.00 Seconds</div>
         <div id="history">
             <h2>過去の計測時間</h2>
@@ -113,61 +114,74 @@ df-messenger {
 
     <script>
         let timerElement = document.getElementById('timer');
-let historyListElement = document.getElementById('history-list');
-let timerInterval;
-let secondsElapsed = 0;
-let history = [];
-let timerRunning = false; // タイマーが動作中かを示すフラグ
+        let historyListElement = document.getElementById('history-list');
+        let timerInterval;
+        let secondsElapsed = 0;
+        let history = [];
+        let timerRunning = false; // タイマーが動作中かを示すフラグ
 
-function startTimer() {
-    if (timerRunning) return; // タイマーが既に動いている場合は何もしない
-    timerRunning = true;
-    clearInterval(timerInterval);
-    secondsElapsed = 0;
-    timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-    timerInterval = setInterval(() => {
-        secondsElapsed += 0.01;
-        timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-    }, 10);
-}
+        function startTimer() {
+            if (timerRunning) return; // タイマーが既に動いている場合は何もしない
+            timerRunning = true;
+            clearInterval(timerInterval);
+            secondsElapsed = 0;
+            timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+            timerInterval = setInterval(() => {
+                secondsElapsed += 0.01;
+                timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+            }, 10);
+        }
 
-function stopTimer() {
-    if (!timerRunning) return; // タイマーが動作していない場合は何もしない
-    clearInterval(timerInterval);
-    timerRunning = false;
-    console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
-    addTimeToHistory(secondsElapsed.toFixed(2));
-}
+        function stopTimer() {
+            if (!timerRunning) return; // タイマーが動作していない場合は何もしない
+            clearInterval(timerInterval);
+            timerRunning = false;
+            console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
+            addTimeToHistory(secondsElapsed.toFixed(2));
+        }
 
-function addTimeToHistory(time) {
-    history.push(time);
-    if (history.length > 5) {
-        history.shift();  // 古い履歴を削除
-    }
-    console.log("Current history array:", history);
-    updateHistoryDisplay();
-}
+        function addTimeToHistory(time) {
+            history.push(time);
+            if (history.length > 5) {
+                history.shift();  // 古い履歴を削除
+            }
+            console.log("Current history array:", history);
+            updateHistoryDisplay();
+        }
 
-function updateHistoryDisplay() {
-    historyListElement.innerHTML = '';  // リストをクリア
-    history.forEach((time, index) => {
-        let listItem = document.createElement('li');
-        listItem.textContent = `計測 ${index + 1}: ${time}秒`;
-        historyListElement.appendChild(listItem);
-        console.log(`Appended: 計測 ${index + 1}: ${time}秒`);
-    });
-}
+        function updateHistoryDisplay() {
+            historyListElement.innerHTML = '';  // リストをクリア
+            history.forEach((time, index) => {
+                let listItem = document.createElement('li');
+                listItem.textContent = `計測 ${index + 1}: ${time}秒`;
+                historyListElement.appendChild(listItem);
+                console.log(`Appended: 計測 ${index + 1}: ${time}秒`);
+            });
+        }
 
-document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
-    console.log("Request sent. Stopping timer and starting new one.");
-    stopTimer();  // 前回の計測を停止して履歴に追加
-    startTimer(); // タイマーをリセットして再スタート
-});
+        document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
+            console.log("Request sent. Stopping timer and starting new one.");
+            stopTimer();  // 前回の計測を停止して履歴に追加
+            startTimer(); // タイマーをリセットして再スタート
+        });
 
-document.querySelector('df-messenger').addEventListener('df-response-received', function() {
-    console.log("Response received. Stopping timer.");
-    stopTimer(); // タイマーを止める
-});
+        document.querySelector('df-messenger').addEventListener('df-response-received', function() {
+            console.log("Response received. Stopping timer.");
+            stopTimer(); // タイマーを止める
+        });
+
+        // トグルボタンとmain要素を取得
+        const toggleMainBtn = document.getElementById('toggle-main-btn');
+        const mainContent = document.getElementById('main-content');
+
+        // ボタンがクリックされたときに実行される関数
+        toggleMainBtn.addEventListener('click', () => {
+            if (mainContent.style.display === 'none' || mainContent.style.display === '') {
+                mainContent.style.display = 'flex'; // 表示する
+            } else {
+                mainContent.style.display = 'none'; // 非表示にする
+            }
+        });
     </script>
 </body>
 </html>
