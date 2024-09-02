@@ -137,13 +137,13 @@
         }
 
         function updateHistoryDisplay() {
-            historyListElement.innerHTML = '';
-            history.forEach((time, index) => {
-                let listItem = document.createElement('li');
-                listItem.textContent = `計測 ${index + 1}: ${time}秒`;
-                historyListElement.appendChild(listItem);
-            });
-        }
+    historyListElement.innerHTML = '';
+    history.slice(-5).forEach((time, index) => {
+        let listItem = document.createElement('li');
+        listItem.textContent = `計測 ${history.length - 5 + index + 1}: ${time}秒`;
+        historyListElement.appendChild(listItem);
+    });
+}
 
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
             stopTimer();  // 前回の計測を停止して履歴に追加
