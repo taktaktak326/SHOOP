@@ -201,8 +201,8 @@
 
         function stopTimer(message) {  // メッセージを引数として受け取る
             if (!timerRunning) return;
-            clearInterval(timerInterval);
-            timerRunning = false;
+            clearInterval(timerInterval); // タイマーをクリア
+            timerRunning = false; // タイマーが停止状態になる
             console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
             addTimeToHistory(secondsElapsed.toFixed(2), message);
         }
