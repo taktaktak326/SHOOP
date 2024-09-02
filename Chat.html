@@ -131,19 +131,22 @@ function stopTimer() {
 function addTimeToHistory(time) {
     history.push(time);
     if (history.length > 5) {
-        history.shift();
+        history.shift();  // 古い履歴を削除
     }
+    console.log("Current history array:", history); // デバッグ用に履歴を確認
     updateHistoryDisplay();
 }
 
 function updateHistoryDisplay() {
-    historyListElement.innerHTML = ''; // リストをリセット
+    historyListElement.innerHTML = '';  // リストをクリア
     history.forEach((time, index) => {
         let listItem = document.createElement('li');
         listItem.textContent = `計測 ${index + 1}: ${time}秒`;
         historyListElement.appendChild(listItem);
+        console.log(`Appended: 計測 ${index + 1}: ${time}秒`); // デバッグ用に確認
     });
 }
+
 
 document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
     stopTimer();  // 前回の計測を停止して履歴に追加
