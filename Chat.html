@@ -239,16 +239,12 @@
             averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
         }
 
+        // チャットにメッセージが送信されたときにメッセージをキャプチャ
         document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
             const message = event.detail.query;  // ユーザーが入力したメッセージを取得
             console.log("Request sent. Stopping timer and starting new one.");
             stopTimer(message);  // メッセージを渡してタイマーを停止
             startTimer();
-        });
-
-        document.querySelector('df-messenger').addEventListener('df-response-received', function() {
-            console.log("Response received. Stopping timer.");
-            stopTimer('Response received');  // 応答があったことを示すメッセージ
         });
 
         const toggleMainBtn = document.getElementById('toggle-main-btn');
