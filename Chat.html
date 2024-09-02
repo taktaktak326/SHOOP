@@ -46,7 +46,6 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 60vh; /* df-messenger の高さを考慮したスペースを確保 */
             overflow: hidden; /* 折りたたみ効果のために必要 */
             transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* 折りたたみアニメーション */
             max-height: 0; /* 初期状態で折りたたみ */
@@ -54,7 +53,7 @@
         }
 
         main.expanded {
-            max-height: 100vh; /* 展開時に全体を表示 */
+            max-height: 60vh; /* 展開時に表示 */
             padding: 20px; /* 展開時にpaddingを元に戻す */
         }
 
@@ -76,7 +75,6 @@
             z-index: 999;
             position: fixed;
             width: 100%;
-            height: 50vh;
             bottom: 0; /* 画面下に配置 */
             left: 0;
             transform: translate(0, 0); /* 左下に配置 */
@@ -86,12 +84,17 @@
             --df-messenger-message-user-background: #d3e3fd;
             --df-messenger-message-bot-background: #fff;
             --df-messenger-message-actor-image-size: 60px;
+            transition: height 0.5s ease-out;
+            height: 50vh; /* 初期状態でのdf-messengerの高さ */
+        }
+
+        df-messenger.expanded {
+            height: 80vh; /* 折りたたまれたときのdf-messengerの高さ */
         }
 
         @media (max-width: 600px) {
             df-messenger {
                 width: 100%;
-                height: 40vh;
                 bottom: 0;
                 left: 0;
                 transform: translate(0, 0);
@@ -100,7 +103,10 @@
             main {
                 flex-direction: column;
                 align-items: center;
-                margin-bottom: 40vh; /* スペースをモバイル版に合わせて調整 */
+            }
+
+            main.expanded {
+                max-height: 40vh;
             }
         }
 
@@ -196,10 +202,12 @@
         // トグルボタンとmain要素を取得
         const toggleMainBtn = document.getElementById('toggle-main-btn');
         const mainContent = document.getElementById('main-content');
+        const dfMessenger = document.querySelector('df-messenger');
 
         // ボタンがクリックされたときに実行される関数
         toggleMainBtn.addEventListener('click', () => {
             mainContent.classList.toggle('expanded');
+            dfMessenger.classList.toggle('expanded');
             toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
             toggleMainBtn.classList.toggle('collapsed');
         });
