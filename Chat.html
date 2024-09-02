@@ -112,6 +112,7 @@
         let historyListElement = document.getElementById('history-list');
         let timerInterval;
         let secondsElapsed = 0;
+        let history = []; // ここでhistory配列を初期化
 
         function startTimer() {
             secondsElapsed = 0;
@@ -154,8 +155,6 @@
         document.querySelector('df-messenger').addEventListener('df-response-received', function() {
             stopTimer(); // タイマーを止める
         });
-
-        let history = [];
     </script>
 </body>
 </html>
