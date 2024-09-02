@@ -48,13 +48,15 @@
             gap: 20px;
             overflow: hidden; /* 折りたたみ効果のために必要 */
             transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* 折りたたみアニメーション */
-            max-height: 0; /* 初期状態で折りたたみ */
-            padding: 0 20px; /* 初期状態でpaddingも折りたたみ */
+            max-height: 0; /* デフォルトで隠れる */
+            padding: 0; /* 隠れた時にはpaddingをなくす */
+            visibility: hidden; /* 完全に隠れるようにする */
         }
 
         main.expanded {
             max-height: 60vh; /* 展開時に表示 */
             padding: 20px; /* 展開時にpaddingを元に戻す */
+            visibility: visible; /* 展開時に表示 */
         }
 
         #timer {
@@ -85,11 +87,11 @@
             --df-messenger-message-bot-background: #fff;
             --df-messenger-message-actor-image-size: 60px;
             transition: height 0.5s ease-out;
-            height: 50vh; /* 初期状態でのdf-messengerの高さ */
+            height: 80vh; /* 初期状態でのdf-messengerの高さ */
         }
 
         df-messenger.expanded {
-            height: 80vh; /* 折りたたまれたときのdf-messengerの高さ */
+            height: 50vh; /* mainが表示されたときのdf-messengerの高さ */
         }
 
         @media (max-width: 600px) {
@@ -98,11 +100,6 @@
                 bottom: 0;
                 left: 0;
                 transform: translate(0, 0);
-            }
-
-            main {
-                flex-direction: column;
-                align-items: center;
             }
 
             main.expanded {
