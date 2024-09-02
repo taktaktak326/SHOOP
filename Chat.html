@@ -238,7 +238,8 @@ function updateAverageTime() {
 
 document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
     console.log("Request sent. Stopping timer and starting new one.");
-    lastMessage = event.detail.query;  // Capture the user's message
+    let eventData = event.detail;
+    lastMessage = eventData.requestBody.queryInput.text.text; // Capture the message correctly
     stopTimer();
     startTimer();
 });
@@ -259,6 +260,7 @@ toggleMainBtn.addEventListener('click', () => {
     toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
     toggleMainBtn.classList.toggle('collapsed');
 });
+
 
     </script>
 </body>
