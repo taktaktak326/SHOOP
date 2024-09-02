@@ -75,8 +75,8 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px; /* 最大幅を設定 */
-            margin: 0 auto; /* 中央寄せ */
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         #timer {
@@ -97,6 +97,13 @@
             text-align: left;
             max-height: 50vh;
             overflow-y: auto;
+        }
+
+        #average-time {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
         }
 
         df-messenger {
@@ -150,8 +157,8 @@
         <div id="timer">Execution time 0.00 Seconds</div>
         <div id="history">
             <h2>Execution Time</h2>
-            <ul id="history-list">
-            </ul>
+            <ul id="history-list"></ul>
+            <div id="average-time">Average time: 0.00 sec</div>
         </div>
     </main>
     <df-messenger
@@ -173,6 +180,7 @@
     <script>
         let timerElement = document.getElementById('timer');
         let historyListElement = document.getElementById('history-list');
+        let averageTimeElement = document.getElementById('average-time');
         let timerInterval;
         let secondsElapsed = 0;
         let history = [];
@@ -205,16 +213,27 @@
             }
             console.log("Current history array:", history);
             updateHistoryDisplay();
+            updateAverageTime();
         }
 
         function updateHistoryDisplay() {
             historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `Time ${index + 1}: ${time}sec`;
+                listItem.textContent = `Time ${index + 1}: ${time} sec`;
                 historyListElement.appendChild(listItem);
-                console.log(`Appended: Time ${index + 1}: ${time}sec`);
+                console.log(`Appended: Time ${index + 1}: ${time} sec`);
             });
+        }
+
+        function updateAverageTime() {
+            if (history.length === 0) {
+                averageTimeElement.textContent = `Average time: 0.00 sec`;
+                return;
+            }
+            const sum = history.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+            const average = sum / history.length;
+            averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
         }
 
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
