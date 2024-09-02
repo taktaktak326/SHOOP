@@ -6,9 +6,10 @@
     <title>チャットボットサイト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f3f3f3;
@@ -18,26 +19,34 @@
         }
 
         header {
-            background-color: #4CAF50;
-            padding: 10px 20px; /* 左右に余白を追加 */
+            background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+            padding: 10px 20px;
             color: white;
             text-align: center;
             width: 100%;
             display: flex;
-            align-items: center; /* 垂直方向に中央寄せ */
-            justify-content: flex-start; /* 左揃え */
-            box-sizing: border-box; /* padding を含めて幅を計算 */
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .toggle-icon {
             font-size: 24px;
             cursor: pointer;
-            margin-right: 10px; /* アイコンとタイトルの間に余白を追加 */
-            transition: transform 0.3s ease;
+            margin-right: 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .toggle-icon.collapsed {
-            transform: rotate(180deg); /* 折りたたんだときにアイコンを回転 */
+            transform: rotate(180deg);
+            color: #ff4081; /* アイコンが折りたたまれたときにピンク色に */
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
         }
 
         main {
@@ -47,52 +56,56 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            overflow: hidden; /* 折りたたみ効果のために必要 */
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* 折りたたみアニメーション */
-            max-height: 0; /* デフォルトで隠れる */
-            padding: 0; /* 隠れた時にはpaddingをなくす */
-            visibility: hidden; /* 完全に隠れるようにする */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            max-height: 0;
+            padding: 0;
+            visibility: hidden;
         }
 
         main.expanded {
-            max-height: 60vh; /* 展開時に表示 */
-            padding: 20px; /* 展開時にpaddingを元に戻す */
-            visibility: visible; /* 展開時に表示 */
+            max-height: 60vh;
+            padding: 20px;
+            visibility: visible;
         }
 
         #timer {
             font-size: 24px;
             font-weight: bold;
-            color: #ff0000;
+            color: #333;
             text-align: center;
         }
 
         #history {
             font-size: 18px;
             text-align: left;
-            max-height: 50vh; /* リストが長くなりすぎないように最大高さを設定 */
-            overflow-y: auto; /* リストが長くなった場合にスクロールできるように設定 */
+            max-height: 50vh;
+            overflow-y: auto;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         df-messenger {
             z-index: 999;
             position: fixed;
             width: 100%;
-            bottom: 0; /* 画面下に配置 */
+            bottom: 0;
             left: 0;
-            transform: translate(0, 0); /* 左下に配置 */
+            transform: translate(0, 0);
             --df-messenger-font-color: #000;
-            --df-messenger-font-family: Google Sans;
+            --df-messenger-font-family: 'Roboto', sans-serif;
             --df-messenger-chat-background: #f3f6fc;
             --df-messenger-message-user-background: #d3e3fd;
             --df-messenger-message-bot-background: #fff;
             --df-messenger-message-actor-image-size: 60px;
             transition: height 0.5s ease-out;
-            height: 80vh; /* 初期状態でのdf-messengerの高さ */
+            height: 80vh;
         }
 
         df-messenger.expanded {
-            height: 50vh; /* mainが表示されたときのdf-messengerの高さ */
+            height: 50vh;
         }
 
         @media (max-width: 600px) {
@@ -113,8 +126,8 @@
 </head>
 <body>
     <header>
-        <span id="toggle-main-btn" class="toggle-icon">＋</span> <!-- トグルアイコンをh1の左側に配置 -->
-        <h1>チャットボットサイト</h1>
+        <span id="toggle-main-btn" class="toggle-icon">＋</span>
+        <h2>テストサイト</h2>
     </header>
     <main id="main-content">
         <div id="timer">Execution time 0.00 Seconds</div>
@@ -145,10 +158,10 @@
         let timerInterval;
         let secondsElapsed = 0;
         let history = [];
-        let timerRunning = false; // タイマーが動作中かを示すフラグ
+        let timerRunning = false;
 
         function startTimer() {
-            if (timerRunning) return; // タイマーが既に動いている場合は何もしない
+            if (timerRunning) return;
             timerRunning = true;
             clearInterval(timerInterval);
             secondsElapsed = 0;
@@ -160,7 +173,7 @@
         }
 
         function stopTimer() {
-            if (!timerRunning) return; // タイマーが動作していない場合は何もしない
+            if (!timerRunning) return;
             clearInterval(timerInterval);
             timerRunning = false;
             console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
@@ -170,14 +183,14 @@
         function addTimeToHistory(time) {
             history.push(time);
             if (history.length > 5) {
-                history.shift();  // 古い履歴を削除
+                history.shift();
             }
             console.log("Current history array:", history);
             updateHistoryDisplay();
         }
 
         function updateHistoryDisplay() {
-            historyListElement.innerHTML = '';  // リストをクリア
+            historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
                 listItem.textContent = `計測 ${index + 1}: ${time}秒`;
@@ -188,21 +201,19 @@
 
         document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
             console.log("Request sent. Stopping timer and starting new one.");
-            stopTimer();  // 前回の計測を停止して履歴に追加
-            startTimer(); // タイマーをリセットして再スタート
+            stopTimer();
+            startTimer();
         });
 
         document.querySelector('df-messenger').addEventListener('df-response-received', function() {
             console.log("Response received. Stopping timer.");
-            stopTimer(); // タイマーを止める
+            stopTimer();
         });
 
-        // トグルボタンとmain要素を取得
         const toggleMainBtn = document.getElementById('toggle-main-btn');
         const mainContent = document.getElementById('main-content');
         const dfMessenger = document.querySelector('df-messenger');
 
-        // ボタンがクリックされたときに実行される関数
         toggleMainBtn.addEventListener('click', () => {
             mainContent.classList.toggle('expanded');
             dfMessenger.classList.toggle('expanded');
