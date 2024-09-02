@@ -112,8 +112,11 @@ let historyListElement = document.getElementById('history-list');
 let timerInterval;
 let secondsElapsed = 0;
 let history = [];
+let timerRunning = false; // タイマーが動作中かを示すフラグ
 
 function startTimer() {
+    if (timerRunning) return; // タイマーが既に動いている場合は何もしない
+    timerRunning = true;
     clearInterval(timerInterval);
     secondsElapsed = 0;
     timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
@@ -124,9 +127,30 @@ function startTimer() {
 }
 
 function stopTimer() {
+    if (!timerRunning) return; // タイマーが動作していない場合は何もしない
     clearInterval(timerInterval);
+    timerRunning = false;
     console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
     addTimeToHistory(secondsElapsed.toFixed(2));
+}
+
+function addTimeToHistory(time) {
+    history.push(time);
+    if (history.length > 5) {
+        history.shift();  // 古い履歴を削除
+    }
+    console.log("Current history array:", history);
+    updateHistoryDisplay();
+}
+
+function updateHistoryDisplay() {
+    historyListElement.innerHTML = '';  // リストをクリア
+    history.forEach((time, index) => {
+        let listItem = document.createElement('li');
+        listItem.textContent = `計測 ${index + 1}: ${time}秒`;
+        historyListElement.appendChild(listItem);
+        console.log(`Appended: 計測 ${index + 1}: ${time}秒`);
+    });
 }
 
 document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
@@ -140,35 +164,6 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
     stopTimer(); // タイマーを止める
 });
 
-
-function addTimeToHistory(time) {
-    history.push(time);
-    if (history.length > 5) {
-        history.shift();  // 古い履歴を削除
-    }
-    console.log("Current history array:", history); // デバッグ用に履歴を確認
-    updateHistoryDisplay();
-}
-
-function updateHistoryDisplay() {
-    historyListElement.innerHTML = '';  // リストをクリア
-    history.forEach((time, index) => {
-        let listItem = document.createElement('li');
-        listItem.textContent = `計測 ${index + 1}: ${time}秒`;
-        historyListElement.appendChild(listItem);
-        console.log(`Appended: 計測 ${index + 1}: ${time}秒`); // デバッグ用に確認
-    });
-}
-
-
-document.querySelector('df-messenger').addEventListener('df-request-sent', function() {
-    stopTimer();  // 前回の計測を停止して履歴に追加
-    startTimer(); // タイマーをリセットして再スタート
-});
-
-document.querySelector('df-messenger').addEventListener('df-response-received', function() {
-    stopTimer(); // タイマーを止める
-});
 
     </script>
 </body>
