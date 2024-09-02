@@ -12,6 +12,9 @@
             margin: 0;
             padding: 0;
             background-color: #f3f3f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
@@ -19,11 +22,16 @@
             padding: 10px 20px;
             color: white;
             text-align: center;
+            width: 100%;
         }
 
         main {
             padding: 20px;
             text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
         #timer {
@@ -31,7 +39,11 @@
             font-weight: bold;
             color: #ff0000;
             text-align: center;
-            margin-top: 20px;
+        }
+
+        #history {
+            font-size: 18px;
+            text-align: left;
         }
 
         df-messenger {
@@ -58,6 +70,11 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 
@@ -67,7 +84,13 @@
         <h1>チャットボットサイト</h1>
     </header>
     <main>
-        <div id="timer">Execution time 0 Seconds</div> <!-- タイマーを表示する要素 -->
+        <div id="timer">Execution time 0.00 Seconds</div> <!-- タイマーを表示する要素 -->
+        <div id="history">
+            <h2>過去の計測時間</h2>
+            <ul id="history-list">
+                <!-- 計測結果がここに追加される -->
+            </ul>
+        </div>
     </main>
     <df-messenger
         id="df-messenger"
@@ -86,20 +109,39 @@
 
     <script>
         let timerElement = document.getElementById('timer');
+        let historyListElement = document.getElementById('history-list');
         let timerInterval;
         let secondsElapsed = 0;
 
         function startTimer() {
             secondsElapsed = 0;
-            timerElement.textContent = `${secondsElapsed}秒`;
+            timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
             timerInterval = setInterval(() => {
-                secondsElapsed++;
-                timerElement.textContent = `${secondsElapsed}秒`;
-            }, 1000);
+                secondsElapsed += 0.01;
+                timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+            }, 10); // 10ミリ秒ごとに更新
         }
 
         function stopTimer() {
             clearInterval(timerInterval);
+            addTimeToHistory(secondsElapsed.toFixed(2));
+        }
+
+        function addTimeToHistory(time) {
+            history.push(time);
+            if (history.length > 5) {
+                history.shift(); // 古いものから削除
+            }
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            historyListElement.innerHTML = ''; // リストをクリア
+            history.forEach((time, index) => {
+                let listItem = document.createElement('li');
+                listItem.textContent = `計測 ${index + 1}: ${time}秒`;
+                historyListElement.appendChild(listItem);
+            });
         }
 
         // チャットボットのメッセージ送信イベントを監視
@@ -112,6 +154,8 @@
         document.querySelector('df-messenger').addEventListener('df-response-received', function() {
             stopTimer(); // タイマーを止める
         });
+
+        let history = [];
     </script>
 </body>
 </html>
