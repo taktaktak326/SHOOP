@@ -211,9 +211,9 @@
             historyListElement.innerHTML = '';
             history.forEach((time, index) => {
                 let listItem = document.createElement('li');
-                listItem.textContent = `Time ${index + 1}: ${time}秒`;
+                listItem.textContent = `Time ${index + 1}: ${time}sec`;
                 historyListElement.appendChild(listItem);
-                console.log(`Appended: Time ${index + 1}: ${time}秒`);
+                console.log(`Appended: Time ${index + 1}: ${time}sec`);
             });
         }
 
