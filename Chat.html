@@ -23,6 +23,20 @@
             color: white;
             text-align: center;
             width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.collapsed {
+            transform: rotate(180deg); /* 折りたたんだときにアイコンを回転 */
         }
 
         main {
@@ -96,7 +110,7 @@
 <body>
     <header>
         <h1>チャットボットサイト</h1>
-        <button id="toggle-main-btn">Toggle Main Display</button> <!-- トグルボタン -->
+        <span id="toggle-main-btn" class="toggle-icon">＋</span> <!-- トグルアイコン -->
     </header>
     <main id="main-content">
         <div id="timer">Execution time 0.00 Seconds</div>
@@ -186,6 +200,8 @@
         // ボタンがクリックされたときに実行される関数
         toggleMainBtn.addEventListener('click', () => {
             mainContent.classList.toggle('expanded');
+            toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
+            toggleMainBtn.classList.toggle('collapsed');
         });
     </script>
 </body>
