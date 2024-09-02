@@ -28,7 +28,7 @@
             align-items: center;
             justify-content: flex-start;
             box-sizing: border-box;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .toggle-icon {
@@ -40,7 +40,7 @@
 
         .toggle-icon.collapsed {
             transform: rotate(180deg);
-            color: #ff4081; /* アイコンが折りたたまれたときにピンク色に */
+            color: #ff4081;
         }
 
         h1 {
@@ -82,7 +82,7 @@
             max-height: 50vh;
             overflow-y: auto;
             background-color: #fff;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
@@ -126,8 +126,8 @@
 </head>
 <body>
     <header>
-        <span id="toggle-main-btn" class="toggle-icon">＋</span>
-        <h2>テストサイト</h2>
+        <span id="toggle-main-btn" class="toggle-icon" aria-label="Toggle main content">＋</span>
+        <h1>テストサイト</h1>
     </header>
     <main id="main-content">
         <div id="timer">Execution time 0.00 Seconds</div>
@@ -149,7 +149,7 @@
         <df-messenger-chat
             bot-actor-image="DALL·E 2024-08-27 19.38.jpg"
             chat-title="AI CHAT"
-            placeholder-text="個人情報やプライベートな情報は入力しないてください。">
+            placeholder-text="個人情報やプライベートな情報は入力しないでください。">
         </df-messenger-chat>
     </df-messenger>
 
