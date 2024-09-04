@@ -257,15 +257,16 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
     let responseData = event.detail.response;
     console.log("Response data:", responseData); // responseデータを確認
 
-    // レスポンスデータの中のmessages配列からhtmlを取得
-    if (responseData && responseData.messages && responseData.messages[0] && responseData.messages[0].html) {
-        let responseMessage = responseData.messages[0].html; // htmlからレスポンスを取得
+    // レスポンスデータの中のdata.messages配列からhtmlを取得
+    if (responseData && responseData.data && responseData.data.messages && responseData.data.messages[0] && responseData.data.messages[0].html) {
+        let responseMessage = responseData.data.messages[0].html; // htmlからレスポンスを取得
         addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
     } else {
         console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
         addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
     }
 });
+
 
 
 
