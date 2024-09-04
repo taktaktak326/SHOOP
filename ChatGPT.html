@@ -239,23 +239,24 @@
         }
 
         document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
-            console.log("Request sent. Stopping timer and starting new one.");
-            let eventData = event.detail;
-            lastMessage = eventData.requestBody.queryInput.text.text; // Capture the message correctly
-            stopTimer();
-            startTimer();
-        });
+    console.log("Request sent. Stopping timer and starting new one.");
+    let eventData = event.detail;
+    lastMessage = eventData.requestBody.queryInput?.text?.text || "Unknown Message"; // 修正ポイント
+    stopTimer();
+    startTimer();
+});
 
-        document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-            console.log("Response received. Stopping timer.");
-            stopTimer();
+document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
+    console.log("Response received. Stopping timer.");
+    stopTimer();
 
-            // チャットボットのレスポンスを取得
-            let responseMessage = event.detail.response.queryResult.fulfillmentText;
+    // チャットボットのレスポンスを取得
+    let responseMessage = event.detail.response.queryResult.fulfillmentText || "Unknown Response";
 
-            // メッセージとレスポンスを一緒に履歴に追加
-            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
-        });
+    // メッセージとレスポンスを一緒に履歴に追加
+    addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+});
+
 
         const toggleMainBtn = document.getElementById('toggle-main-btn');
         const mainContent = document.getElementById('main-content');
