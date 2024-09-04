@@ -249,26 +249,16 @@
 
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Full event detail object:", event.detail);  // イベント全体をコンソールに出力
+    console.log("Full event detail object:", event.detail);  // イベント全体を表示
 
-    stopTimer();
-
-    // ここでレスポンスの構造を確認
-    if (event.detail && event.detail.response) {
-        console.log("Response data:", event.detail.response);  // responseオブジェクトを確認
-        if (event.detail.response.queryResult) {
-            let responseMessage = event.detail.response.queryResult.fulfillmentText;
-            console.log("Response message:", responseMessage);  // responseMessageを出力
-            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
-        } else {
-            console.log("queryResult not found in response");  // queryResultがない場合のメッセージ
-            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No queryResult in response");
-        }
+    // event.detailの中身を確認し、responseがどこにあるか確認する
+    if (event.detail) {
+        console.log("Response detail:", event.detail);  // responseの代わりに他のフィールドかもしれないので全体をチェック
     } else {
-        console.log("Response object not found in event detail");  // responseオブジェクトがない場合
-        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response object in event detail");
+        console.log("No response detail available.");
     }
 });
+
 
 
 
