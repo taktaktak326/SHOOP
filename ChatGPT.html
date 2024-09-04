@@ -249,33 +249,40 @@
 
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Response received:", event.detail);  // レスポンス全体をログ表示
+    console.log("Response received:", event.detail);  // レスポンス全体を出力
 
     stopTimer();
 
-    // チャットボットのレスポンスを取得
+    // チャットボットのレスポンス全体を取得
     let responseData = event.detail.response;
 
-    // responseDataの中身を確認
-    console.log("Full response data:", responseData); 
+    // responseDataの中身をコンソールに出力して確認
+    console.log("Full response data:", responseData);
 
-    // messagesの配列からhtmlの内容を取得
-    let responseMessage = "No response"; // デフォルト値
+    // messages配列の存在を確認
     if (responseData && responseData.messages && responseData.messages.length > 0) {
-        // 最初のメッセージのHTMLを取得
-        let firstMessage = responseData.messages[0];
-        console.log("First message:", firstMessage); // メッセージの内容をログ出力
+        // messages配列の内容を出力して確認
+        console.log("Messages array:", responseData.messages);
 
-        // HTMLレスポンスを確認し、存在する場合に取得
-        if (firstMessage.type === 'html' && firstMessage.html) {
-            responseMessage = firstMessage.html;
-            console.log("HTML response:", responseMessage); // 正しく取得されているか確認
+        // 最初のメッセージのhtmlを取得
+        let firstMessage = responseData.messages[0]; // 最初のメッセージを取得
+        console.log("First message object:", firstMessage); // 最初のメッセージ全体を出力
+
+        // htmlフィールドがあるか確認
+        if (firstMessage.html) {
+            let responseMessage = firstMessage.html; // htmlフィールドの内容を取得
+            console.log("HTML response found:", responseMessage); // 正しく取得できたかログ表示
+
+            // 履歴にメッセージを追加
+            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+        } else {
+            console.log("No HTML content found in first message.");
         }
+    } else {
+        console.log("No messages array found in response.");
     }
-
-    // 履歴にメッセージとレスポンスを追加
-    addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
 });
+
 
 
 
