@@ -249,15 +249,28 @@
 
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Full event detail object:", event.detail);  // イベント全体を表示
+    console.log("Response received:", event.detail);  // デバッグ用
 
-    // event.detailの中身を確認し、responseがどこにあるか確認する
-    if (event.detail) {
-        console.log("Response detail:", event.detail);  // responseの代わりに他のフィールドかもしれないので全体をチェック
-    } else {
-        console.log("No response detail available.");
+    stopTimer();
+
+    // チャットボットのレスポンスを取得
+    let responseData = event.detail.response;
+    console.log("Response data:", responseData); // responseデータを確認
+
+    // messagesの配列からhtmlの内容を取得
+    let responseMessage = "No response"; // デフォルト値
+
+    if (responseData && responseData.messages && responseData.messages.length > 0) {
+        // 最初のメッセージのHTMLを取得
+        let firstMessage = responseData.messages[0];
+        if (firstMessage.type === 'html' && firstMessage.html) {
+            responseMessage = firstMessage.html;
+        }
     }
+
+    addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
 });
+
 
 
 
