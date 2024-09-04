@@ -250,12 +250,14 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
     console.log("Response received. Stopping timer.");
     stopTimer();
 
-    // チャットボットのレスポンスを取得
-    let responseMessage = event.detail.response.queryResult.fulfillmentText || "Unknown Response";
+    // チャットボットのレスポンスを取得（queryResultの存在を確認）
+    let responseData = event.detail.response;
+    let responseMessage = responseData && responseData.queryResult ? responseData.queryResult.fulfillmentText : "No response";
 
     // メッセージとレスポンスを一緒に履歴に追加
     addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
 });
+
 
 
         const toggleMainBtn = document.getElementById('toggle-main-btn');
