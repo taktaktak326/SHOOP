@@ -247,7 +247,6 @@
 });
 
 
-        
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
     console.log("Response received:", event.detail);  // 受け取ったレスポンスデータ全体を表示
 
@@ -257,15 +256,21 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
     let responseData = event.detail;  // event.detail にアクセス
     console.log("Response data:", responseData); // responseData を確認
 
-    // レスポンスデータの中の messages 配列から html を取得
+    // レスポンスデータの中の data.messages 配列から html を取得
     if (responseData && responseData.data && responseData.data.messages && responseData.data.messages[0] && responseData.data.messages[0].html) {
         let responseMessage = responseData.data.messages[0].html; // html からレスポンスを取得
+        console.log("Extracted HTML response:", responseMessage); // HTMLレスポンスをログに表示
+
+        // 履歴にHTMLレスポンスを追加
         addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
     } else {
         console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
         addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
     }
 });
+        
+
+        
 
 
 
