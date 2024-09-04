@@ -250,6 +250,7 @@
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
     console.log("Response received:", event.detail);  // レスポンス全体をログ表示
+
     stopTimer();
 
     // チャットボットのレスポンスを取得
@@ -258,13 +259,6 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
     // responseDataの中身を確認
     console.log("Full response data:", responseData); 
 
-    // messages配列の確認
-    if (responseData && responseData.messages) {
-        console.log("Messages array:", responseData.messages);
-    } else {
-        console.log("No messages array found");
-    }
-
     // messagesの配列からhtmlの内容を取得
     let responseMessage = "No response"; // デフォルト値
     if (responseData && responseData.messages && responseData.messages.length > 0) {
@@ -272,13 +266,17 @@ document.querySelector('df-messenger').addEventListener('df-response-received', 
         let firstMessage = responseData.messages[0];
         console.log("First message:", firstMessage); // メッセージの内容をログ出力
 
+        // HTMLレスポンスを確認し、存在する場合に取得
         if (firstMessage.type === 'html' && firstMessage.html) {
             responseMessage = firstMessage.html;
+            console.log("HTML response:", responseMessage); // 正しく取得されているか確認
         }
     }
 
+    // 履歴にメッセージとレスポンスを追加
     addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
 });
+
 
 
 
