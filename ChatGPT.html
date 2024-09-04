@@ -249,23 +249,27 @@
 
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Response received:", event.detail);  // 受け取ったレスポンスデータ全体を表示
+    console.log("Full event detail object:", event.detail);  // イベント全体をコンソールに出力
 
     stopTimer();
 
-    // チャットボットのレスポンスを取得
-    let responseData = event.detail.response;
-    console.log("Response data:", responseData); // responseデータを確認
-
-    // レスポンスデータの中身を確認しながら、期待するデータがあるかチェック
-    if (responseData && responseData.queryResult && responseData.queryResult.fulfillmentText) {
-        let responseMessage = responseData.queryResult.fulfillmentText;
-        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+    // ここでレスポンスの構造を確認
+    if (event.detail && event.detail.response) {
+        console.log("Response data:", event.detail.response);  // responseオブジェクトを確認
+        if (event.detail.response.queryResult) {
+            let responseMessage = event.detail.response.queryResult.fulfillmentText;
+            console.log("Response message:", responseMessage);  // responseMessageを出力
+            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+        } else {
+            console.log("queryResult not found in response");  // queryResultがない場合のメッセージ
+            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No queryResult in response");
+        }
     } else {
-        console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
-        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
+        console.log("Response object not found in event detail");  // responseオブジェクトがない場合
+        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response object in event detail");
     }
 });
+
 
 
 
