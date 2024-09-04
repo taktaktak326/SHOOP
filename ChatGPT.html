@@ -249,45 +249,23 @@
 
         
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Response received:", event.detail);  // レスポンス全体を出力
+    console.log("Response received:", event.detail);  // 受け取ったレスポンスデータ全体を表示
 
     stopTimer();
 
-    // チャットボットのレスポンス全体を取得
+    // チャットボットのレスポンスを取得
     let responseData = event.detail.response;
+    console.log("Response data:", responseData); // responseデータを確認
 
-    // responseDataの中身をコンソールに出力して確認
-    console.log("Full response data:", responseData);
-
-    // messages配列の存在を確認
-    if (responseData && responseData.messages && responseData.messages.length > 0) {
-        // messages配列の内容を出力して確認
-        console.log("Messages array:", responseData.messages);
-
-        // 最初のメッセージのhtmlを取得
-        let firstMessage = responseData.messages[0]; // 最初のメッセージを取得
-        console.log("First message object:", firstMessage); // 最初のメッセージ全体を出力
-
-        // htmlフィールドがあるか確認
-        if (firstMessage.html) {
-            let responseMessage = firstMessage.html; // htmlフィールドの内容を取得
-            console.log("HTML response found:", responseMessage); // 正しく取得できたかログ表示
-
-            // 履歴にメッセージを追加
-            addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
-        } else {
-            console.log("No HTML content found in first message.");
-        }
+    // レスポンスデータの中のmessages配列からhtmlを取得
+    if (responseData && responseData.messages && responseData.messages[0] && responseData.messages[0].html) {
+        let responseMessage = responseData.messages[0].html; // htmlからレスポンスを取得
+        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
     } else {
-        console.log("No messages array found in response.");
+        console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
+        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
     }
 });
-
-
-
-
-
-
 
 
 
