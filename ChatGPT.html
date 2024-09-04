@@ -246,17 +246,27 @@
     startTimer();
 });
 
+
+        
 document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Response received. Stopping timer.");
+    console.log("Response received:", event.detail);  // 受け取ったレスポンスデータ全体を表示
+
     stopTimer();
 
-    // チャットボットのレスポンスを取得（queryResultの存在を確認）
+    // チャットボットのレスポンスを取得
     let responseData = event.detail.response;
-    let responseMessage = responseData && responseData.queryResult ? responseData.queryResult.fulfillmentText : "No response";
+    console.log("Response data:", responseData); // responseデータを確認
 
-    // メッセージとレスポンスを一緒に履歴に追加
-    addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+    // レスポンスデータの中身を確認しながら、期待するデータがあるかチェック
+    if (responseData && responseData.queryResult && responseData.queryResult.fulfillmentText) {
+        let responseMessage = responseData.queryResult.fulfillmentText;
+        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
+    } else {
+        console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
+        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
+    }
 });
+
 
 
 
