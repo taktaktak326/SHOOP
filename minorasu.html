@@ -1,63 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test IP Fetching</title>
+    <title>minorasuテスト</title>
     <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
     <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f3f3f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
             padding: 10px 20px;
             color: white;
             text-align: center;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-icon {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .toggle-icon.collapsed {
+            transform: rotate(180deg);
+            color: #ff4081;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
         }
 
         main {
             padding: 20px;
             text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            max-height: 0;
+            padding: 0;
+            visibility: hidden;
         }
 
-df-messenger {
-    z-index: 999;
-    position: fixed;
-    width: 100%; /* Responsive width */
-    height: 50vh; /* Responsive height, 50% of viewport height */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    --df-messenger-font-color: #000;
-    --df-messenger-font-family: Google Sans;
-    --df-messenger-chat-background: #f3f6fc;
-    --df-messenger-message-user-background: #d3e3fd;
-    --df-messenger-message-bot-background: #fff;
-    --df-messenger-message-actor-image-size: 60px;
-}
+        main.expanded {
+            max-height: 60vh;
+            padding: 20px;
+            visibility: visible;
+        }
 
-@media (max-width: 600px) {
-    df-messenger {
-        width: 100%;
-        height: 40vh; /* Adjust height for mobile */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
+        #timer, #history {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        #history h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        #history {
+            font-size: 18px;
+            text-align: left;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        #average-time {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            transform: translate(0, 0);
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: 'Roboto', sans-serif;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            --df-messenger-message-actor-image-size: 60px;
+            transition: height 0.5s ease-out;
+            height: 80vh;
+        }
+
+        df-messenger.expanded {
+            height: 50vh;
+        }
+
+        @media (max-width: 600px) {
+            df-messenger {
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                transform: translate(0, 0);
+            }
+
+            main.expanded {
+                max-height: 40vh;
+            }
+
+            #timer, #history {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+        }
 
     </style>
 
 </head>
 <body>
-    <!-- Assume df-messenger is a custom element or iframe -->
+    <header>
+        <span id="toggle-main-btn" class="toggle-icon" aria-label="Toggle main content">＋</span>
+        <h1>←Click to check Response time</h1>
+    </header>
+    <main id="main-content">
+        <div id="timer">Execution time 0.00 Seconds</div>
+        <div id="history">
+            <h2>Execution Time</h2>
+            <ul id="history-list"></ul>
+            <div id="average-time">Average time: 0.00 sec</div>
+        </div>
+    </main>
     <df-messenger
+        id="df-messenger"
         project-id="prj-basf-minorasu-dev"
         agent-id="d50c1c1f-171b-4e29-a1b2-16a8168518b2"
         language-code="ja"
@@ -66,10 +171,100 @@ df-messenger {
         url-allowlist="*"
         intent="Start_Conversation">
         <df-messenger-chat
-            chat-title="Minorasu"
-            bot-actor-image="DALL·E 2024-08-27 19.38.png">
+            bot-actor-image="DALL·E 2024-08-27 19.38.jpg"
+            chat-title="AI CHAT"
+            placeholder-text="minorasuテストです">
         </df-messenger-chat>
     </df-messenger>
 
+    <script>
+        let timerElement = document.getElementById('timer');
+let historyListElement = document.getElementById('history-list');
+let averageTimeElement = document.getElementById('average-time');
+let timerInterval;
+let secondsElapsed = 0;
+let history = [];
+let timerRunning = false;
+let lastMessage = '';
+
+function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true;
+    clearInterval(timerInterval);
+    secondsElapsed = 0;
+    timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+    timerInterval = setInterval(() => {
+        secondsElapsed += 0.01;
+        timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
+    }, 10);
+}
+
+function stopTimer() {
+    if (!timerRunning) return;
+    clearInterval(timerInterval);
+    timerRunning = false;
+    console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
+}
+
+function addTimeToHistory(time, message) {
+    const parsedTime = parseFloat(time);  // Ensure the time is a number
+    history.push({ time: parsedTime, message });
+    if (history.length > 5) {
+        history.shift();
+    }
+    console.log("Current history array:", history);
+    updateHistoryDisplay();
+    updateAverageTime();
+}
+
+function updateHistoryDisplay() {
+    historyListElement.innerHTML = '';
+    history.forEach((entry, index) => {
+        let listItem = document.createElement('li');
+        listItem.textContent = `Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}"`;
+        historyListElement.appendChild(listItem);
+        console.log(`Appended: Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}"`);
+    });
+}
+
+function updateAverageTime() {
+    if (history.length === 0) {
+        averageTimeElement.textContent = `Average time: 0.00 sec`;
+        return;
+    }
+    const sum = history.reduce((a, b) => a + b.time, 0);
+    const average = sum / history.length;
+    averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
+    console.log(`Calculated average: ${average.toFixed(2)} sec`);
+}
+
+document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
+    console.log("Request sent. Stopping timer and starting new one.");
+    let eventData = event.detail;
+    lastMessage = eventData.requestBody.queryInput.text.text; // Capture the message correctly
+    stopTimer();
+    startTimer();
+});
+
+document.querySelector('df-messenger').addEventListener('df-response-received', function() {
+    console.log("Response received. Stopping timer.");
+    stopTimer();
+    addTimeToHistory(secondsElapsed.toFixed(2), lastMessage);  // Pass the message along with the time
+});
+
+const toggleMainBtn = document.getElementById('toggle-main-btn');
+const mainContent = document.getElementById('main-content');
+const dfMessenger = document.querySelector('df-messenger');
+
+toggleMainBtn.addEventListener('click', () => {
+    mainContent.classList.toggle('expanded');
+    dfMessenger.classList.toggle('expanded');
+    toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
+    toggleMainBtn.classList.toggle('collapsed');
+});
+
+
+
+    </script>
 </body>
 </html>
