@@ -126,88 +126,24 @@
   </div>
 
 <script>
-    let inactivityTime = function () {
-        let time;
-        let countdownInterval;
-        let countdown = 10; // デバッグ用に10秒
+  // 60秒後に指定されたボタンをクリックする関数
+  function clickCloseButton() {
+    // ボタンをクラス名で取得
+    const closeButton = document.querySelector(".close-button.bubble.focus-outline");
+    
+    // ボタンが存在する場合はクリックする
+    if (closeButton) {
+      closeButton.click();
+      console.log("ボタンがクリックされました。");
+    } else {
+      console.log("ボタンが見つかりませんでした。");
+    }
+  }
 
-        // ユーザー操作を監視してタイマーをリセット
-        window.onload = resetTimer;
-        document.onmousemove = resetTimer;
-        document.onkeypress = resetTimer;
-        document.ontouchstart = resetTimer;  // for mobile devices
-
-        // df-messengerが完全にロードされたか確認する関数
-        function waitForMessengerLoad(callback) {
-            const chat = document.querySelector('df-messenger');
-            if (chat) {
-                callback(chat);
-            } else {
-                console.log("df-messenger が見つかりません。ロード待ち...");
-                setTimeout(() => waitForMessengerLoad(callback), 1000);  // 1秒ごとにチェック
-            }
-        }
-
-        // 10秒経過後にチャットボットを自動的に開き、イベントを送信
-        function openChatBubble() {
-            console.log("10秒間操作がなかったため、チャットボットを開きます。");
-
-            // df-messenger-chat-bubble要素のexpanded属性をtrueに設定
-            const chatBubble = document.querySelector('df-messenger-chat-bubble');
-            if (chatBubble) {
-                chatBubble.setAttribute("expanded", "true");
-                console.log("チャットボットが開かれました。");
-
-                // df-messengerがロードされてからイベントを送信
-                waitForMessengerLoad(function(chat) {
-                    console.log("df-messenger 要素が正常に取得されました:", chat);
-
-                    // カスタムイベントを送信
-                    const event = new CustomEvent('df-request-event', {
-                        detail: {
-                            eventName: 'Next_Conversation',  // カスタムイベント名
-                            languageCode: 'ja',  // 言語コードを指定
-                            parameters: {}  // 必要に応じてパラメータを追加
-                        }
-                    });
-
-                    // df-messenger要素にイベントを送信
-                    chat.dispatchEvent(event);
-                    console.log("Next_Conversation イベントが送信されました。");
-
-                    // イベントの詳細情報をログに出力
-                    console.log("送信されたイベントの詳細:", event);
-                });
-            } else {
-                console.error("チャットボットの要素 (df-messenger-chat-bubble) が見つかりませんでした。");
-            }
-
-            clearInterval(countdownInterval);  // カウントダウンを終了
-        }
-
-        // タイマーとカウントダウンのリセット
-        function resetTimer() {
-            clearTimeout(time);
-            clearInterval(countdownInterval);
-            countdown = 10;  // カウントダウンのリセット
-            console.log("カウントダウンをリセットしました。");
-
-            // 毎秒カウントダウンをコンソールに表示
-            countdownInterval = setInterval(() => {
-                countdown--;
-                console.log("残り時間: " + countdown + "秒");
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                }
-            }, 1000);
-
-            // 10秒後にチャットを開く
-            time = setTimeout(openChatBubble, 10000);
-        }
-    };
-
-    inactivityTime();  // 関数を呼び出して開始
+  // 60秒後にボタンをクリックするようにタイマーを設定
+  setTimeout(clickCloseButton, 60000);  // 60秒後に実行
 </script>
+
 
 
 
