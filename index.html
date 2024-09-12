@@ -140,36 +140,25 @@
 
   // 5秒後にDialogflowにカスタムイベントを送信する関数
   function sendCustomEvent() {
-    console.log("df-messengerのカスタムイベント 'Next_Conversation' を送信します...");
+    console.log("カスタムイベント 'Next_Conversation' を送信します...");
 
-    // df-messenger要素を取得
-    const chatElement = document.querySelector("df-messenger");
+    // Dialogflow Webコンポーネントにカスタムイベントを送信する
+    window.postMessage({
+      event: 'df_custom_event',
+      eventName: 'Next_Conversation',  // カスタムイベント名
+      parameters: {
+        user: 'John Doe',
+        session: '12345'
+      }
+    }, '*');  // '*' はすべてのターゲットにメッセージを送信するための指定
 
-    // デバッグ情報: df-messenger の存在確認
-    if (chatElement) {
-      console.log("df-messenger が見つかりました:", chatElement);
-
-      // カスタムイベント 'Next_Conversation' を送信
-      chatElement.postMessage({
-        event: 'event',
-        data: {
-          eventName: 'Next_Conversation',  // カスタムイベント名
-          parameters: {
-            user: 'John Doe',
-            session: '12345'
-          }
-        }
-      });
-
-      console.log("カスタムイベント 'Next_Conversation' が送信されました。");
-    } else {
-      console.error("df-messenger が見つかりませんでした。");
-    }
+    console.log("カスタムイベント 'Next_Conversation' が送信されました。");
   }
 
   // 5秒後にカスタムイベントを送信するようにタイマーを設定
   setTimeout(sendCustomEvent, 5000);  // 5秒後に実行
 </script>
+
 
 
 
