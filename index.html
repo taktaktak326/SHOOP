@@ -128,7 +128,7 @@
     let inactivityTime = function () {
         let time;
         let countdownInterval;
-        let countdown = 10;  // 60秒から10秒に変更
+        let countdown = 10;
 
         // Reset the timer on user interaction
         window.onload = resetTimer;
@@ -137,10 +137,18 @@
         document.ontouchstart = resetTimer;  // for mobile devices
 
         function openChatBubble() {
-            // Open the chat bubble
+            // コンソールに表示
+            console.log("10秒間操作がなかったため、チャットボットが開かれます。");
+
+            // Chat bubbleを開くためのトリガーを実行
             const chatBubble = document.querySelector('df-messenger');
-            chatBubble.shadowRoot.querySelector('df-messenger-chat-bubble').open();
-            console.log("10秒間操作がなかったため、チャットボットが開きました。");
+            if (chatBubble) {
+                const event = new Event('df-open-chat');
+                chatBubble.dispatchEvent(event);
+                console.log("チャットボットが開かれました。");
+            } else {
+                console.log("チャットボットが見つかりませんでした。");
+            }
 
             // カウントダウンを終了
             clearInterval(countdownInterval);
