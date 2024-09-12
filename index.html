@@ -138,27 +138,38 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // 5秒後にdf-messenger-chat-bubbleをクリックする関数
-  function clickChatBubble() {
-    console.log("df-messenger-chat-bubble の検索を開始します...");
+  // 5秒後にDialogflowにカスタムイベントを送信する関数
+  function sendCustomEvent() {
+    console.log("df-messengerのカスタムイベント 'Next_Conversation' を送信します...");
 
-    // df-messenger-chat-bubble 要素をクエリで取得
-    const chatBubble = document.querySelector("df-messenger-chat-bubble");
+    // df-messenger要素を取得
+    const chatElement = document.querySelector("df-messenger");
 
-    // デバッグ情報: chat bubble の存在確認
-    if (chatBubble) {
-      console.log("df-messenger-chat-bubble が見つかりました:", chatBubble);
+    // デバッグ情報: df-messenger の存在確認
+    if (chatElement) {
+      console.log("df-messenger が見つかりました:", chatElement);
 
-      // Webコンポーネント内のクリックイベントを発火させるために属性を変更
-      chatBubble.setAttribute("expanded", "true");  // チャットを展開
-      console.log("df-messenger-chat-bubble がクリックされました。");
+      // カスタムイベント 'Next_Conversation' を送信
+      chatElement.renderRoot.querySelector('df-messenger-chat')._handleEventInput({
+        detail: {
+          eventName: 'Next_Conversation',  // カスタムイベント名
+          languageCode: 'ja',               // 言語コード
+          parameters: {
+            // 必要に応じてパラメータを設定
+            user: 'John Doe',
+            session: '12345'
+          }
+        }
+      });
+
+      console.log("カスタムイベント 'Next_Conversation' が送信されました。");
     } else {
-      console.error("df-messenger-chat-bubble が見つかりませんでした。");
+      console.error("df-messenger が見つかりませんでした。");
     }
   }
 
-  // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
-  setTimeout(clickChatBubble, 5000);  // 5秒後に実行
+  // 5秒後にカスタムイベントを送信するようにタイマーを設定
+  setTimeout(sendCustomEvent, 5000);  // 5秒後に実行
 </script>
 
 
