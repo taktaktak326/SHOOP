@@ -153,7 +153,7 @@
                     console.log("チャットボットが見つかりました。インテントを送信します。");
 
                     // インテント送信イベントを発火
-                    chat.dispatchEvent(new CustomEvent('df-request-query-input', {
+                    chat.shadowRoot.querySelector('df-messenger').dispatchEvent(new CustomEvent('df-request-query-input', {
                         detail: { query: 'Start_Conversation' }
                     }));
                     console.log("Start_Conversation インテントが送信されました。");
@@ -190,12 +190,6 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
-
-
-
-
-
-
 
 
 
