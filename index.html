@@ -152,13 +152,20 @@
             });
         }
 
-        // 10秒経過後にチャットボットにカスタムメッセージを表示
+        // 10秒経過後にチャットボットを展開し、カスタムメッセージを表示
         function displayCustomMessages() {
-            console.log("10秒間操作がなかったため、カスタムメッセージを表示します。");
+            console.log("10秒間操作がなかったため、チャットボットを展開し、カスタムメッセージを表示します。");
 
             // df-messengerがロードされるまで待機
             waitForDfMessenger().then((dfMessenger) => {
                 if (dfMessenger) {
+                    // チャットボットを展開
+                    const chatBubble = document.querySelector('df-messenger-chat-bubble');
+                    if (chatBubble) {
+                        chatBubble.setAttribute("expanded", "true");
+                        console.log("チャットボットが展開されました。");
+                    }
+
                     // メッセージを表示する
                     const message1 = 'こんにちは！ゲストさま';
                     const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
@@ -206,7 +213,7 @@
                 }
             }, 1000);
 
-            // 10秒後にカスタムメッセージを表示
+            // 10秒後にチャットを展開してカスタムメッセージを表示
             time = setTimeout(displayCustomMessages, 10000);
         }
     };
