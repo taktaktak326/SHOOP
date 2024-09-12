@@ -150,12 +150,11 @@
       console.log("df-messenger が見つかりました:", chatElement);
 
       // カスタムイベント 'Next_Conversation' を送信
-      chatElement.renderRoot.querySelector('df-messenger-chat')._handleEventInput({
-        detail: {
+      chatElement.postMessage({
+        event: 'event',
+        data: {
           eventName: 'Next_Conversation',  // カスタムイベント名
-          languageCode: 'ja',               // 言語コード
           parameters: {
-            // 必要に応じてパラメータを設定
             user: 'John Doe',
             session: '12345'
           }
@@ -171,6 +170,7 @@
   // 5秒後にカスタムイベントを送信するようにタイマーを設定
   setTimeout(sendCustomEvent, 5000);  // 5秒後に実行
 </script>
+
 
 
 
