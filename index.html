@@ -137,7 +137,7 @@
         document.onkeypress = resetTimer;
         document.ontouchstart = resetTimer;  // for mobile devices
 
-        // 10秒経過後にチャットボットを自動的に開き、イベントを送信
+        // 10秒経過後にチャットボットを自動的に開き、インテントを送信
         function openChatBubble() {
             console.log("10秒間操作がなかったため、チャットボットを開きます。");
 
@@ -147,12 +147,14 @@
                 chatBubble.setAttribute("expanded", "true");
                 console.log("チャットボットが開かれました。");
 
-                // Next_Conversation カスタムイベントを送信
+                // df-messenger要素を取得
                 const chat = document.querySelector('df-messenger');
-                if (chat) {
-                    console.log("チャットボットが見つかりました。イベントを送信します。");
 
-                    // `df-request-event` イベントを発火させて、カスタムイベントを送信
+                // df-messenger要素が正しく取得されているか確認
+                if (chat) {
+                    console.log("df-messenger 要素が正常に取得されました:", chat);
+
+                    // カスタムイベントを送信
                     const event = new CustomEvent('df-request-event', {
                         detail: {
                             eventName: 'Next_Conversation',  // カスタムイベント名
@@ -168,10 +170,10 @@
                     // イベントの詳細情報をログに出力
                     console.log("送信されたイベントの詳細:", event);
                 } else {
-                    console.log("df-messenger 要素が見つかりませんでした。");
+                    console.error("df-messenger 要素が見つかりませんでした。");
                 }
             } else {
-                console.log("チャットボットが見つかりませんでした。");
+                console.error("チャットボットの要素 (df-messenger-chat-bubble) が見つかりませんでした。");
             }
 
             clearInterval(countdownInterval);  // カウントダウンを終了
@@ -200,6 +202,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
