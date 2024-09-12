@@ -126,7 +126,19 @@
   </div>
 
 <script>
-  // 60秒後に指定されたボタンをクリックする関数
+  let countdown = 5;  // 5秒のカウントダウン
+
+  // 1秒ごとにカウントダウンを表示する関数
+  const countdownInterval = setInterval(() => {
+    console.log(`残り ${countdown} 秒`);
+    countdown--;
+
+    if (countdown < 0) {
+      clearInterval(countdownInterval);  // カウントダウンが終わったらインターバルをクリア
+    }
+  }, 1000);  // 1秒ごとに実行
+
+  // 5秒後に指定されたボタンをクリックする関数
   function clickCloseButton() {
     // ボタンをクラス名で取得
     const closeButton = document.querySelector(".close-button.bubble.focus-outline");
@@ -140,9 +152,10 @@
     }
   }
 
-  // 60秒後にボタンをクリックするようにタイマーを設定
-  setTimeout(clickCloseButton, 60000);  // 60秒後に実行
+  // 5秒後にボタンをクリックするようにタイマーを設定
+  setTimeout(clickCloseButton, 5000);  // 5秒後に実行
 </script>
+
 
 
 
