@@ -152,18 +152,20 @@
                 if (chat) {
                     console.log("チャットボットが見つかりました。インテントを送信します。");
 
-                    // インテント送信イベントを発火
-                    const event = new CustomEvent('df-request-query-input', {
-                        detail: { query: 'Next_Conversation' }  // インテント名をNext_Conversationに変更
-                    });
+                    // インテント送信イベントを遅延させて発火
+                    setTimeout(() => {
+                        const event = new CustomEvent('df-request-query-input', {
+                            detail: { query: 'Next_Conversation' }  // インテント名をNext_Conversationに変更
+                        });
 
-                    // df-messenger要素にイベントを送信
-                    chat.dispatchEvent(event);
-                    console.log("Next_Conversation インテントが送信されました。");
+                        // df-messenger要素にイベントを送信
+                        chat.dispatchEvent(event);
+                        console.log("Next_Conversation インテントが送信されました。");
 
-                    // イベントの詳細情報をログに出力
-                    console.log("送信されたイベントの詳細:", event);
-                    console.log("送信されたクエリ:", event.detail.query);
+                        // イベントの詳細情報をログに出力
+                        console.log("送信されたイベントの詳細:", event);
+                        console.log("送信されたクエリ:", event.detail.query);
+                    }, 1000); // 1秒遅延させてインテントを送信
                 } else {
                     console.log("df-messenger 要素が見つかりませんでした。");
                 }
@@ -197,7 +199,6 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
-
 
 
 
