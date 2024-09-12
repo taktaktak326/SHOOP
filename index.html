@@ -170,57 +170,32 @@
                         chatBubble.setAttribute("expanded", "true");
                         console.log("チャットボットが展開されました。");
 
-                        // Start_Conversation インテントを送信
-                        const chat = document.querySelector('df-messenger');
-                        if (chat) {
-                            console.log("df-messengerチャットコンポーネントが見つかりました。Start_Conversationインテントを送信します。");
+                        // メッセージを表示する
+                        const message1 = 'こんにちは！ゲストさま';
+                        const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
+                        const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
 
-                            // renderRootが存在するかをチェックしてから処理を行う
-                            if (chat.renderRoot) {
-                                const messengerChat = chat.renderRoot.querySelector('df-messenger-chat');
-                                
-                                if (messengerChat) {
-                                    console.log("df-messenger-chatが見つかりました。Start_Conversationを送信します。");
-                                    messengerChat._handleQueryInput({
-                                        detail: { query: 'Start_Conversation' }
-                                    });
-                                } else {
-                                    console.log("df-messenger-chatが見つかりませんでした。");
-                                }
+                        dfMessenger.renderCustomText(message1, true);
+                        console.log("メッセージ1を送信しました。");
+                        dfMessenger.renderCustomText(message2, true);
+                        console.log("メッセージ2を送信しました。");
+                        dfMessenger.renderCustomText(message3, true);
+                        console.log("メッセージ3を送信しました。");
 
-                                // メッセージを表示する
-                                const message1 = 'こんにちは！ゲストさま';
-                                const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
-                                const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
-
-                                chat.renderCustomText(message1, true);
-                                console.log("メッセージ1を送信しました。");
-                                chat.renderCustomText(message2, true);
-                                console.log("メッセージ2を送信しました。");
-                                chat.renderCustomText(message3, true);
-                                console.log("メッセージ3を送信しました。");
-
-                                // チップ（選択肢）を表示
-                                const payload = [
+                        // チップ（選択肢）を表示
+                        const payload = [
+                            {
+                                "type": "chips",
+                                "options": [
                                     {
-                                        "type": "chips",
-                                        "options": [
-                                            {
-                                                "text": "質問カテゴリから選ぶ"
-                                            }
-                                        ]
+                                        "text": "質問カテゴリから選ぶ"
                                     }
-                                ];
-                                chat.renderCustomCard(payload);
-                                console.log("チップを表示しました。");
-
-                            } else {
-                                console.log("renderRootが見つかりませんでした。df-messengerが正しくロードされていない可能性があります。");
+                                ]
                             }
+                        ];
+                        dfMessenger.renderCustomCard(payload);
+                        console.log("チップを表示しました。");
 
-                        } else {
-                            console.log("df-messengerチャットコンポーネントが見つかりませんでした。");
-                        }
                     } else {
                         console.log("df-messenger-chat-bubbleが見つかりませんでした。");
                     }
@@ -255,6 +230,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
