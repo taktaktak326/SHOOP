@@ -176,10 +176,17 @@
                             console.log("df-messengerチャットコンポーネントが見つかりました。Start_Conversationインテントを送信します。");
 
                             // renderRootが存在するかをチェックしてから処理を行う
-                            if (chat.renderRoot && chat.renderRoot.querySelector('df-messenger-chat')) {
-                                chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
-                                    detail: { query: 'Start_Conversation' }
-                                });
+                            if (chat.renderRoot) {
+                                const messengerChat = chat.renderRoot.querySelector('df-messenger-chat');
+                                
+                                if (messengerChat) {
+                                    console.log("df-messenger-chatが見つかりました。Start_Conversationを送信します。");
+                                    messengerChat._handleQueryInput({
+                                        detail: { query: 'Start_Conversation' }
+                                    });
+                                } else {
+                                    console.log("df-messenger-chatが見つかりませんでした。");
+                                }
 
                                 // メッセージを表示する
                                 const message1 = 'こんにちは！ゲストさま';
@@ -208,7 +215,7 @@
                                 console.log("チップを表示しました。");
 
                             } else {
-                                console.log("renderRootまたはdf-messenger-chatが見つかりませんでした。");
+                                console.log("renderRootが見つかりませんでした。df-messengerが正しくロードされていない可能性があります。");
                             }
 
                         } else {
@@ -248,6 +255,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
