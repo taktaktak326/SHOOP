@@ -138,50 +138,42 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // df-messenger が定義された後にチャットボットにメッセージを送信する関数
+  // 5秒後にdf-messenger-chat-bubbleをクリックして展開、メッセージを送信する関数
   function sendMessageToChatBot() {
     console.log("df-messenger のメッセージ送信プロセスを開始します...");
 
     // df-messenger要素を取得
     const chatElement = document.querySelector("df-messenger");
 
-    // df-messenger が見つかった場合
     if (chatElement) {
       console.log("df-messenger が見つかりました:", chatElement);
 
-      // Webコンポーネント内部でのイベントリスナーを設定
-      chatElement.addEventListener('df-messenger-loaded', function () {
-        console.log("df-messenger がロードされました。");
+      // df-messenger-chat-bubbleを取得して展開する
+      const chatBubble = chatElement.shadowRoot.querySelector('df-messenger-chat-bubble');
+      if (chatBubble) {
+        console.log("df-messenger-chat-bubble が見つかりました:", chatBubble);
 
-        // シャドウDOM内部の df-messenger-chat を取得
-        const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
-        console.log("df-messenger-chat:", chatWindow);
+        // チャットバブルをクリックして展開（expanded属性を設定）
+        chatBubble.setAttribute("expanded", "true");
 
-        if (chatWindow) {
-          // テキスト入力フィールドにアクセス
-          const textInput = chatWindow.shadowRoot.querySelector('input');
-          console.log("テキスト入力フィールド:", textInput);
+        // イベントを使って内部のメッセージ送信処理を呼び出す
+        setTimeout(() => {
+          const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
+          if (chatWindow) {
+            console.log("df-messenger-chat が見つかりました:", chatWindow);
 
-          // 送信ボタンにアクセス
-          const sendButton = chatWindow.shadowRoot.querySelector('button.send');
-          console.log("送信ボタン:", sendButton);
+            chatWindow._handleQueryInput({
+              detail: { query: 'こんにちは、どうすればいいですか？' }
+            });
 
-          if (textInput && sendButton) {
-            // テキスト入力フィールドにメッセージを設定
-            textInput.value = "こんにちは、どうすればいいですか？";
-            console.log("メッセージが入力されました。");
-
-            // 送信ボタンをクリック
-            sendButton.click();
-            console.log("送信ボタンがクリックされました。");
-
+            console.log("メッセージが送信されました。");
           } else {
-            console.error("テキスト入力または送信ボタンが見つかりませんでした。");
+            console.error("df-messenger-chat 要素が見つかりませんでした。");
           }
-        } else {
-          console.error("df-messenger-chat 要素が見つかりませんでした。");
-        }
-      });
+        }, 1000);  // チャットが展開されるまで1秒待つ
+      } else {
+        console.error("df-messenger-chat-bubble 要素が見つかりませんでした。");
+      }
     } else {
       console.error("df-messenger 要素が見つかりませんでした。");
     }
@@ -194,7 +186,6 @@
     console.error("df-messenger が定義されていません。");
   });
 </script>
-
 
 
 
