@@ -138,44 +138,50 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // df-messenger が定義された後にチャットボットに文字を送信する関数
+  // 5秒後にチャットボットに文字を入力して送信する関数
   function sendMessageToChatBot() {
-    console.log("df-messenger がロードされました。メッセージを送信します...");
+    console.log("df-messenger がロードされ、メッセージを送信します...");
 
     // df-messenger要素を取得
     const chatElement = document.querySelector("df-messenger");
 
+    // df-messenger が見つかった場合
     if (chatElement) {
-      // df-messenger の内部シャドウDOMにアクセス
-      const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
-      
-      if (chatWindow) {
-        // テキスト入力フィールドにアクセス
-        const textInput = chatWindow.shadowRoot.querySelector('input');
+      // Webコンポーネント内部でのイベントリスナーを設定
+      chatElement.addEventListener('df-messenger-loaded', function () {
+        console.log("df-messenger がロードされました。");
 
-        // 送信ボタンにアクセス
-        const sendButton = chatWindow.shadowRoot.querySelector('button.send');
+        // シャドウDOM内部の df-messenger-chat を取得
+        const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
 
-        if (textInput && sendButton) {
-          // テキスト入力フィールドにメッセージを設定
-          textInput.value = "こんにちは、どうすればいいですか？";
+        if (chatWindow) {
+          // テキスト入力フィールドにアクセス
+          const textInput = chatWindow.shadowRoot.querySelector('input');
+          
+          // 送信ボタンにアクセス
+          const sendButton = chatWindow.shadowRoot.querySelector('button.send');
 
-          // 送信ボタンをクリック
-          sendButton.click();
+          if (textInput && sendButton) {
+            // テキスト入力フィールドにメッセージを設定
+            textInput.value = "こんにちは、どうすればいいですか？";
 
-          console.log("メッセージが送信されました。");
+            // 送信ボタンをクリック
+            sendButton.click();
+
+            console.log("メッセージが送信されました。");
+          } else {
+            console.error("テキスト入力または送信ボタンが見つかりませんでした。");
+          }
         } else {
-          console.error("テキスト入力または送信ボタンが見つかりませんでした。");
+          console.error("df-messenger-chat 要素が見つかりませんでした。");
         }
-      } else {
-        console.error("df-messenger-chat 要素が見つかりませんでした。");
-      }
+      });
     } else {
       console.error("df-messenger 要素が見つかりませんでした。");
     }
   }
 
-  // df-messenger が完全にロードされるまで待機し、その後にメッセージを送信
+  // df-messenger のロードが完了した後、5秒後にメッセージ送信を行う
   customElements.whenDefined('df-messenger').then(() => {
     setTimeout(sendMessageToChatBot, 5000);  // df-messengerがロードされたら5秒後にメッセージ送信
   }).catch(() => {
