@@ -124,39 +124,35 @@
     </div>
   </div>
 
- <script>
+  <script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
-        let countdown = 10;
+        let countdown = 10; // デバッグ用に10秒
 
-        // Reset the timer on user interaction
+        // ユーザー操作を監視してタイマーをリセット
         window.onload = resetTimer;
         document.onmousemove = resetTimer;
         document.onkeypress = resetTimer;
         document.ontouchstart = resetTimer;  // for mobile devices
 
+        // 10秒経過後にチャットボットを自動的に開く
         function openChatBubble() {
-            console.log("10秒間操作がなかったため、チャットボットが開かれます。");
+            console.log("10秒間操作がなかったため、チャットボットを開きます。");
 
-            // shadow DOM内のチャットボットバブルを開く
-            const chatBubble = document.querySelector('df-messenger');
-            if (chatBubble && chatBubble.shadowRoot) {
-                const chatWindow = chatBubble.shadowRoot.querySelector('df-messenger-chat');
-                if (chatWindow) {
-                    chatWindow.toggleChat();
-                    console.log("チャットボットが開かれました。");
-                } else {
-                    console.log("チャットウィンドウが見つかりませんでした。");
-                }
+            // df-messenger-chat-bubble要素のexpanded属性をtrueに設定
+            const chatBubble = document.querySelector('df-messenger-chat-bubble');
+            if (chatBubble) {
+                chatBubble.setAttribute("expanded", "true");
+                console.log("チャットボットが開かれました。");
             } else {
                 console.log("チャットボットが見つかりませんでした。");
             }
 
-            // カウントダウンを終了
-            clearInterval(countdownInterval);
+            clearInterval(countdownInterval);  // カウントダウンを終了
         }
 
+        // タイマーとカウントダウンのリセット
         function resetTimer() {
             clearTimeout(time);
             clearInterval(countdownInterval);
