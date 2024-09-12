@@ -147,17 +147,17 @@
                 chatBubble.setAttribute("expanded", "true");
                 console.log("チャットボットが開かれました。");
 
-                // カスタムイベントを送信
+                // Next_Conversation カスタムイベントを送信
                 const chat = document.querySelector('df-messenger');
                 if (chat) {
                     console.log("チャットボットが見つかりました。イベントを送信します。");
 
-                    // `df-request-event` イベントを発火させて、カスタムイベントを送信
+                    // カスタムイベントを発火させるために `df-request-event` を使用
                     const event = new CustomEvent('df-request-event', {
                         detail: {
-                            eventName: 'Next_Conversation',  // イベント名
-                            languageCode: 'ja',  // 言語コード
-                            parameters: {}  // 必要に応じてパラメータを追加
+                            eventName: 'Next_Conversation',  // カスタムイベント名
+                            languageCode: 'ja',  // 言語コードを指定
+                            parameters: {}  // パラメータがあればここに追加
                         }
                     });
 
@@ -200,8 +200,6 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
-
-
 
 
 
