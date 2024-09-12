@@ -138,14 +138,13 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // 5秒後にチャットボットに文字を入力して送信する関数
+  // df-messenger が定義された後にチャットボットに文字を送信する関数
   function sendMessageToChatBot() {
-    console.log("チャットボットにメッセージを送信します...");
+    console.log("df-messenger がロードされました。メッセージを送信します...");
 
-    // df-messenger 要素を取得
+    // df-messenger要素を取得
     const chatElement = document.querySelector("df-messenger");
 
-    // df-messenger-chatの存在確認
     if (chatElement) {
       // df-messenger の内部シャドウDOMにアクセス
       const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
@@ -153,7 +152,7 @@
       if (chatWindow) {
         // テキスト入力フィールドにアクセス
         const textInput = chatWindow.shadowRoot.querySelector('input');
-        
+
         // 送信ボタンにアクセス
         const sendButton = chatWindow.shadowRoot.querySelector('button.send');
 
@@ -176,8 +175,12 @@
     }
   }
 
-  // 5秒後にメッセージを送信するようにタイマーを設定
-  setTimeout(sendMessageToChatBot, 5000);  // 5秒後に実行
+  // df-messenger が完全にロードされるまで待機し、その後にメッセージを送信
+  customElements.whenDefined('df-messenger').then(() => {
+    setTimeout(sendMessageToChatBot, 5000);  // df-messengerがロードされたら5秒後にメッセージ送信
+  }).catch(() => {
+    console.error("df-messenger が定義されていません。");
+  });
 </script>
 
 
