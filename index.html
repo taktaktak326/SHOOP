@@ -137,41 +137,57 @@
         document.onkeypress = resetTimer;
         document.ontouchstart = resetTimer;  // for mobile devices
 
+        // df-messengerが完全にロードされたことを確認する
+        function waitForDfMessenger() {
+            return new Promise((resolve) => {
+                const checkDfMessenger = () => {
+                    const dfMessenger = document.querySelector('df-messenger');
+                    if (dfMessenger) {
+                        resolve(dfMessenger);
+                    } else {
+                        setTimeout(checkDfMessenger, 100);  // 100msごとにチェック
+                    }
+                };
+                checkDfMessenger();
+            });
+        }
+
         // 10秒経過後にチャットボットにカスタムメッセージを表示
         function displayCustomMessages() {
             console.log("10秒間操作がなかったため、カスタムメッセージを表示します。");
 
-            // df-messenger要素がロードされているか確認
-            const dfMessenger = document.querySelector('df-messenger');
-            if (dfMessenger) {
-                // メッセージを表示する
-                const message1 = 'こんにちは！ゲストさま';
-                const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
-                const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
+            // df-messengerがロードされるまで待機
+            waitForDfMessenger().then((dfMessenger) => {
+                if (dfMessenger) {
+                    // メッセージを表示する
+                    const message1 = 'こんにちは！ゲストさま';
+                    const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
+                    const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
 
-                dfMessenger.renderCustomText(message1, true);
-                dfMessenger.renderCustomText(message2, true);
-                dfMessenger.renderCustomText(message3, true);
+                    dfMessenger.renderCustomText(message1, true);
+                    dfMessenger.renderCustomText(message2, true);
+                    dfMessenger.renderCustomText(message3, true);
 
-                // チップ（選択肢）を表示
-                const payload = [
-                    {
-                        "type": "chips",
-                        "options": [
-                            {
-                                "text": "質問カテゴリから選ぶ"
-                            }
-                        ]
-                    }
-                ];
-                dfMessenger.renderCustomCard(payload);
+                    // チップ（選択肢）を表示
+                    const payload = [
+                        {
+                            "type": "chips",
+                            "options": [
+                                {
+                                    "text": "質問カテゴリから選ぶ"
+                                }
+                            ]
+                        }
+                    ];
+                    dfMessenger.renderCustomCard(payload);
 
-                console.log("カスタムメッセージと選択肢が表示されました。");
-            } else {
-                console.log("df-messengerが見つかりませんでした。");
-            }
+                    console.log("カスタムメッセージと選択肢が表示されました。");
+                } else {
+                    console.log("df-messengerが見つかりませんでした。");
+                }
 
-            clearInterval(countdownInterval);  // カウントダウンを終了
+                clearInterval(countdownInterval);  // カウントダウンを終了
+            });
         }
 
         // タイマーとカウントダウンのリセット
@@ -197,6 +213,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 </body>
 </html>
