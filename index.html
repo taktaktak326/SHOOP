@@ -152,12 +152,12 @@
                 if (chat) {
                     console.log("チャットボットが見つかりました。イベントを送信します。");
 
-                    // カスタムイベントを発火させるために `df-request-event` を使用
+                    // `df-request-event` イベントを発火させて、カスタムイベントを送信
                     const event = new CustomEvent('df-request-event', {
                         detail: {
                             eventName: 'Next_Conversation',  // カスタムイベント名
                             languageCode: 'ja',  // 言語コードを指定
-                            parameters: {}  // パラメータがあればここに追加
+                            parameters: {}  // 必要に応じてパラメータを追加
                         }
                     });
 
