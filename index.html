@@ -126,67 +126,58 @@
   </div>
 
 <script>
-  let countdown = 5;  // 5秒のカウントダウン
+  let countdown = 5; // 5秒のカウントダウン
 
-  // 1秒ごとにカウントダウンを表示する関数
-  const countdownInterval = setInterval(() => {
-    console.log(`残り ${countdown} 秒`);
-    countdown--;
+// 1秒ごとにカウントダウンを表示する関数
+const countdownInterval = setInterval(() => {
+  console.log(`残り ${countdown} 秒`);
+  countdown--;
 
-    if (countdown < 0) {
-      clearInterval(countdownInterval);  // カウントダウンが終わったらインターバルをクリア
-    }
-  }, 1000);  // 1秒ごとに実行
+  if (countdown < 0) {
+    clearInterval(countdownInterval); // カウントダウンが終わったらインターバルをクリア
+  }
+}, 1000); // 1秒ごとに実行
 
-  // 5秒後にチャットボットに文字を入力して送信する関数
-  function sendMessageToChatBot() {
-    console.log("df-messenger がロードされ、メッセージを送信します...");
+// 5秒後にチャットボットに文字を入力して送信する関数
+function sendMessageToChatBot() {
+  console.log("df-messenger がロードされ、メッセージを送信します...");
 
-    // df-messenger要素を取得
-    const chatElement = document.querySelector("df-messenger");
+  // df-messenger要素を取得
+  const chatElement = document.querySelector("df-messenger");
 
-    // df-messenger が見つかった場合
-    if (chatElement) {
-      // Webコンポーネント内部でのイベントリスナーを設定
-      chatElement.addEventListener('df-messenger-loaded', function () {
-        console.log("df-messenger がロードされました。");
+  // df-messenger が見つかった場合
+  if (chatElement) {
+    // Webコンポーネント内部でのイベントリスナーを設定
+    chatElement.addEventListener('df-messenger-loaded', function () {
+      console.log("df-messenger がロードされました。");
 
-        // シャドウDOM内部の df-messenger-chat を取得
-        const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
-
-        if (chatWindow) {
-          // テキスト入力フィールドにアクセス
-          const textInput = chatWindow.shadowRoot.querySelector('input');
-          
-          // 送信ボタンにアクセス
-          const sendButton = chatWindow.shadowRoot.querySelector('button.send');
-
-          if (textInput && sendButton) {
-            // テキスト入力フィールドにメッセージを設定
-            textInput.value = "こんにちは、どうすればいいですか？";
-
-            // 送信ボタンをクリック
-            sendButton.click();
-
-            console.log("メッセージが送信されました。");
-          } else {
-            console.error("テキスト入力または送信ボタンが見つかりませんでした。");
-          }
-        } else {
-          console.error("df-messenger-chat 要素が見つかりませんでした。");
+      // Custom Event を送信
+      const event = new CustomEvent('df-request-event', {
+        detail: {
+          eventName: 'Send_Message', // イベント名
+          languageCode: 'ja', // 言語コードを指定
+          parameters: {} // 必要に応じてパラメータを追加
         }
       });
-    } else {
-      console.error("df-messenger 要素が見つかりませんでした。");
-    }
-  }
 
-  // df-messenger のロードが完了した後、5秒後にメッセージ送信を行う
-  customElements.whenDefined('df-messenger').then(() => {
-    setTimeout(sendMessageToChatBot, 5000);  // df-messengerがロードされたら5秒後にメッセージ送信
-  }).catch(() => {
-    console.error("df-messenger が定義されていません。");
-  });
+      // df-messenger 要素にイベントを送信
+      chatElement.dispatchEvent(event);
+      console.log("Send_Message イベントが送信されました。");
+
+      // イベントの詳細情報をログに出力
+      console.log("送信されたイベントの詳細:", event);
+    });
+  } else {
+    console.error("df-messenger 要素が見つかりませんでした。");
+  }
+}
+
+// df-messenger のロードが完了した後、5秒後にメッセージ送信を行う
+customElements.whenDefined('df-messenger').then(() => {
+  setTimeout(sendMessageToChatBot, 5000); // df-messengerがロードされたら5秒後にメッセージ送信
+}).catch(() => {
+  console.error("df-messenger が定義されていません。");
+});
 </script>
 
 
