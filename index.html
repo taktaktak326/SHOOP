@@ -139,12 +139,15 @@
 
         // df-messengerが完全にロードされたことを確認する
         function waitForDfMessenger() {
+            console.log("waitForDfMessenger: df-messengerのロードを待機中...");
             return new Promise((resolve) => {
                 const checkDfMessenger = () => {
                     const dfMessenger = document.querySelector('df-messenger');
                     if (dfMessenger) {
+                        console.log("df-messengerが見つかりました。");
                         resolve(dfMessenger);
                     } else {
+                        console.log("df-messengerがまだ見つかりません。再度確認します...");
                         setTimeout(checkDfMessenger, 100);  // 100msごとにチェック
                     }
                 };
@@ -154,20 +157,23 @@
 
         // 10秒経過後にチャットボットを展開し、カスタムメッセージを表示
         function displayCustomMessages() {
-            console.log("10秒間操作がなかったため、チャットボットを展開し、カスタムメッセージを表示します。");
+            console.log("10秒間操作がなかったため、チャットボットを展開します。");
 
             // df-messengerがロードされるまで待機
             waitForDfMessenger().then((dfMessenger) => {
                 if (dfMessenger) {
+                    console.log("df-messengerがロードされました。チャットボットの展開を開始します。");
                     // チャットボットを展開
                     const chatBubble = document.querySelector('df-messenger-chat-bubble');
                     if (chatBubble) {
+                        console.log("df-messenger-chat-bubbleが見つかりました。expanded属性を設定します。");
                         chatBubble.setAttribute("expanded", "true");
                         console.log("チャットボットが展開されました。");
 
                         // Start_Conversation インテントを送信
                         const chat = document.querySelector('df-messenger');
                         if (chat) {
+                            console.log("df-messengerチャットコンポーネントが見つかりました。Start_Conversationインテントを送信します。");
                             chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
                                 detail: { query: 'Start_Conversation' }
                             });
@@ -178,8 +184,11 @@
                             const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
 
                             chat.renderCustomText(message1, true);
+                            console.log("メッセージ1を送信しました。");
                             chat.renderCustomText(message2, true);
+                            console.log("メッセージ2を送信しました。");
                             chat.renderCustomText(message3, true);
+                            console.log("メッセージ3を送信しました。");
 
                             // チップ（選択肢）を表示
                             const payload = [
@@ -193,9 +202,13 @@
                                 }
                             ];
                             chat.renderCustomCard(payload);
+                            console.log("チップを表示しました。");
 
-                            console.log("カスタムメッセージと選択肢が表示されました。");
+                        } else {
+                            console.log("df-messengerチャットコンポーネントが見つかりませんでした。");
                         }
+                    } else {
+                        console.log("df-messenger-chat-bubbleが見つかりませんでした。");
                     }
                 } else {
                     console.log("df-messengerが見つかりませんでした。");
@@ -228,6 +241,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
