@@ -138,27 +138,47 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // 5秒後にDialogflowにカスタムイベントを送信する関数
-  function sendCustomEvent() {
-    console.log("カスタムイベント 'Next_Conversation' を送信します...");
+  // 5秒後にチャットボットに文字を入力して送信する関数
+  function sendMessageToChatBot() {
+    console.log("チャットボットにメッセージを送信します...");
 
-    // Dialogflow Webコンポーネントにカスタムイベントを送信する
-    window.postMessage({
-      event: 'df_custom_event',
-      eventName: 'Next_Conversation',  // カスタムイベント名
-      parameters: {
-        user: 'John Doe',
-        session: '12345'
+    // df-messenger 要素を取得
+    const chatElement = document.querySelector("df-messenger");
+
+    // df-messenger-chatの存在確認
+    if (chatElement) {
+      // df-messenger の内部シャドウDOMにアクセス
+      const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
+      
+      if (chatWindow) {
+        // テキスト入力フィールドにアクセス
+        const textInput = chatWindow.shadowRoot.querySelector('input');
+        
+        // 送信ボタンにアクセス
+        const sendButton = chatWindow.shadowRoot.querySelector('button.send');
+
+        if (textInput && sendButton) {
+          // テキスト入力フィールドにメッセージを設定
+          textInput.value = "こんにちは、どうすればいいですか？";
+
+          // 送信ボタンをクリック
+          sendButton.click();
+
+          console.log("メッセージが送信されました。");
+        } else {
+          console.error("テキスト入力または送信ボタンが見つかりませんでした。");
+        }
+      } else {
+        console.error("df-messenger-chat 要素が見つかりませんでした。");
       }
-    }, '*');  // '*' はすべてのターゲットにメッセージを送信するための指定
-
-    console.log("カスタムイベント 'Next_Conversation' が送信されました。");
+    } else {
+      console.error("df-messenger 要素が見つかりませんでした。");
+    }
   }
 
-  // 5秒後にカスタムイベントを送信するようにタイマーを設定
-  setTimeout(sendCustomEvent, 5000);  // 5秒後に実行
+  // 5秒後にメッセージを送信するようにタイマーを設定
+  setTimeout(sendMessageToChatBot, 5000);  // 5秒後に実行
 </script>
-
 
 
 
