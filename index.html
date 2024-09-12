@@ -128,6 +128,9 @@
 <script>
     let inactivityTime = function () {
         let time;
+        let countdownInterval;
+        let countdown = 10;
+
         // Reset the timer on user interaction
         window.onload = resetTimer;
         document.onmousemove = resetTimer;
@@ -139,11 +142,28 @@
             const chatBubble = document.querySelector('df-messenger');
             chatBubble.shadowRoot.querySelector('df-messenger-chat-bubble').open();
             console.log("60秒間操作がなかったため、チャットボットが開きました。");
+
+            // カウントダウンを終了
+            clearInterval(countdownInterval);
         }
 
         function resetTimer() {
             clearTimeout(time);
-            time = setTimeout(openChatBubble, 60000);  // 60秒間操作がない場合にチャットを開く
+            clearInterval(countdownInterval);
+            countdown = 10; // カウントダウンのリセット
+            console.log("カウントダウンをリセットしました。");
+
+            // 毎秒カウントダウンをコンソールに表示
+            countdownInterval = setInterval(() => {
+                countdown--;
+                console.log("残り時間: " + countdown + "秒");
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // 60秒後にチャットを開く
+            time = setTimeout(openChatBubble, 60000);
         }
     };
 
