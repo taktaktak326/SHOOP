@@ -170,7 +170,15 @@
     // 質問を入力するtextarea要素を取得
     const inputBox = document.querySelector("textarea.input-box");
 
+    if (!inputBox) {
+      console.log("inputBox が見つかりませんでした。全体のDOM構造を確認しています...");
+      console.log("現在のDOM構造:", document.body.innerHTML);  // DOM全体を出力して確認
+      return;
+    }
+
     if (inputBox) {
+      console.log("inputBox が見つかりました:", inputBox);
+
       // 質問を入力
       const question = "これは自動化された質問です。";
       inputBox.value = question;  // テキストエリアに質問を設定
@@ -184,6 +192,7 @@
       const sendButton = document.querySelector("#send-icon-button");
 
       if (sendButton) {
+        console.log("送信ボタンが見つかりました:", sendButton);
         // 送信ボタンを有効化し、クリック
         sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
         sendButton.click();
@@ -191,11 +200,10 @@
       } else {
         console.error("送信ボタンが見つかりませんでした。");
       }
-    } else {
-      console.error("入力ボックスが見つかりませんでした。");
     }
   }
 </script>
+
 
 
 
