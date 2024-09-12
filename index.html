@@ -137,26 +137,38 @@
         document.onkeypress = resetTimer;
         document.ontouchstart = resetTimer;  // for mobile devices
 
-        // 10秒経過後にチャットボットを自動的に開き、インテントを送信
-        function openChatBubble() {
-            console.log("10秒間操作がなかったため、チャットボットを開きます。");
+        // 10秒経過後にチャットボットにカスタムメッセージを表示
+        function displayCustomMessages() {
+            console.log("10秒間操作がなかったため、カスタムメッセージを表示します。");
 
-            // df-messenger-chat-bubble要素のexpanded属性をtrueに設定
-            const chatBubble = document.querySelector('df-messenger-chat-bubble');
-            if (chatBubble) {
-                chatBubble.setAttribute("expanded", "true");
-                console.log("チャットボットが開かれました。");
+            // df-messenger要素がロードされているか確認
+            const dfMessenger = document.querySelector('df-messenger');
+            if (dfMessenger) {
+                // メッセージを表示する
+                const message1 = 'こんにちは！ゲストさま';
+                const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
+                const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
 
-                // Start_Conversation インテントを送信
-                const chat = document.querySelector('df-messenger');
-                if (chat) {
-                    chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
-                        detail: { query: 'Start_Conversation' }
-                    });
-                    console.log("Start_Conversation インテントが送信されました。");
-                }
+                dfMessenger.renderCustomText(message1, true);
+                dfMessenger.renderCustomText(message2, true);
+                dfMessenger.renderCustomText(message3, true);
+
+                // チップ（選択肢）を表示
+                const payload = [
+                    {
+                        "type": "chips",
+                        "options": [
+                            {
+                                "text": "質問カテゴリから選ぶ"
+                            }
+                        ]
+                    }
+                ];
+                dfMessenger.renderCustomCard(payload);
+
+                console.log("カスタムメッセージと選択肢が表示されました。");
             } else {
-                console.log("チャットボットが見つかりませんでした。");
+                console.log("df-messengerが見つかりませんでした。");
             }
 
             clearInterval(countdownInterval);  // カウントダウンを終了
@@ -178,12 +190,13 @@
                 }
             }, 1000);
 
-            // 10秒後にチャットを開く
-            time = setTimeout(openChatBubble, 10000);
+            // 10秒後にカスタムメッセージを表示
+            time = setTimeout(displayCustomMessages, 10000);
         }
     };
 
     inactivityTime();  // 関数を呼び出して開始
-  </script>
+</script>
+
 </body>
 </html>
