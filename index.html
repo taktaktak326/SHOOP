@@ -153,10 +153,16 @@
                     console.log("チャットボットが見つかりました。インテントを送信します。");
 
                     // インテント送信イベントを発火
-                    chat.shadowRoot.querySelector('df-messenger').dispatchEvent(new CustomEvent('df-request-query-input', {
+                    const event = new CustomEvent('df-request-query-input', {
                         detail: { query: 'Start_Conversation' }
-                    }));
+                    });
+
+                    chat.shadowRoot.querySelector('df-messenger').dispatchEvent(event);
                     console.log("Start_Conversation インテントが送信されました。");
+
+                    // イベントの詳細情報をログに出力
+                    console.log("送信されたイベントの詳細:", event);
+                    console.log("送信されたクエリ:", event.detail.query);
                 } else {
                     console.log("df-messenger 要素が見つかりませんでした。");
                 }
@@ -190,6 +196,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
