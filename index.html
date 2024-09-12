@@ -137,7 +137,7 @@
         document.onkeypress = resetTimer;
         document.ontouchstart = resetTimer;  // for mobile devices
 
-        // 10秒経過後にチャットボットを自動的に開き、インテントを送信
+        // 10秒経過後にチャットボットを自動的に開き、イベントを送信
         function openChatBubble() {
             console.log("10秒間操作がなかったため、チャットボットを開きます。");
 
@@ -147,25 +147,25 @@
                 chatBubble.setAttribute("expanded", "true");
                 console.log("チャットボットが開かれました。");
 
-                // Next_Conversation インテントを送信
+                // Next_Conversation カスタムイベントを送信
                 const chat = document.querySelector('df-messenger');
                 if (chat) {
-                    console.log("チャットボットが見つかりました。インテントを送信します。");
+                    console.log("チャットボットが見つかりました。イベントを送信します。");
 
-                    // インテント送信イベントを遅延させて発火
-                    setTimeout(() => {
-                        const event = new CustomEvent('df-request-query-input', {
-                            detail: { query: 'Next_Conversation' }  // インテント名をNext_Conversationに変更
-                        });
+                    // カスタムイベント送信
+                    const event = new CustomEvent('df-request-event', {
+                        detail: {
+                            eventName: 'Next_Conversation',  // イベント名を指定
+                            parameters: {}  // 必要であればパラメータも指定可能
+                        }
+                    });
 
-                        // df-messenger要素にイベントを送信
-                        chat.dispatchEvent(event);
-                        console.log("Next_Conversation インテントが送信されました。");
+                    // df-messenger要素にイベントを送信
+                    chat.dispatchEvent(event);
+                    console.log("Next_Conversation イベントが送信されました。");
 
-                        // イベントの詳細情報をログに出力
-                        console.log("送信されたイベントの詳細:", event);
-                        console.log("送信されたクエリ:", event.detail.query);
-                    }, 1000); // 1秒遅延させてインテントを送信
+                    // イベントの詳細情報をログに出力
+                    console.log("送信されたイベントの詳細:", event);
                 } else {
                     console.log("df-messenger 要素が見つかりませんでした。");
                 }
@@ -199,7 +199,6 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
-
 
 
 
