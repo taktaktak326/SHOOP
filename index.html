@@ -140,21 +140,29 @@
 
   // 5秒後に指定されたボタンをクリックする関数
   function clickCloseButton() {
+    console.log("ボタンの検索を開始します...");
+    
     // ボタンをクラス名で取得
     const closeButton = document.querySelector(".close-button.bubble.focus-outline");
     
-    // ボタンが存在する場合はクリックする
+    // デバッグ情報: ボタンの存在確認
     if (closeButton) {
+      console.log("ボタンが見つかりました:", closeButton);
+      console.log("aria-expanded:", closeButton.getAttribute("aria-expanded"));
+      console.log("aria-label:", closeButton.getAttribute("aria-label"));
+
+      // ボタンをクリック
       closeButton.click();
       console.log("ボタンがクリックされました。");
     } else {
-      console.log("ボタンが見つかりませんでした。");
+      console.error("ボタンが見つかりませんでした。クラス名を確認してください。");
     }
   }
 
   // 5秒後にボタンをクリックするようにタイマーを設定
   setTimeout(clickCloseButton, 5000);  // 5秒後に実行
 </script>
+
 
 
 
