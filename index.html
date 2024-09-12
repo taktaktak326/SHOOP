@@ -126,41 +126,39 @@
   </div>
 
 <script>
-  let countdown = 5;  // 5秒のカウントダウン
+  // 5秒後に質問を入力して送信する処理
+  setTimeout(() => {
+    console.log("入力ボックスと送信ボタンを探しています...");
 
-  // 1秒ごとにカウントダウンを表示する関数
-  const countdownInterval = setInterval(() => {
-    console.log(`残り ${countdown} 秒`);
-    countdown--;
+    // 質問を入力するtextarea要素を取得
+    const inputBox = document.querySelector(".input-box");
+    
+    if (inputBox) {
+      // 質問を入力
+      const question = "これは自動化された質問です。";
+      inputBox.value = question;  // テキストエリアに質問を設定
+      console.log(`質問が入力されました: ${question}`);
 
-    if (countdown < 0) {
-      clearInterval(countdownInterval);  // カウントダウンが終わったらインターバルをクリア
-    }
-  }, 1000);  // 1秒ごとに実行
+      // inputイベントを手動で発火して入力を反映させる
+      const event = new Event('input', { bubbles: true });
+      inputBox.dispatchEvent(event);
 
-  // 5秒後にdf-messenger-chat-bubbleをクリックする関数
-  function clickChatBubble() {
-    console.log("df-messenger-chat-bubble の検索を開始します...");
+      // 送信ボタンを取得
+      const sendButton = document.querySelector("#send-icon-button");
 
-    // df-messenger-chat-bubble 要素をクエリで取得
-    const chatBubble = document.querySelector("df-messenger-chat-bubble");
-
-    // デバッグ情報: chat bubble の存在確認
-    if (chatBubble) {
-      console.log("df-messenger-chat-bubble が見つかりました:", chatBubble);
-
-      // Webコンポーネント内のクリックイベントを発火させるために属性を変更
-      chatBubble.setAttribute("expanded", "true");  // チャットを展開
-      console.log("df-messenger-chat-bubble がクリックされました。");
+      if (sendButton) {
+        // 送信ボタンを有効化し、クリック
+        sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
+        sendButton.click();
+        console.log("送信ボタンがクリックされました。");
+      } else {
+        console.error("送信ボタンが見つかりませんでした。");
+      }
     } else {
-      console.error("df-messenger-chat-bubble が見つかりませんでした。");
+      console.error("入力ボックスが見つかりませんでした。");
     }
-  }
-
-  // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
-  setTimeout(clickChatBubble, 5000);  // 5秒後に実行
+  }, 5000);  // 5秒後に実行
 </script>
-
 
 
 
