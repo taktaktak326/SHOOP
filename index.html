@@ -138,30 +138,29 @@
     }
   }, 1000);  // 1秒ごとに実行
 
-  // 5秒後に指定されたボタンをクリックする関数
-  function clickCloseButton() {
-    console.log("ボタンの検索を開始します...");
-    
-    // ボタンをクラス名で取得
-    const closeButton = document.querySelector(".close-button.bubble.focus-outline");
-    
-    // デバッグ情報: ボタンの存在確認
-    if (closeButton) {
-      console.log("ボタンが見つかりました:", closeButton);
-      console.log("aria-expanded:", closeButton.getAttribute("aria-expanded"));
-      console.log("aria-label:", closeButton.getAttribute("aria-label"));
+  // 5秒後にdf-messenger-chat-bubbleをクリックする関数
+  function clickChatBubble() {
+    console.log("df-messenger-chat-bubble の検索を開始します...");
 
-      // ボタンをクリック
-      closeButton.click();
-      console.log("ボタンがクリックされました。");
+    // df-messenger-chat-bubble 要素をクエリで取得
+    const chatBubble = document.querySelector("df-messenger-chat-bubble");
+
+    // デバッグ情報: chat bubble の存在確認
+    if (chatBubble) {
+      console.log("df-messenger-chat-bubble が見つかりました:", chatBubble);
+
+      // Webコンポーネント内のクリックイベントを発火させるために属性を変更
+      chatBubble.setAttribute("expanded", "true");  // チャットを展開
+      console.log("df-messenger-chat-bubble がクリックされました。");
     } else {
-      console.error("ボタンが見つかりませんでした。クラス名を確認してください。");
+      console.error("df-messenger-chat-bubble が見つかりませんでした。");
     }
   }
 
-  // 5秒後にボタンをクリックするようにタイマーを設定
-  setTimeout(clickCloseButton, 5000);  // 5秒後に実行
+  // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
+  setTimeout(clickChatBubble, 5000);  // 5秒後に実行
 </script>
+
 
 
 
