@@ -147,18 +147,18 @@
                 chatBubble.setAttribute("expanded", "true");
                 console.log("チャットボットが開かれました。");
 
-                // Start_Conversation インテントを送信
+                // Next_Conversation インテントを送信
                 const chat = document.querySelector('df-messenger');
                 if (chat) {
                     console.log("チャットボットが見つかりました。インテントを送信します。");
 
                     // インテント送信イベントを発火
                     const event = new CustomEvent('df-request-query-input', {
-                        detail: { query: 'Start_Conversation' }
+                        detail: { query: 'Next_Conversation' }
                     });
 
                     chat.shadowRoot.querySelector('df-messenger').dispatchEvent(event);
-                    console.log("Start_Conversation インテントが送信されました。");
+                    console.log("Next_Conversation インテントが送信されました。");
 
                     // イベントの詳細情報をログに出力
                     console.log("送信されたイベントの詳細:", event);
