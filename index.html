@@ -154,10 +154,11 @@
 
                     // インテント送信イベントを発火
                     const event = new CustomEvent('df-request-query-input', {
-                        detail: { query: 'Next_Conversation' }
+                        detail: { query: 'Next_Conversation' }  // インテント名をNext_Conversationに変更
                     });
 
-                    chat.shadowRoot.querySelector('df-messenger').dispatchEvent(event);
+                    // df-messenger要素にイベントを送信
+                    chat.dispatchEvent(event);
                     console.log("Next_Conversation インテントが送信されました。");
 
                     // イベントの詳細情報をログに出力
@@ -196,6 +197,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
