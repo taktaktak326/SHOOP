@@ -174,35 +174,42 @@
                         const chat = document.querySelector('df-messenger');
                         if (chat) {
                             console.log("df-messengerチャットコンポーネントが見つかりました。Start_Conversationインテントを送信します。");
-                            chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
-                                detail: { query: 'Start_Conversation' }
-                            });
 
-                            // メッセージを表示する
-                            const message1 = 'こんにちは！ゲストさま';
-                            const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
-                            const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
+                            // renderRootが存在するかをチェックしてから処理を行う
+                            if (chat.renderRoot && chat.renderRoot.querySelector('df-messenger-chat')) {
+                                chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
+                                    detail: { query: 'Start_Conversation' }
+                                });
 
-                            chat.renderCustomText(message1, true);
-                            console.log("メッセージ1を送信しました。");
-                            chat.renderCustomText(message2, true);
-                            console.log("メッセージ2を送信しました。");
-                            chat.renderCustomText(message3, true);
-                            console.log("メッセージ3を送信しました。");
+                                // メッセージを表示する
+                                const message1 = 'こんにちは！ゲストさま';
+                                const message2 = 'minorasuチャットでは、農業について知りたいことやお悩みをご質問いただけます。\n画面下の入力欄に質問を入力いただくか、選択肢から選ばれたい場合は「質問カテゴリから選ぶ」をクリックしてください。';
+                                const message3 = '質問入力例：\n・「農業経営をはじめたい」\n・「スマート農業について知りたい」\n※個人情報の入力はお控えください。';
 
-                            // チップ（選択肢）を表示
-                            const payload = [
-                                {
-                                    "type": "chips",
-                                    "options": [
-                                        {
-                                            "text": "質問カテゴリから選ぶ"
-                                        }
-                                    ]
-                                }
-                            ];
-                            chat.renderCustomCard(payload);
-                            console.log("チップを表示しました。");
+                                chat.renderCustomText(message1, true);
+                                console.log("メッセージ1を送信しました。");
+                                chat.renderCustomText(message2, true);
+                                console.log("メッセージ2を送信しました。");
+                                chat.renderCustomText(message3, true);
+                                console.log("メッセージ3を送信しました。");
+
+                                // チップ（選択肢）を表示
+                                const payload = [
+                                    {
+                                        "type": "chips",
+                                        "options": [
+                                            {
+                                                "text": "質問カテゴリから選ぶ"
+                                            }
+                                        ]
+                                    }
+                                ];
+                                chat.renderCustomCard(payload);
+                                console.log("チップを表示しました。");
+
+                            } else {
+                                console.log("renderRootまたはdf-messenger-chatが見つかりませんでした。");
+                            }
 
                         } else {
                             console.log("df-messengerチャットコンポーネントが見つかりませんでした。");
@@ -241,6 +248,7 @@
 
     inactivityTime();  // 関数を呼び出して開始
 </script>
+
 
 
 
