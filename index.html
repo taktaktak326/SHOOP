@@ -125,7 +125,7 @@
     </div>
   </div>
 
-<script>
+ <script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
@@ -150,20 +150,13 @@
                 // Start_Conversation インテントを送信
                 const chat = document.querySelector('df-messenger');
                 if (chat) {
-                    // 確認用ログメッセージ
                     console.log("チャットボットが見つかりました。インテントを送信します。");
 
-                    // 実際にインテントを送信する部分
-                    const chatElement = chat.renderRoot.querySelector('df-messenger-chat');
-                    if (chatElement) {
-                        console.log("チャット要素が見つかりました。インテント送信を試みます。");
-                        chatElement._handleQueryInput({
-                            detail: { query: 'Start_Conversation' }
-                        });
-                        console.log("Start_Conversation インテントが送信されました。");
-                    } else {
-                        console.log("チャット要素が見つかりませんでした。");
-                    }
+                    // インテント送信イベントを発火
+                    chat.dispatchEvent(new CustomEvent('df-request-query-input', {
+                        detail: { query: 'Start_Conversation' }
+                    }));
+                    console.log("Start_Conversation インテントが送信されました。");
                 } else {
                     console.log("df-messenger 要素が見つかりませんでした。");
                 }
@@ -197,7 +190,6 @@
 
     inactivityTime();  // 関数を呼び出して開始
   </script>
-
 
 
 
