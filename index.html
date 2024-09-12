@@ -124,7 +124,7 @@
     </div>
   </div>
 
-  <script>
+ <script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
@@ -148,12 +148,12 @@
 
                 // Start_Conversation インテントを送信
                 const chat = document.querySelector('df-messenger');
-                chat.emitCustomEvent = function(eventName, eventDetail) {
-                    const event = new CustomEvent(eventName, { detail: eventDetail });
-                    this.dispatchEvent(event);
-                };
-                chat.emitCustomEvent('df-request-query', { query: "Start_Conversation" });
-                console.log("Start_Conversation インテントが送信されました。");
+                if (chat) {
+                    chat.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
+                        detail: { query: 'Start_Conversation' }
+                    });
+                    console.log("Start_Conversation インテントが送信されました。");
+                }
             } else {
                 console.log("チャットボットが見つかりませんでした。");
             }
