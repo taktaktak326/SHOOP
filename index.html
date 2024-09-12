@@ -124,7 +124,7 @@
     </div>
   </div>
 
-  <script>
+ <script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
@@ -137,15 +137,18 @@
         document.ontouchstart = resetTimer;  // for mobile devices
 
         function openChatBubble() {
-            // コンソールに表示
             console.log("10秒間操作がなかったため、チャットボットが開かれます。");
 
-            // Chat bubbleを開くためのトリガーを実行
+            // shadow DOM内のチャットボットバブルを開く
             const chatBubble = document.querySelector('df-messenger');
-            if (chatBubble) {
-                const event = new Event('df-open-chat');
-                chatBubble.dispatchEvent(event);
-                console.log("チャットボットが開かれました。");
+            if (chatBubble && chatBubble.shadowRoot) {
+                const chatWindow = chatBubble.shadowRoot.querySelector('df-messenger-chat');
+                if (chatWindow) {
+                    chatWindow.toggleChat();
+                    console.log("チャットボットが開かれました。");
+                } else {
+                    console.log("チャットウィンドウが見つかりませんでした。");
+                }
             } else {
                 console.log("チャットボットが見つかりませんでした。");
             }
