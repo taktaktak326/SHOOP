@@ -168,26 +168,39 @@
     // input-element-wrapperがDOMに追加されたときに発火する関数
     function observeInputWrapper() {
       console.log("input-element-wrapper の監視を開始します...");
+      
+      // 親要素の監視を開始 (可能な限り大きな範囲を監視)
+      const parentElement = document.body;
+
+      // MutationObserverでDOMの変化を監視
       const observer = new MutationObserver((mutationsList, observer) => {
         for (const mutation of mutationsList) {
           if (mutation.addedNodes.length) {
-            const inputWrapper = document.querySelector(".input-element-wrapper");
-            if (inputWrapper) {
-              console.log("input-element-wrapper が見つかりました:", inputWrapper);
-              inputWrapper.click();  // 指定された要素をクリック
-              console.log(".input-element-wrapper がクリックされました。");
+            // 追加されたノードに対して確認
+            mutation.addedNodes.forEach(node => {
+              // node が要素かどうか確認
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                console.log("追加されたノード:", node);
+                const inputWrapper = document.querySelector(".input-element-wrapper");
 
-              // クリック後、質問を入力する処理を開始
-              inputAndSendQuestion();  // 質問を入力
-              observer.disconnect();  // 監視を停止
-              break;
-            }
+                // input-element-wrapperが追加されたらクリックして処理を開始
+                if (inputWrapper) {
+                  console.log("input-element-wrapper が見つかりました:", inputWrapper);
+                  inputWrapper.click();  // 指定された要素をクリック
+                  console.log(".input-element-wrapper がクリックされました。");
+
+                  // クリック後、質問を入力する処理を開始
+                  inputAndSendQuestion();  // 質問を入力
+                  observer.disconnect();  // 監視を停止
+                }
+              }
+            });
           }
         }
       });
 
-      // ボディ全体を監視して、新しい要素が追加されるのをチェック
-      observer.observe(document.body, { childList: true, subtree: true });
+      // body全体に対して子ノードの変化を監視
+      observer.observe(parentElement, { childList: true, subtree: true });
     }
 
     // 質問を入力して送信する処理
@@ -227,6 +240,7 @@
     }
   };
 </script>
+
 
 
 
