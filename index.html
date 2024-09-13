@@ -125,60 +125,68 @@
     </div>
   </div>
 
-<script>
+  <script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
         let countdown = 5; // 5秒のカウントダウン
 
-        // ユーザー操作があればタイマーをリセット
-        window.onload = resetTimer;
-        document.onmousemove = resetTimer;
-        document.onkeypress = resetTimer;
-        document.ontouchstart = resetTimer;  // モバイルデバイス用
+        // df-messenger のロードを監視する
+        const messengerElement = document.getElementById('df-messenger');
+        messengerElement.addEventListener('df-messenger-loaded', () => {
+            console.log('df-messenger がロードされました');
+            startInactivityTimer();
+        });
 
-        // 5秒後に自動でメッセージを送信する関数
-        function sendMessageAfterInactivity() {
-            console.log("5秒間操作がなかったため、メッセージを送信します。");
+        function startInactivityTimer() {
+            // ユーザー操作があればタイマーをリセット
+            window.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onkeypress = resetTimer;
+            document.ontouchstart = resetTimer;  // モバイルデバイス用
 
-            // df-messenger の内部にアクセスしてメッセージを送信
-            const chatElement = document.querySelector('df-messenger');
-            if (chatElement) {
-                chatElement.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
-                    detail: { query: '自動的に送信されたメッセージです。' }
-                });
-                console.log("メッセージが送信されました。");
-            } else {
-                console.log("df-messenger が見つかりませんでした。");
+            // 5秒後に自動でメッセージを送信する関数
+            function sendMessageAfterInactivity() {
+                console.log("5秒間操作がなかったため、メッセージを送信します。");
+
+                // df-messenger の内部にアクセスしてメッセージを送信
+                const chatElement = document.querySelector('df-messenger');
+                if (chatElement && chatElement.renderRoot) {
+                    chatElement.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
+                        detail: { query: '自動的に送信されたメッセージです。' }
+                    });
+                    console.log("メッセージが送信されました。");
+                } else {
+                    console.log("df-messenger が完全にロードされていません。");
+                }
+
+                clearInterval(countdownInterval);  // カウントダウンを終了
             }
 
-            clearInterval(countdownInterval);  // カウントダウンを終了
-        }
+            // タイマーをリセットし、再度カウントダウンを開始
+            function resetTimer() {
+                clearTimeout(time);
+                clearInterval(countdownInterval);
+                countdown = 5;  // カウントダウンのリセット
+                console.log("カウントダウンをリセットしました。");
 
-        // タイマーをリセットし、再度カウントダウンを開始
-        function resetTimer() {
-            clearTimeout(time);
-            clearInterval(countdownInterval);
-            countdown = 5;  // カウントダウンのリセット
-            console.log("カウントダウンをリセットしました。");
+                // カウントダウンを毎秒表示
+                countdownInterval = setInterval(() => {
+                    countdown--;
+                    console.log("残り時間: " + countdown + "秒");
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
 
-            // カウントダウンを毎秒表示
-            countdownInterval = setInterval(() => {
-                countdown--;
-                console.log("残り時間: " + countdown + "秒");
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                }
-            }, 1000);
-
-            // 5秒後にメッセージを送信
-            time = setTimeout(sendMessageAfterInactivity, 5000);
+                // 5秒後にメッセージを送信
+                time = setTimeout(sendMessageAfterInactivity, 5000);
+            }
         }
     };
 
     inactivityTime();  // 関数を呼び出して無操作時間を監視
   </script>
-
 
 
 
