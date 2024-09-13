@@ -126,121 +126,58 @@
   </div>
 
 <script>
-  // DOMの読み込みが完了した後に実行
-  window.onload = function() {
-    let countdown = 5;  // 5秒のカウントダウン
+    let inactivityTime = function () {
+        let time;
+        let countdownInterval;
+        let countdown = 5; // 5秒のカウントダウン
 
-    // 1秒ごとにカウントダウンを表示する関数
-    const countdownInterval = setInterval(() => {
-      console.log(`残り ${countdown} 秒`);
-      countdown--;
+        // ユーザー操作があればタイマーをリセット
+        window.onload = resetTimer;
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+        document.ontouchstart = resetTimer;  // モバイルデバイス用
 
-      if (countdown < 0) {
-        clearInterval(countdownInterval);  // カウントダウンが終わったらインターバルをクリア
-      }
-    }, 1000);  // 1秒ごとに実行
+        // 5秒後に自動でメッセージを送信する関数
+        function sendMessageAfterInactivity() {
+            console.log("5秒間操作がなかったため、メッセージを送信します。");
 
-    // 5秒後にdf-messenger-chat-bubbleをクリックする関数
-    function clickChatBubble() {
-      console.log("df-messenger-chat-bubble の検索を開始します...");
+            // df-messenger の内部にアクセスしてメッセージを送信
+            const chatElement = document.querySelector('df-messenger');
+            if (chatElement) {
+                chatElement.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
+                    detail: { query: '自動的に送信されたメッセージです。' }
+                });
+                console.log("メッセージが送信されました。");
+            } else {
+                console.log("df-messenger が見つかりませんでした。");
+            }
 
-      // df-messenger-chat-bubble 要素をクエリで取得
-      const chatBubble = document.querySelector("df-messenger-chat-bubble");
+            clearInterval(countdownInterval);  // カウントダウンを終了
+        }
 
-      // デバッグ情報: chat bubble の存在確認
-      if (chatBubble) {
-        console.log("df-messenger-chat-bubble が見つかりました:", chatBubble);
+        // タイマーをリセットし、再度カウントダウンを開始
+        function resetTimer() {
+            clearTimeout(time);
+            clearInterval(countdownInterval);
+            countdown = 5;  // カウントダウンのリセット
+            console.log("カウントダウンをリセットしました。");
 
-        // Webコンポーネント内のクリックイベントを発火させるために属性を変更
-        chatBubble.setAttribute("expanded", "true");  // チャットを展開
-        console.log("df-messenger-chat-bubble がクリックされました。");
-
-        // チャットバブルが開かれた後に、input-element-wrapperが出現するのを監視
-        observeInputWrapper();
-      } else {
-        console.error("df-messenger-chat-bubble が見つかりませんでした。");
-      }
-    }
-
-    // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
-    setTimeout(clickChatBubble, 5000);  // 5秒後に実行
-
-    // input-element-wrapperがDOMに追加されたときに発火する関数
-    function observeInputWrapper() {
-      console.log("input-element-wrapper の監視を開始します...");
-      
-      // 親要素の監視を開始 (可能な限り大きな範囲を監視)
-      const parentElement = document.body;
-
-      // MutationObserverでDOMの変化を監視
-      const observer = new MutationObserver((mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-          if (mutation.addedNodes.length) {
-            // 追加されたノードに対して確認
-            mutation.addedNodes.forEach(node => {
-              // node が要素かどうか確認
-              if (node.nodeType === Node.ELEMENT_NODE) {
-                console.log("追加されたノード:", node);
-                const inputWrapper = document.querySelector(".input-element-wrapper");
-
-                // input-element-wrapperが追加されたらクリックして処理を開始
-                if (inputWrapper) {
-                  console.log("input-element-wrapper が見つかりました:", inputWrapper);
-                  inputWrapper.click();  // 指定された要素をクリック
-                  console.log(".input-element-wrapper がクリックされました。");
-
-                  // クリック後、質問を入力する処理を開始
-                  inputAndSendQuestion();  // 質問を入力
-                  observer.disconnect();  // 監視を停止
+            // カウントダウンを毎秒表示
+            countdownInterval = setInterval(() => {
+                countdown--;
+                console.log("残り時間: " + countdown + "秒");
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
                 }
-              }
-            });
-          }
+            }, 1000);
+
+            // 5秒後にメッセージを送信
+            time = setTimeout(sendMessageAfterInactivity, 5000);
         }
-      });
+    };
 
-      // body全体に対して子ノードの変化を監視
-      observer.observe(parentElement, { childList: true, subtree: true });
-    }
-
-    // 質問を入力して送信する処理
-    function inputAndSendQuestion() {
-      console.log("入力ボックスと送信ボタンを探しています...");
-
-      // 質問を入力するtextarea要素を取得
-      const inputBox = document.querySelector("textarea.input-box");
-
-      if (inputBox) {
-        console.log("inputBox が見つかりました:", inputBox);
-
-        // 質問を入力
-        const question = "これは自動化された質問です。";
-        inputBox.value = question;  // テキストエリアに質問を設定
-        console.log(`質問が入力されました: ${question}`);
-
-        // inputイベントを手動で発火して入力を反映させる
-        const event = new Event('input', { bubbles: true });
-        inputBox.dispatchEvent(event);
-
-        // 送信ボタンを取得
-        const sendButton = document.querySelector("#send-icon-button");
-
-        if (sendButton) {
-          console.log("送信ボタンが見つかりました:", sendButton);
-          // 送信ボタンを有効化し、クリック
-          sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
-          sendButton.click();
-          console.log("送信ボタンがクリックされました。");
-        } else {
-          console.error("送信ボタンが見つかりませんでした。");
-        }
-      } else {
-        console.error("入力ボックスが見つかりませんでした。");
-      }
-    }
-  };
-</script>
-
+    inactivityTime();  // 関数を呼び出して無操作時間を監視
+  </script>
 
 
 
