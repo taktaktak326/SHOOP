@@ -125,7 +125,7 @@
     </div>
   </div>
 
-  <script>
+<script>
     let inactivityTime = function () {
         let time;
         let countdownInterval;
@@ -149,15 +149,20 @@
             function sendMessageAfterInactivity() {
                 console.log("5秒間操作がなかったため、メッセージを送信します。");
 
-                // df-messenger の内部にアクセスしてメッセージを送信
+                // df-messenger の shadow DOM にアクセスしてメッセージを送信
                 const chatElement = document.querySelector('df-messenger');
-                if (chatElement && chatElement.renderRoot) {
-                    chatElement.renderRoot.querySelector('df-messenger-chat')._handleQueryInput({
-                        detail: { query: '自動的に送信されたメッセージです。' }
-                    });
-                    console.log("メッセージが送信されました。");
+                if (chatElement && chatElement.shadowRoot) {
+                    const chatWindow = chatElement.shadowRoot.querySelector('df-messenger-chat');
+                    if (chatWindow) {
+                        chatWindow._handleQueryInput({
+                            detail: { query: '自動的に送信されたメッセージです。' }
+                        });
+                        console.log("メッセージが送信されました。");
+                    } else {
+                        console.error("df-messenger-chat が見つかりません。");
+                    }
                 } else {
-                    console.log("df-messenger が完全にロードされていません。");
+                    console.error("shadowRoot にアクセスできませんでした。");
                 }
 
                 clearInterval(countdownInterval);  // カウントダウンを終了
@@ -187,7 +192,6 @@
 
     inactivityTime();  // 関数を呼び出して無操作時間を監視
   </script>
-
 
 
 
