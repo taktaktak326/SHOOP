@@ -153,8 +153,8 @@
       chatBubble.setAttribute("expanded", "true");  // チャットを展開
       console.log("df-messenger-chat-bubble がクリックされました。");
 
-      // チャットバブルが開かれた後に質問を入力して送信する処理を実行
-      setTimeout(inputAndSendQuestion, 2000);  // 2秒後に質問を入力
+      // チャットバブルが開かれた後に、指定された要素をクリックして質問を入力する処理を実行
+      setTimeout(clickInputWrapperAndInputQuestion, 2000);  // 2秒後に指定要素をクリックし質問を入力
     } else {
       console.error("df-messenger-chat-bubble が見つかりませんでした。");
     }
@@ -163,54 +163,62 @@
   // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
   setTimeout(clickChatBubble, 5000);  // 5秒後に実行
 
+  // 質問を入力する前に指定された要素をクリックし、その後質問を入力する
+  function clickInputWrapperAndInputQuestion() {
+    console.log("指定された要素と入力ボックスを探しています...");
+
+    // 指定された要素 (.input-element-wrapper) をクエリで取得してクリック
+    const inputWrapper = document.querySelector(".input-element-wrapper");
+
+    if (inputWrapper) {
+      console.log("指定された要素 (.input-element-wrapper) が見つかりました:", inputWrapper);
+      inputWrapper.click();  // 指定された要素をクリック
+      console.log(".input-element-wrapper がクリックされました。");
+
+      // クリック後、質問を入力する処理を開始
+      setTimeout(inputAndSendQuestion, 1000);  // 1秒後に質問を入力
+    } else {
+      console.error(".input-element-wrapper が見つかりませんでした。");
+    }
+  }
+
   // 質問を入力して送信する処理
   function inputAndSendQuestion() {
     console.log("入力ボックスと送信ボタンを探しています...");
 
-    // df-messenger 内のシャドウDOMにアクセスする
-    const messengerElement = document.querySelector("df-messenger");
-    if (messengerElement) {
-      const shadowRoot = messengerElement.shadowRoot;
+    // 質問を入力するtextarea要素を取得
+    const inputBox = document.querySelector("textarea.input-box");
 
-      // シャドウDOM内の入力ボックスを探す
-      const inputBox = shadowRoot.querySelector("textarea.input-box");
+    if (inputBox) {
+      console.log("inputBox が見つかりました:", inputBox);
 
-      if (!inputBox) {
-        console.log("inputBox が見つかりませんでした。シャドウDOMの構造を確認しています...");
-        console.log("シャドウDOMの構造:", shadowRoot.innerHTML);  // シャドウDOM全体を出力して確認
-        return;
-      }
+      // 質問を入力
+      const question = "これは自動化された質問です。";
+      inputBox.value = question;  // テキストエリアに質問を設定
+      console.log(`質問が入力されました: ${question}`);
 
-      if (inputBox) {
-        console.log("inputBox が見つかりました:", inputBox);
+      // inputイベントを手動で発火して入力を反映させる
+      const event = new Event('input', { bubbles: true });
+      inputBox.dispatchEvent(event);
 
-        // 質問を入力
-        const question = "これは自動化された質問です。";
-        inputBox.value = question;  // テキストエリアに質問を設定
-        console.log(`質問が入力されました: ${question}`);
+      // 送信ボタンを取得
+      const sendButton = document.querySelector("#send-icon-button");
 
-        // inputイベントを手動で発火して入力を反映させる
-        const event = new Event('input', { bubbles: true });
-        inputBox.dispatchEvent(event);
-
-        // シャドウDOM内の送信ボタンを取得
-        const sendButton = shadowRoot.querySelector("#send-icon-button");
-
-        if (sendButton) {
-          console.log("送信ボタンが見つかりました:", sendButton);
-          // 送信ボタンを有効化し、クリック
-          sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
-          sendButton.click();
-          console.log("送信ボタンがクリックされました。");
-        } else {
-          console.error("送信ボタンが見つかりませんでした。");
-        }
+      if (sendButton) {
+        console.log("送信ボタンが見つかりました:", sendButton);
+        // 送信ボタンを有効化し、クリック
+        sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
+        sendButton.click();
+        console.log("送信ボタンがクリックされました。");
+      } else {
+        console.error("送信ボタンが見つかりませんでした。");
       }
     } else {
-      console.error("df-messenger 要素が見つかりませんでした。");
+      console.error("入力ボックスが見つかりませんでした。");
     }
   }
 </script>
+
 
 
 
