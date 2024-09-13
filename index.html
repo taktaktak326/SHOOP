@@ -167,42 +167,51 @@
   function inputAndSendQuestion() {
     console.log("入力ボックスと送信ボタンを探しています...");
 
-    // 質問を入力するtextarea要素を取得
-    const inputBox = document.querySelector("textarea.input-box");
+    // df-messenger 内のシャドウDOMにアクセスする
+    const messengerElement = document.querySelector("df-messenger");
+    if (messengerElement) {
+      const shadowRoot = messengerElement.shadowRoot;
 
-    if (!inputBox) {
-      console.log("inputBox が見つかりませんでした。全体のDOM構造を確認しています...");
-      console.log("現在のDOM構造:", document.body.innerHTML);  // DOM全体を出力して確認
-      return;
-    }
+      // シャドウDOM内の入力ボックスを探す
+      const inputBox = shadowRoot.querySelector("textarea.input-box");
 
-    if (inputBox) {
-      console.log("inputBox が見つかりました:", inputBox);
-
-      // 質問を入力
-      const question = "これは自動化された質問です。";
-      inputBox.value = question;  // テキストエリアに質問を設定
-      console.log(`質問が入力されました: ${question}`);
-
-      // inputイベントを手動で発火して入力を反映させる
-      const event = new Event('input', { bubbles: true });
-      inputBox.dispatchEvent(event);
-
-      // 送信ボタンを取得
-      const sendButton = document.querySelector("#send-icon-button");
-
-      if (sendButton) {
-        console.log("送信ボタンが見つかりました:", sendButton);
-        // 送信ボタンを有効化し、クリック
-        sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
-        sendButton.click();
-        console.log("送信ボタンがクリックされました。");
-      } else {
-        console.error("送信ボタンが見つかりませんでした。");
+      if (!inputBox) {
+        console.log("inputBox が見つかりませんでした。シャドウDOMの構造を確認しています...");
+        console.log("シャドウDOMの構造:", shadowRoot.innerHTML);  // シャドウDOM全体を出力して確認
+        return;
       }
+
+      if (inputBox) {
+        console.log("inputBox が見つかりました:", inputBox);
+
+        // 質問を入力
+        const question = "これは自動化された質問です。";
+        inputBox.value = question;  // テキストエリアに質問を設定
+        console.log(`質問が入力されました: ${question}`);
+
+        // inputイベントを手動で発火して入力を反映させる
+        const event = new Event('input', { bubbles: true });
+        inputBox.dispatchEvent(event);
+
+        // シャドウDOM内の送信ボタンを取得
+        const sendButton = shadowRoot.querySelector("#send-icon-button");
+
+        if (sendButton) {
+          console.log("送信ボタンが見つかりました:", sendButton);
+          // 送信ボタンを有効化し、クリック
+          sendButton.removeAttribute("disabled");  // ボタンの無効化を解除
+          sendButton.click();
+          console.log("送信ボタンがクリックされました。");
+        } else {
+          console.error("送信ボタンが見つかりませんでした。");
+        }
+      }
+    } else {
+      console.error("df-messenger 要素が見つかりませんでした。");
     }
   }
 </script>
+
 
 
 
