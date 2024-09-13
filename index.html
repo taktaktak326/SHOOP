@@ -155,8 +155,8 @@
         chatBubble.setAttribute("expanded", "true");  // チャットを展開
         console.log("df-messenger-chat-bubble がクリックされました。");
 
-        // チャットバブルが開かれた後に、指定された要素をクリックして質問を入力する処理を実行
-        setTimeout(clickInputWrapperAndInputQuestion, 2000);  // 2秒後に指定要素をクリックし質問を入力
+        // チャットバブルが開かれた後に、input-element-wrapperが出現するのを監視
+        observeInputWrapper();
       } else {
         console.error("df-messenger-chat-bubble が見つかりませんでした。");
       }
@@ -165,24 +165,29 @@
     // 5秒後にdf-messenger-chat-bubbleをクリックするようにタイマーを設定
     setTimeout(clickChatBubble, 5000);  // 5秒後に実行
 
-    // 質問を入力する前に指定された要素をクリックし、その後質問を入力する
-    function clickInputWrapperAndInputQuestion() {
-      console.log("指定された要素 (.input-element-wrapper) を探しています...");
+    // input-element-wrapperがDOMに追加されたときに発火する関数
+    function observeInputWrapper() {
+      console.log("input-element-wrapper の監視を開始します...");
+      const observer = new MutationObserver((mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+          if (mutation.addedNodes.length) {
+            const inputWrapper = document.querySelector(".input-element-wrapper");
+            if (inputWrapper) {
+              console.log("input-element-wrapper が見つかりました:", inputWrapper);
+              inputWrapper.click();  // 指定された要素をクリック
+              console.log(".input-element-wrapper がクリックされました。");
 
-      // 指定された要素 (.input-element-wrapper) をクエリで取得してクリック
-      const inputWrapper = document.querySelector(".input-element-wrapper");
+              // クリック後、質問を入力する処理を開始
+              inputAndSendQuestion();  // 質問を入力
+              observer.disconnect();  // 監視を停止
+              break;
+            }
+          }
+        }
+      });
 
-      if (inputWrapper) {
-        console.log("指定された要素 (.input-element-wrapper) が見つかりました:", inputWrapper);
-        inputWrapper.click();  // 指定された要素をクリック
-        console.log(".input-element-wrapper がクリックされました。");
-
-        // クリック後、質問を入力する処理を開始
-        setTimeout(inputAndSendQuestion, 1000);  // 1秒後に質問を入力
-      } else {
-        console.error(".input-element-wrapper が見つかりませんでした。");
-        console.log("現在のDOM構造:", document.body.innerHTML);  // DOM全体を出力して確認
-      }
+      // ボディ全体を監視して、新しい要素が追加されるのをチェック
+      observer.observe(document.body, { childList: true, subtree: true });
     }
 
     // 質問を入力して送信する処理
@@ -222,6 +227,7 @@
     }
   };
 </script>
+
 
 
 
