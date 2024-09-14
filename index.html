@@ -125,7 +125,45 @@
     </div>
   </div>
 
+<script>
+    // セッションIDを動的に生成する関数
+    function generateSessionId() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
 
+    // 一意のセッションIDを生成
+    let sessionId = generateSessionId();
+
+    // 30秒後にWebhookを呼び出す
+    setTimeout(function() {
+      fetch("https://asia-northeast1-prj-basf-xarviobot-prod.cloudfunctions.net/xarvio-japan-public", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "session": `projects/prj-basf-xarviobot-prod/agent/sessions/${sessionId}`,  // 動的に生成したセッションIDを使用
+          "queryInput": {
+            "text": {
+              "text": "ユーザーが長時間閲覧しています。",
+              "languageCode": "ja"
+            }
+          }
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Webhook response:", data);  // Webhookからのレスポンスをログに出力
+      })
+      .catch(error => {
+        console.error("Error calling webhook:", error);  // エラーが発生した場合にログ出力
+      });
+    }, 30000);  // 30秒後に実行
+  </script>
 
 
 
