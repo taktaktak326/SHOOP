@@ -57,18 +57,21 @@ df-messenger {
 </head>
 <body>
     <!-- Assume df-messenger is a custom element or iframe -->
-    <df-messenger
-        project-id="prj-basf-xarviobot-prod"
-        agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
-        language-code="ja"
-        max-query-length="-1"
-        allow-feedback="all"
-        url-allowlist="*"
-        intent="Start_Conversation">
-        <df-messenger-chat
-            chat-title="Publicチャット"
-            bot-actor-image="logo-xarvio-field-manager_1.png">
-        </df-messenger-chat>
-    </df-messenger>
+      <df-messenger
+    project-id="prj-basf-xarviobot-prod"
+    agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
+    language-code="ja"
+    max-query-length="-1"
+    allow-feedback="all"
+    url-allowlist="*"
+    intent="Start_Conversation">
+    <df-messenger-chat-bubble
+      chat-title="Publicチャット"
+      bot-actor-image="logo-xarvio-field-manager_1.png"
+      chat-width="620"
+      chat-height="880"
+      placeholder-text="メッセージを入力してください。">>
+    </df-messenger-chat-bubble>
+  </df-messenger>
 </body>
 </html>
