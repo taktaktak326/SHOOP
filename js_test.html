@@ -58,60 +58,17 @@ df-messenger {
 <body>
     <!-- Assume df-messenger is a custom element or iframe -->
     <df-messenger
-        project-id="prj-basf-xarviobot-dev"
-        agent-id="a1665471-9343-46bb-a513-398bfaaca268"
+        project-id="prj-basf-xarviobot-prod"
+        agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
         language-code="ja"
         max-query-length="-1"
         allow-feedback="all"
         url-allowlist="*"
         intent="Start_Conversation">
         <df-messenger-chat
-            chat-title="IPアドレス取得テスト"
-            bot-actor-image="DALL·E 2024-08-27 19.38.png">
+            chat-title="Publicチャット"
+            bot-actor-image="logo-xarvio-field-manager_1.png">
         </df-messenger-chat>
     </df-messenger>
-
-    <script>
-        // Insert the JavaScript code here
-        var ip;
-
-async function getIP() {
-    try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        ip = data.ip;
-        alert('IP Address Retrieved: ' + ip);  // IPアドレスをアラートで表示
-    } catch (error) {
-        ip = null;
-        console.error('Error fetching IP:', error);
-    }
-}
-
-async function passParamsToMessenger() {
-    // Wait until IP is retrieved by the API call
-    await getIP();
-
-    // Find the df-messenger element
-    const dfMessenger = document.querySelector('df-messenger');
-
-    // Add additional parameters via query parameters for the google messenger to handle additional input
-    const queryParameters = {
-        parameters: {
-            url: window.location.href,  // Retrieve the current URL
-            ip: ip  // Use the retrieved IP address
-        }
-    };
-
-    if (dfMessenger) {
-        dfMessenger.setQueryParameters(queryParameters);
-        console.log('Query Parameters set in dfMessenger:', queryParameters);  // dfMessengerに設定されたパラメータを表示
-    } else {
-        console.error('df-messenger not found');
-    }
-}
-
-// Call the function to test
-passParamsToMessenger();
-    </script>
 </body>
 </html>
