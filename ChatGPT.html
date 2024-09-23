@@ -1,292 +1,135 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チャットボットサイト</title>
-    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f3f3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カスタムチャットウィジェット</title>
+  <style>
+    /* チャットウィジェットのスタイル */
+    #chat-container {
+      width: 300px;
+      height: 400px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
 
-        header {
-            background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
-            padding: 10px 20px;
-            color: white;
-            text-align: center;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            box-sizing: border-box;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
+    #chat-messages {
+      height: 300px;
+      overflow-y: scroll;
+    }
 
-        .toggle-icon {
-            font-size: 24px;
-            cursor: pointer;
-            margin-right: 15px;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
+    .message {
+      margin-bottom: 10px;
+    }
 
-        .toggle-icon.collapsed {
-            transform: rotate(180deg);
-            color: #ff4081;
-        }
+    .user-message {
+      text-align: right;
+    }
 
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0;
-        }
+    .bot-message {
+      text-align: left;
+    }
 
-        main {
-            padding: 20px;
-            text-align: center;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
-            max-height: 0;
-            padding: 0;
-            visibility: hidden;
-        }
+    #input-area {
+      display: flex;
+      margin-top: 10px;
+    }
 
-        main.expanded {
-            max-height: 60vh;
-            padding: 20px;
-            visibility: visible;
-        }
+    #input-text {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
 
-        #timer, #history {
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    #send-button {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        #timer {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-        }
-
-        #history h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        #history {
-            font-size: 18px;
-            text-align: left;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        #average-time {
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        df-messenger {
-            z-index: 999;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            left: 0;
-            transform: translate(0, 0);
-            --df-messenger-font-color: #000;
-            --df-messenger-font-family: 'Roboto', sans-serif;
-            --df-messenger-chat-background: #f3f6fc;
-            --df-messenger-message-user-background: #d3e3fd;
-            --df-messenger-message-bot-background: #fff;
-            --df-messenger-message-actor-image-size: 60px;
-            transition: height 0.5s ease-out;
-            height: 80vh;
-        }
-
-        df-messenger.expanded {
-            height: 50vh;
-        }
-
-        @media (max-width: 600px) {
-            df-messenger {
-                width: 100%;
-                bottom: 0;
-                left: 0;
-                transform: translate(0, 0);
-            }
-
-            main.expanded {
-                max-height: 40vh;
-            }
-
-            #timer, #history {
-                max-width: 100%;
-                margin-bottom: 20px;
-            }
-        }
-
-    </style>
-
+    #microphoneButton {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <span id="toggle-main-btn" class="toggle-icon" aria-label="Toggle main content">＋</span>
-        <h1>←Click to check Response time</h1>
-    </header>
-    <main id="main-content">
-        <div id="timer">Execution time 0.00 Seconds</div>
-        <div id="history">
-            <h2>Execution Time</h2>
-            <ul id="history-list"></ul>
-            <div id="average-time">Average time: 0.00 sec</div>
-        </div>
-    </main>
-    <df-messenger
-        id="df-messenger"
-        project-id="prj-basf-xarviobot-dev"
-        agent-id="a1665471-9343-46bb-a513-398bfaaca268"
-        language-code="ja"
-        max-query-length="-1"
-        allow-feedback="all"
-        url-allowlist="*"
-        intent="Start_Conversation">
-        <df-messenger-chat
-            bot-actor-image="xarvio_xFM_powered by BASF_color_RGB.png"
-            chat-title="AI CHAT"
-            placeholder-text="個人情報やプライベートな情報は入力しないでください。">
-        </df-messenger-chat>
-    </df-messenger>
 
-    <script>
-        let timerElement = document.getElementById('timer');
-        let historyListElement = document.getElementById('history-list');
-        let averageTimeElement = document.getElementById('average-time');
-        let timerInterval;
-        let secondsElapsed = 0;
-        let history = [];
-        let timerRunning = false;
-        let lastMessage = '';
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <div id="input-area">
+      <input type="text" id="input-text" placeholder="メッセージを入力してください">
+      <button id="send-button">送信</button>
+      <button id="microphoneButton">🎤</button>
+    </div>
+  </div>
 
-        function startTimer() {
-            if (timerRunning) return;
-            timerRunning = true;
-            clearInterval(timerInterval);
-            secondsElapsed = 0;
-            timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-            timerInterval = setInterval(() => {
-                secondsElapsed += 0.01;
-                timerElement.textContent = `Execution time ${secondsElapsed.toFixed(2)} Seconds`;
-            }, 10);
-        }
+  <script>
+    const chatMessages = document.getElementById("chat-messages");
+    const inputText = document.getElementById("input-text");
+    const sendButton = document.getElementById("send-button");
+    const microphoneButton = document.getElementById("microphoneButton");
 
-        function stopTimer() {
-            if (!timerRunning) return;
-            clearInterval(timerInterval);
-            timerRunning = false;
-            console.log(`Stopped at: ${secondsElapsed.toFixed(2)} seconds`);
-        }
+    const recognition = new SpeechRecognition();
 
-        function addTimeToHistory(time, message, response) {
-            const parsedTime = parseFloat(time);  // Ensure the time is a number
-            history.push({ time: parsedTime, message, response });
-            if (history.length > 5) {
-                history.shift();
+    // 音声認識開始
+    microphoneButton.addEventListener("click", () => {
+      recognition.start();
+    });
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      sendMessage(transcript);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("音声認識エラー:", event.error);
+    };
+
+    // メッセージ送信
+    sendButton.addEventListener("click", () => {
+      sendMessage(inputText.value);
+      inputText.value = "";
+    });
+
+    // メッセージ送信関数
+    function sendMessage(message) {
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user-message");
+      userMessage.textContent = message;
+      chatMessages.appendChild(userMessage);
+
+      // Dialogflow Webhook にメッセージを送信
+      fetch("https://your-webhook-url", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "queryInput": {
+            "text": {
+              "text": message
             }
-            console.log("Current history array:", history);
-            updateHistoryDisplay();
-            updateAverageTime();
-        }
-
-        function updateHistoryDisplay() {
-            historyListElement.innerHTML = '';
-            history.forEach((entry, index) => {
-                let listItem = document.createElement('li');
-                listItem.textContent = `Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}" - Response: "${entry.response}"`;
-                historyListElement.appendChild(listItem);
-                console.log(`Appended: Time ${index + 1}: ${entry.time.toFixed(2)} sec - Message: "${entry.message}" - Response: "${entry.response}"`);
-            });
-        }
-
-        function updateAverageTime() {
-            if (history.length === 0) {
-                averageTimeElement.textContent = `Average time: 0.00 sec`;
-                return;
-            }
-            const sum = history.reduce((a, b) => a + b.time, 0);
-            const average = sum / history.length;
-            averageTimeElement.textContent = `Average time: ${average.toFixed(2)} sec`;
-            console.log(`Calculated average: ${average.toFixed(2)} sec`);
-        }
-
-        document.querySelector('df-messenger').addEventListener('df-request-sent', function(event) {
-    console.log("Request sent. Stopping timer and starting new one.");
-    let eventData = event.detail;
-    lastMessage = eventData.requestBody.queryInput?.text?.text || "Unknown Message"; // 修正ポイント
-    stopTimer();
-    startTimer();
-});
-
-
-document.querySelector('df-messenger').addEventListener('df-response-received', function(event) {
-    console.log("Response received:", event.detail);  // 受け取ったレスポンスデータ全体を表示
-
-    stopTimer();
-
-    // チャットボットのレスポンスを取得
-    let responseData = event.detail;  // event.detail にアクセス
-    console.log("Response data:", responseData); // responseData を確認
-
-    // レスポンスデータの中の data.messages 配列から html を取得
-    if (responseData && responseData.data && responseData.data.messages && responseData.data.messages[0] && responseData.data.messages[0].html) {
-        let responseMessage = responseData.data.messages[0].html; // html からレスポンスを取得
-        console.log("Extracted HTML response:", responseMessage); // HTMLレスポンスをログに表示
-
-        // 履歴にHTMLレスポンスを追加
-        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, responseMessage);
-    } else {
-        console.log("Invalid response structure:", responseData); // 想定していないデータ構造が返ってきた場合
-        addTimeToHistory(secondsElapsed.toFixed(2), lastMessage, "No response");
+          }
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Dialogflow の応答を受信
+        const botMessage = document.createElement("div");
+        botMessage.classList.add("message", "bot-message");
+        botMessage.textContent = data.fulfillmentText;
+        chatMessages.appendChild(botMessage);
+      });
     }
-});
-        
-
-        
-
-
-
-
-
-
-        const toggleMainBtn = document.getElementById('toggle-main-btn');
-        const mainContent = document.getElementById('main-content');
-        const dfMessenger = document.querySelector('df-messenger');
-
-        toggleMainBtn.addEventListener('click', () => {
-            mainContent.classList.toggle('expanded');
-            dfMessenger.classList.toggle('expanded');
-            toggleMainBtn.textContent = mainContent.classList.contains('expanded') ? '−' : '＋';
-            toggleMainBtn.classList.toggle('collapsed');
-        });
-    </script>
+  </script>
 </body>
 </html>
