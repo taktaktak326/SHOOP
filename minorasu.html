@@ -1,75 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minorasu</title>
-    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f3f3f3;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minorasu</title>
+  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f3f3;
+    }
 
-        header {
-            background-color: #4CAF50;
-            padding: 10px 20px;
-            color: white;
-            text-align: center;
-        }
+    header {
+      background-color: #4CAF50;
+      padding: 10px 20px;
+      color: white;
+      text-align: center;
+    }
 
-        main {
-            padding: 20px;
-            text-align: center;
-        }
+    main {
+      padding: 20px;
+      text-align: center;
+    }
 
-        /* チャットボットのスタイル */
-        df-messenger {
-            position: fixed;
-            bottom: 16px;
-            right: 16px;
-            z-index: 999;
-            --df-messenger-font-color: #000;
-            --df-messenger-font-family: Google Sans;
-            --df-messenger-chat-background: #f3f6fc;
-            --df-messenger-message-user-background: #d3e3fd;
-            --df-messenger-message-bot-background: #fff;
-            --df-messenger-message-actor-image-size: 60px; 
-        }
+    /* チャットボットのスタイル */
+    df-messenger {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 999;
+      --df-messenger-font-color: #000;
+      --df-messenger-font-family: Google Sans;
+      --df-messenger-chat-background: #f3f6fc;
+      --df-messenger-message-user-background: #d3e3fd;
+      --df-messenger-message-bot-background: #fff;
+      --df-messenger-message-actor-image-size: 60px; 
+      /* チャットバブルを基準にするために position を relative に変更 */
+      position: relative; 
+    }
 
-        /* モバイル用のスタイル */
-        @media (max-width: 600px) {
-            df-messenger {
-                width: 100%;
-                height: 40vh;
-                bottom: 0;
-                right: 0;
-            }
-        }
-    </style>
-
+    /* モバイル用のスタイル */
+    @media (max-width: 600px) {
+      df-messenger {
+        width: 100%;
+        height: 40vh;
+        bottom: 0;
+        right: 0;
+      }
+    }
+    /* マイクボタンのスタイル */
+    #microphoneButton {
+      position: absolute; /* チャットバブルを基準に絶対配置 */
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <!-- チャットボットの埋め込み -->
-    <button id="microphoneButton">🎤</button>
-    <df-messenger
-      project-id="prj-basf-minorasu-dev"
-      agent-id="1af24435-fc9d-4bb1-9a28-af868f8b4db5"
-      language-code="ja"
-      max-query-length="-1"
-      allow-feedback="all"
-      url-allowlist="*"
-      intent="Start_Conversation">
-      <df-messenger-chat-bubble
-        chat-title="Minorasuチャット"
+  <!-- マイクボタン -->
+  <button id="microphoneButton">🎤</button>
 
-        chat-width="620"
-        chat-height="880"
-        placeholder-text="メッセージを入力してください。">
-      </df-messenger-chat-bubble>
-    </df-messenger>
+  <!-- チャットボットの埋め込み -->
+  <df-messenger
+    project-id="prj-basf-minorasu-dev"
+    agent-id="1af24435-fc9d-4bb1-9a28-af868f8b4db5"
+    language-code="ja"
+    max-query-length="-1"
+    allow-feedback="all"
+    url-allowlist="*"
+    intent="Start_Conversation">
+    <df-messenger-chat-bubble
+      chat-title="Minorasuチャット"
+      bot-actor-image="minorasu.svg"
+      chat-width="620"
+      chat-height="880"
+      placeholder-text="メッセージを入力してください。">
+    </df-messenger-chat-bubble>
+  </df-messenger>
 </body>
 </html>
