@@ -6,48 +6,7 @@
   <title>Minorasu</title>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f3f3f3;
-    }
-
-    header {
-      background-color: #4CAF50;
-      padding: 10px 20px;
-      color: white;
-      text-align: center;
-    }
-
-    main {
-      padding: 20px;
-      text-align: center;
-    }
-
-    /* チャットボットのスタイル */
-    df-messenger {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      z-index: 999;
-      --df-messenger-font-color: #000;
-      --df-messenger-font-family: Google Sans;
-      --df-messenger-chat-background: #f3f6fc;
-      --df-messenger-message-user-background: #d3e3fd;
-      --df-messenger-message-bot-background: #fff;
-      --df-messenger-message-actor-image-size: 60px;
-    }
-
-    /* モバイル用のスタイル */
-    @media (max-width: 600px) {
-      df-messenger {
-        width: 100%;
-        height: 40vh;
-        bottom: 0;
-        right: 0;
-      }
-    }
+    /* ... その他のスタイル ... */
 
     /* マイクボタンのスタイル */
     #microphoneButton {
@@ -57,77 +16,51 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-left: 10px; /* 他の要素との間隔 */
     }
   </style>
 </head>
 <body>
-  <!-- チャットボットの埋め込み -->
-  <df-messenger
-    intent="Start_Conversation"
-    agent-id="1af24435-fc9d-4bb1-9a28-af868f8b4db5"
-    language-code="ja"
-    max-query-length="-1"
-    allow-feedback="all"
-    url-allowlist="*"
-  >
-    <df-messenger-chat-bubble
-      chat-title="Minorasuチャット"
-      chat-width="620"
-      chat-height="880"
-      placeholder-text="メッセージを入力してください。"
-    >
-    </df-messenger-chat-bubble>
-  </df-messenger>
+  <div id="chat-container">
+    <!-- Dialogflow Messenger 埋め込み -->
+    <df-messenger
+      intent="Start_Conversation"
+      agent-id="1af24435-fc9d-4bb1-9a28-af868f8b4db5"
+      language-code="ja"
+    ></df-messenger>
+
+    <!-- マイクボタン -->
+    <button id="microphoneButton">🎤</button>
+  </div>
 
   <script>
     const dfMessenger = document.querySelector('df-messenger');
-
-    dfMessenger.addEventListener('df-messenger-loaded', () => {
-      // マイクボタンをチャットフッターに追加
-      dfMessenger.renderCustomComponent(
-        {
-          tag: 'my-microphone-button',
-          template: function(df, args) {
-            return `<button id="microphoneButton">🎤</button>`;
-          },
-          properties: {},
-        },
-        'df-messenger-chat-footer' 
-      );
-    });
+    const microphoneButton = document.getElementById('microphoneButton');
 
     // マイクボタンのクリックイベントリスナー
-    document.addEventListener('click', (event) => {
-      if (event.target.id === 'microphoneButton') {
-        // 音声認識処理
-        recognizeSpeech()
-          .then(transcript => sendMessageToDialogflow(transcript))
-          .catch(error => console.error("音声認識エラー:", error));
-      }
+    microphoneButton.addEventListener('click', () => {
+      recognizeSpeech()
+        .then(transcript => sendMessageToDialogflow(transcript))
+        .catch(error => console.error("音声認識エラー:", error));
     });
 
     // 音声認識処理
     function recognizeSpeech() {
-      return new Promise((resolve, reject) => {
-        const recognition = new window.SpeechRecognition();
-        recognition.onresult = event => resolve(event.results[0][0].transcript);
-        recognition.onerror = error => reject(error);
-        recognition.start();
-      });
+      // ... (以前の回答と同じ) ...
     }
 
     // Dialogflowにメッセージを送信
     function sendMessageToDialogflow(message) {
+      // Dialogflow Messenger にメッセージを表示
+      dfMessenger.addMessage({ text: message, sender: 'user' });
+
+      // Dialogflow CX の DetectIntent API を呼び出す
       dfMessenger.detectIntent(message)
         .then(response => {
           // Dialogflow からの応答を処理
           console.log('Dialogflow からの応答:', response);
 
-          // 例：応答メッセージをチャットに追加
-          const botMessage = document.createElement('div');
-          botMessage.textContent = response.response.queryResult.fulfillmentText;
-          dfMessenger.element_.shadowRoot.querySelector('df-messenger-chat').appendChild(botMessage);
+          // Dialogflow Messenger に応答メッセージを表示
+          dfMessenger.addMessage({ text: response.response.queryResult.fulfillmentText, sender: 'bot' });
         })
         .catch(error => console.error('Dialogflow API エラー:', error));
     }
