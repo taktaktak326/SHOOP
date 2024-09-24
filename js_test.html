@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +61,7 @@
         url-allowlist="*"
         intent="Start_Conversation">
         <df-messenger-chat-bubble
-
+            expanded="True"
             chat-title="Publicチャット"
             bot-actor-image="logo-xarvio-field-manager_1.png"
             chat-width="620"
@@ -77,12 +77,10 @@
             
             setTimeout(() => {
                 try {
-                    const dfMessengerChatBubble = document.querySelector('df-messenger-chat-bubble');
-                    if (dfMessengerChatBubble) {
+                    const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+                    if (dfMessengerBubble) {
                         // チャットボットを開く処理
-                        dfMessengerChatBubble.openMinChat({
-                            anchor: 'top-left'
-                        });
+                        dfMessengerBubble.openChat();
                         console.log("チャットボットが自動的に開かれました。");
                     } else {
                         console.log("df-messenger-chat-bubbleが見つかりませんでした。");
