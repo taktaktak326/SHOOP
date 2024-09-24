@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,50 +26,72 @@
             text-align: center;
         }
 
-    df-messenger {
-      z-index: 999;
-      position: fixed;
-      --df-messenger-font-color: #000;
-      --df-messenger-font-family: Google Sans;
-      --df-messenger-chat-background: #f3f6fc;
-      --df-messenger-message-user-background: #d3e3fd;
-      --df-messenger-message-bot-background: #fff;
-      --df-messenger-message-actor-image-size: 60px; 
-      bottom: 16px;
-      right: 16px;
-    }
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            --df-messenger-font-color: #000;
+            --df-messenger-font-family: Google Sans;
+            --df-messenger-chat-background: #f3f6fc;
+            --df-messenger-message-user-background: #d3e3fd;
+            --df-messenger-message-bot-background: #fff;
+            --df-messenger-message-actor-image-size: 60px; 
+            bottom: 16px;
+            right: 16px;
+        }
 
-@media (max-width: 600px) {
-    df-messenger {
-        width: 100%;
-        height: 40vh; /* Adjust height for mobile */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
+        @media (max-width: 600px) {
+            df-messenger {
+                width: 100%;
+                height: 40vh; /* Adjust height for mobile */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
     </style>
-
 </head>
 <body>
     <!-- Assume df-messenger is a custom element or iframe -->
-      <df-messenger
-    project-id="prj-basf-xarviobot-prod"
-    agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
-    language-code="ja"
-    max-query-length="-1"
-    allow-feedback="all"
-    url-allowlist="*"
-    intent="Start_Conversation">
-    <df-messenger-chat-bubble
-    expanded="True"
-      chat-title="Publicチャット"
-      bot-actor-image="logo-xarvio-field-manager_1.png"
-      chat-width="620"
-      chat-height="880"
-      placeholder-text="メッセージを入力してください。">>
-    </df-messenger-chat-bubble>
-  </df-messenger>
+    <df-messenger
+        project-id="prj-basf-xarviobot-prod"
+        agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
+        language-code="ja"
+        max-query-length="-1"
+        allow-feedback="all"
+        url-allowlist="*"
+        intent="Start_Conversation">
+        <df-messenger-chat-bubble
+            expanded="True"
+            chat-title="Publicチャット"
+            bot-actor-image="logo-xarvio-field-manager_1.png"
+            chat-width="620"
+            chat-height="880"
+            placeholder-text="メッセージを入力してください。">
+        </df-messenger-chat-bubble>
+    </df-messenger>
+
+    <script>
+        // ページがロードされた後に5秒間待機
+        window.addEventListener('DOMContentLoaded', (event) => {
+            console.log("ページが読み込まれました。5秒後にチャットを自動的に開きます...");
+            
+            setTimeout(() => {
+                try {
+                    const dfMessengerChatBubble = document.querySelector('df-messenger-chat-bubble');
+                    if (dfMessengerChatBubble) {
+                        // チャットボットを開く処理
+                        dfMessengerChatBubble.openMinChat({
+                            anchor: 'top-left'
+                        });
+                        console.log("チャットボットが自動的に開かれました。");
+                    } else {
+                        console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                    }
+                } catch (error) {
+                    console.error("エラーが発生しました:", error);
+                }
+            }, 5000); // 5秒間待機
+        });
+    </script>
 </body>
 </html>
