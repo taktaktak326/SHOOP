@@ -73,42 +73,53 @@
 
     <script>
         let chatOpened = false;  // チャットが開かれたかを追跡するフラグ
+        let countdown = 60;      // 60秒のカウントダウン
 
-        // ページがロードされた後に60秒間待機
+        // ページがロードされた後にカウントダウンを開始
         window.addEventListener('DOMContentLoaded', (event) => {
-            console.log("ページが読み込まれました。60秒後にチャットを自動的に開きます...");
+            console.log("ページが読み込まれました。60秒のカウントダウンを開始します...");
 
-            // チャットが閉じたときにフラグを更新
             const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+
             if (dfMessengerBubble) {
+                // チャットが閉じたときにフラグを更新
                 dfMessengerBubble.addEventListener('df-chat-bubble-close', () => {
                     console.log("チャットが閉じられました。自動オープンをキャンセルします。");
                     chatOpened = false;  // チャットが閉じられたらフラグをfalseに
                 });
 
+                // チャットが開かれたときにフラグを更新
                 dfMessengerBubble.addEventListener('df-chat-bubble-open', () => {
                     console.log("チャットが開かれました。");
                     chatOpened = true;  // チャットが開かれたらフラグをtrueに
                 });
             }
 
-            setTimeout(() => {
-                if (!chatOpened) {  // チャットが開かれていない場合にのみ自動的に開く
-                    try {
-                        if (dfMessengerBubble) {
-                            // チャットボットを開く処理
-                            dfMessengerBubble.openChat();
-                            console.log("チャットボットが自動的に開かれました。");
-                        } else {
-                            console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+            // 1秒ごとにカウントダウンとチャットの自動オープン判定を行う
+            const countdownInterval = setInterval(() => {
+                console.log(`カウントダウン: ${countdown}秒`);
+
+                countdown--;
+
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);  // カウントダウンが終了したらタイマーを止める
+
+                    if (!chatOpened) {  // チャットが開かれていない場合にのみ自動的に開く
+                        try {
+                            if (dfMessengerBubble) {
+                                dfMessengerBubble.openChat();  // チャットを自動的に開く
+                                console.log("チャットボットが自動的に開かれました。");
+                            } else {
+                                console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                            }
+                        } catch (error) {
+                            console.error("エラーが発生しました:", error);
                         }
-                    } catch (error) {
-                        console.error("エラーが発生しました:", error);
+                    } else {
+                        console.log("チャットがすでに開かれていたか閉じられているため、自動オープンをスキップします。");
                     }
-                } else {
-                    console.log("チャットがすでに開かれていたか閉じられているため、自動オープンをスキップします。");
                 }
-            }, 60000); // 60秒間待機
+            }, 1000); // 1秒ごとにカウントダウン
         });
     </script>
 </body>
