@@ -72,22 +72,41 @@
     </df-messenger>
 
     <script>
+        let chatOpened = false;  // チャットが開かれたかを追跡するフラグ
+
         // ページがロードされた後に60秒間待機
         window.addEventListener('DOMContentLoaded', (event) => {
             console.log("ページが読み込まれました。60秒後にチャットを自動的に開きます...");
-            
+
+            // チャットが閉じたときにフラグを更新
+            const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+            if (dfMessengerBubble) {
+                dfMessengerBubble.addEventListener('df-chat-bubble-close', () => {
+                    console.log("チャットが閉じられました。自動オープンをキャンセルします。");
+                    chatOpened = false;  // チャットが閉じられたらフラグをfalseに
+                });
+
+                dfMessengerBubble.addEventListener('df-chat-bubble-open', () => {
+                    console.log("チャットが開かれました。");
+                    chatOpened = true;  // チャットが開かれたらフラグをtrueに
+                });
+            }
+
             setTimeout(() => {
-                try {
-                    const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
-                    if (dfMessengerBubble) {
-                        // チャットボットを開く処理
-                        dfMessengerBubble.openChat();
-                        console.log("チャットボットが自動的に開かれました。");
-                    } else {
-                        console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                if (!chatOpened) {  // チャットが開かれていない場合にのみ自動的に開く
+                    try {
+                        if (dfMessengerBubble) {
+                            // チャットボットを開く処理
+                            dfMessengerBubble.openChat();
+                            console.log("チャットボットが自動的に開かれました。");
+                        } else {
+                            console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                        }
+                    } catch (error) {
+                        console.error("エラーが発生しました:", error);
                     }
-                } catch (error) {
-                    console.error("エラーが発生しました:", error);
+                } else {
+                    console.log("チャットがすでに開かれていたか閉じられているため、自動オープンをスキップします。");
                 }
             }, 60000); // 60秒間待機
         });
