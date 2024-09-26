@@ -71,26 +71,161 @@
         </df-messenger-chat-bubble>
     </df-messenger>
 
-    <script>
-        // ページがロードされた後に5秒間待機
-        window.addEventListener('DOMContentLoaded', (event) => {
-            console.log("ページが読み込まれました。6０秒後にチャットを自動的に開きます...");
-            
-            setTimeout(() => {
-                try {
-                    const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
-                    if (dfMessengerBubble) {
-                        // チャットボットを開く処理
-                        dfMessengerBubble.openChat();
-                        console.log("チャットボットが自動的に開かれました。");
-                    } else {
-                        console.log("df-messenger-chat-bubbleが見つかりませんでした。");
-                    }
-                } catch (error) {
-                    console.error("エラーが発生しました:", error);
+    <script>       
+  class CustomFeedbackElement extends HTMLElement {
+    constructor() {
+      super();
+      this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = 'irrelevant';
+    }
+ 
+    connectedCallback() {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
+ 
+      // 回答フォームを作成
+      const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
+ 
+      // 低評価の理由選択
+      const reasonLabel = document.createElement('label');
+      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white';
+      reasonSelect.style.cursor = 'pointer';
+      const reasonOptions = [
+        { value: 'irrelevant', label: '求めている回答ではない' },
+        { value: 'incorrect', label: '間違った情報' },
+        { value: 'not_enough_information', label: '情報が少ない' },
+        { value: 'other', label: 'その他' },
+      ];
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+ 
+        if (option.value === this.selectedReason) {
+          optionElement.selected = true;
+        }
+        reasonSelect.appendChild(optionElement);
+      });
+ 
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+ 
+      form.appendChild(reasonLabel);
+      form.appendChild(reasonSelect);
+ 
+      // フリーテキスト入力
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
+      const commentInput = document.createElement('textarea');
+      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
+      form.appendChild(commentLabel);
+      form.appendChild(commentInput);
+ 
+      // Submit ボタンを作成
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#009fe3';
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
+      });
+ 
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+ 
+      wrapper.appendChild(form);
+      wrapper.appendChild(submitButtonContainer);
+ 
+      this.renderRoot.appendChild(wrapper);
+ 
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        console.log('Feedback:', feedbackData);
+      });
+    }
+ 
+    _reasonSelected(value) {
+      this.selectedReason = value;
+    }
+ 
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          reason: this.selectedReason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+  }
+ 
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+  
+  const dfMessenger = document.querySelector('df-messenger');
+  dfMessenger.clearStorage();
+  
+  // An example of handling events: Navigate to the first suggested URL.
+  document.addEventListener('df-url-suggested', (event) => {
+    if (Array.isArray(event.detail.suggestedUrls) &&
+    event.detail.suggestedUrls.length) {
+    window.location.href = event.detail.suggestedUrls[0];
+  }
+});
+
+   window.onload = function () {
+     var currentUrl = window.location.href;
+     dfMessenger = document.querySelector('df-messenger');
+     dfMessenger.setAttribute("current-url", currentUrl);
+   };
+
+    // ページがロードされた後に5秒間待機
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log("ページが読み込まれました。6０秒後にチャットを自動的に開きます...");
+       
+        setTimeout(() => {
+            try {
+                const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+                if (dfMessengerBubble) {
+                    // チャットボットを開く処理
+                    dfMessengerBubble.openChat();
+                    console.log("チャットボットが自動的に開かれました。");
+                } else {
+                    console.log("df-messenger-chat-bubbleが見つかりませんでした。");
                 }
-            }, 60000); // 6０秒間待機
-        });
+            } catch (error) {
+                console.error("エラーが発生しました:", error);
+            }
+        }, 60000); // 6０秒間待機
+    });
+
     </script>
 
 </body>
