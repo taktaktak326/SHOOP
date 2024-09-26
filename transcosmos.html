@@ -1,0 +1,1265 @@
+<html lang="jp">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初級者向け｜xarvio（ザルビオ）フィールドマネージャー</title>
+  <meta name="description" content="ザルビオフィールドマネージャーの基礎的な使い方、初級者向け情報を掲載しています。">
+  <meta property="og:title" content="初級者向け｜xarvio（ザルビオ）フィールドマネージャー">
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://www.xarvio-japan.jp/beginner/index.html">
+  <meta property="og:image" content="https://www.xarvio-japan.jp/img/common/xarvio-ogp.png">
+  <meta property="og:site_name" content="初級者向け｜xarvio（ザルビオ）フィールドマネージャー">
+  <meta property="og:description" content="ザルビオフィールドマネージャーの基礎的な使い方、初級者向け情報を掲載しています。">
+  <meta property="og:locale" content="ja_JP">
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+  <link rel="preconnect dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="apple-touch-icon" href="../img/common/apple-touch-icon.png">
+  <link rel="shortcut icon" href="../img/common/favicon.png">
+  <!-- Google Tag Manager -->
+  <script src="https://connect.facebook.net/signals/config/939015767099944?v=2.9.168&amp;r=stable&amp;domain=basf-renew-001.digital-marketing.dev&amp;hme=3ba426d944c98eb3ce406a0f93fc097d0320a486b65b445a33b2eda3a5aa3429&amp;ex_m=70%2C119%2C105%2C109%2C61%2C4%2C98%2C69%2C16%2C95%2C87%2C51%2C54%2C170%2C173%2C185%2C181%2C182%2C184%2C29%2C99%2C53%2C76%2C183%2C165%2C168%2C178%2C179%2C186%2C129%2C41%2C34%2C141%2C15%2C50%2C192%2C191%2C131%2C18%2C40%2C1%2C43%2C65%2C66%2C67%2C71%2C91%2C17%2C14%2C94%2C90%2C89%2C106%2C52%2C108%2C39%2C107%2C30%2C92%2C26%2C166%2C169%2C138%2C28%2C11%2C12%2C13%2C6%2C7%2C25%2C22%2C23%2C57%2C62%2C64%2C74%2C100%2C27%2C75%2C9%2C8%2C79%2C48%2C21%2C102%2C101%2C103%2C96%2C10%2C20%2C3%2C38%2C19%2C84%2C56%2C82%2C33%2C73%2C0%2C93%2C32%2C81%2C86%2C47%2C46%2C85%2C37%2C5%2C88%2C80%2C44%2C35%2C83%2C2%2C36%2C63%2C42%2C104%2C45%2C78%2C68%2C110%2C60%2C59%2C31%2C97%2C58%2C55%2C49%2C77%2C72%2C24%2C111" async=""></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/destination?id=AW-621805554&amp;l=dataLayer&amp;cx=c"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-5KGNCRF"></script><script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-5KGNCRF');
+  </script>
+  <!-- End Google Tag Manager -->
+  <link rel="stylesheet" href="../public/styles/slick.css">
+  <link rel="stylesheet" href="../public/styles/style.css">
+
+<script type="text/javascript" async="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/621805554/?random=1727315721683&amp;cv=11&amp;fst=1727315721683&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be49n0v897479820z8810401442za201zb810401442&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101671035~101747727&amp;u_w=1536&amp;u_h=864&amp;url=https%3A%2F%2Fbasf-renew-001.digital-marketing.dev%2Fbeginner%2Findex.html&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%E5%88%9D%E7%B4%9A%E8%80%85%E5%90%91%E3%81%91%EF%BD%9Cxarvio%EF%BC%88%E3%82%B6%E3%83%AB%E3%83%93%E3%82%AA%EF%BC%89%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC&amp;npa=0&amp;pscdl=noapi&amp;uaa=x86&amp;uab=64&amp;uafvl=Chromium%3B128.0.6613.138%7CNot%253BA%253DBrand%3B24.0.0.0%7CMicrosoft%2520Edge%3B128.0.2739.79&amp;uamb=0&amp;uam=&amp;uap=Windows&amp;uapv=15.0.0&amp;uaw=0&amp;fledge=1&amp;rfmt=3&amp;fmt=4"></script></head>
+
+<body><!-- Google Tag Manager (noscript) --><!-- gtmのnoscriptはここに記載 --><!-- End Google Tag Manager (noscript) -->
+  <header class="c-header">
+    <div data-includehtml="../header.html"><div class="c-header__inner">
+    <a href="/" class="c-header__logo">
+        <img src="../img/common/logo.svg" alt="">
+    </a>
+    <div class="c-header__content">
+        <div class="c-header__nav pc-only">
+            <div class="c-header__btn">
+                <ul class="c-header__btn-list">
+                    <li class="c-header__btn-item">
+                        <a href="https://fm.xarvio.com/jp/ja_jp/registration" class="c-header__btn-inner">
+                            <p class="c-header__btn-txt">会員登録(無料)</p>
+                        </a>
+                    </li>
+                    <li class="c-header__btn-item">
+                        <a href="https://fm.xarvio.com/jp/ja_jp/login" class="c-header__btn-inner -white">
+                            <p class="c-header__btn-txt">ログイン</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="c-header__nav-list">
+                <li class="c-header__nav-item active">
+                    <a href="../beginner/index.html" data-link="beginner" class="c-header__nav-ttl">初級者向け</a>
+                </li>
+                <li class="c-header__nav-item">
+                    <a href="../feature/index.html" data-link="feature" class="c-header__nav-ttl">機能紹介</a>
+                </li>
+                <li class="c-header__nav-item">
+                    <a href="../case/index.html" data-link="case" class="c-header__nav-ttl">実証実験／導入事例</a>
+                </li>
+                <li class="c-header__nav-item">
+                    <a href="../price/index.html" data-link="price" class="c-header__nav-ttl">料金プラン</a>
+                </li>
+                <li class="c-header__nav-item">
+                    <a href="../guide/index.html" data-link="guide" class="c-header__nav-ttl">活用コンテンツ</a>
+                </li>
+                <li class="c-header__nav-item">
+                    <a href="../faq/index.html" data-link="faq" class="c-header__nav-ttl">よくある質問</a>
+                </li>
+                <li class="c-header__nav-item ">
+                    <a href="../news/index.html" data-link="news" class="c-header__nav-ttl">新着情報</a>
+                </li>
+                <li class="c-header__nav-item c-modal-open">
+                    <a href="javascript:void(0)" class="c-header__nav-ttl">お問い合わせ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- スマホ -->
+    <div class="c-header__content-sp sp-only">
+        <div class="c-header__right">
+            <div class="c-header__register">
+                <div class="c-header__register-img">
+                    <img src="../img/common/register.svg" alt="">
+                </div>
+                <div class="c-header__register-txt">会員登録<br>(無料)</div>
+                <a href="https://fm.xarvio.com/jp/ja_jp/registration"></a>
+            </div>
+            <div class="c-header__login">
+                <div class="c-header__login-img">
+                    <img src="../img/common/login.svg" alt="">
+                </div>
+                <div class="c-header__login-txt">ログイン</div>
+                <a href="https://fm.xarvio.com/jp/ja_jp/login"></a>
+            </div>
+            <div class="nav-wrapper">
+                <nav class="header-nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="../beginner/index.html">初級者向け</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../feature/index.html">機能紹介</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../case/index.html">導入事例</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../price/index.html">料金プラン</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../guide/index.html">活用コンテンツ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../faq/index.html">よくある質問</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../news/index.html">新着情報</a>
+                        </li>
+                        <li class="nav-item c-modal-open">
+                            <a href="javascript:void(0)">お問い合わせ</a>
+                        </li>
+                    </ul>
+                    <!-- <div class="nav__below">
+                        <div>
+                            <a href="https://fm.xarvio.com/jp/ja_jp/registration" class="nav__below-btn">会員登録（無料）</a>
+                        </div>
+                        <div>
+                            <a href="../img/pdf/xarviopamphlet4th.pdf" class="nav__below-btn -download">資料ダウンロード</a>
+                        </div>
+                    </div> -->
+                </nav>
+            </div>
+            <div class="burger-btn-wrap">
+                <button class="burger-btn">
+                    <span class="bar bar_top"></span>
+                    <span class="bar bar_mid"></span>
+                    <span class="bar bar_bottom"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        // ===
+        let nameUrl = window.location.pathname.split('/')[1];
+        let aHref = $('.c-header__nav-list a');
+        $.each(aHref, function(i, e) {
+            let a = this.getAttribute('data-link');
+            if (a == nameUrl) {
+                $(this).parents('li').addClass('active')
+            };
+        });
+
+    })
+</script></div>
+  </header>
+
+  <main class="">
+    <section class="section--breadcrumb">
+      <div class="container container-option1130">
+        <div id="breadcrumb">
+          <ul class="breadcrumb " itemprop="itemListElement" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+            <li itemscope="" itemtype="http://schema.org/ListItem">
+              <a href="/" itemprop="item">
+                <span itemprop="name">TOP</span>
+              </a>
+              <meta itemprop="position" content="1">
+            </li>
+            <li>
+              初級者向け
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section-page--beginner beginner--styleTop">
+      <div class="container container-option1130">
+        <h1 class="head-title--h1 text-center mb-30"><span>初級者向け</span></h1>
+        <div class="text-des fonts-16 fonts-md-18 text-md-center mb-75 lineheight-18 font-w300 text-left">
+          スマート農業をはじめて導入する方でも簡単に始められる<br>ザルビオの機能と使い方をご紹介します。
+        </div>
+        <div class="beginner-AI">
+          <div class="title-head fonts-20 fonts-md-24 fonts-lg-30 mb-45 mb-sp35 text-md-center  text-left">
+            衛星画像×AI分析のザルビオでは<br>今まではできなかった「圃場の状況を真上から見る」ことができます
+          </div>
+          <div class="row row-x50 text-center">
+            <div class="col-lg-6 pd-x50">
+              <div class="title-row mb-15 fonts-16 fonts-md-18">
+                圃場の地力が見える
+              </div>
+              <div class="title-h3 fonts-22 fonts-md-26 fonts-lg-30 mb-15">地力マップ</div>
+              <div class="image-block mb-20">
+                <img class="img-fluid" src="../img/other/beginner/4.jpg" alt="">
+              </div>
+              <div class="text-note fonts-16 fonts-md-18 font-w300">
+                過去の衛星画像の解析から<br>地力を可視化したマップです。
+              </div>
+            </div>
+            <div class="col-lg-6 pd-x50">
+              <div class="title-row mb-15 fonts-16 fonts-md-18">
+                リアルタイムな生育が見える
+              </div>
+              <div class="title-h3 fonts-22 fonts-md-26 fonts-lg-30 mb-15">生育マップ</div>
+              <div class="image-block mb-20">
+                <img class="img-fluid" src="../img/other/beginner/5.jpg" alt="">
+              </div>
+              <div class="text-note fonts-16 fonts-md-18 font-w300">
+                日々更新される衛星画像データを元に<br>圃場内の生育状況を可視化したマップです。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-how--beginner ">
+      <div class="p-top__bg">
+        <img src="../img/other/can-bg2.svg" alt="">
+      </div>
+      <div class="container container-option1130">
+        <div class="text-top-section fonts-20 fonts-md-22 text-center mb-25">初級者向け活用方法 その１</div>
+        <h2 class="head-title--h1 text-center mb-30">
+          <span><strong class="fonts-md-20 fonts-14">地力マップを使って<br class="m-sp767"></strong> 元肥の可変施肥で<br class="m-sp575">収量アップ</span>
+        </h2>
+        <div class="text--note fonts-md-18 fonts-16 font-w300 text-md-center text-left mb-55 mb-sp35">地力マップを活用すれば、地力に合わせた元肥設計で効果的な土作りができます。</div>
+        <div class="row row-x20 mb-20 mb-sp30 row-col-4">
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/6.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                圃場内の地力が高い場所、<br>低い場所が一目瞭然！
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/7.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                地力が高い所は肥料の量を減らし<br>地力の低い所には肥料を多く散布
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/8.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                地力ムラの解消で<br>品質向上・収量アップ！
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row row-x20 row-col-6">
+          <div class="col-lg-6 pd-x20">
+            <div class="item--st2">
+              <div class="title-item fonts-20 fonts-md-26">高額な農機や難しい作業は不要 </div>
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/9.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 lineheight-18">
+                収量センサー付き農機やドローンなどの特別な農機がなくても、ザルビオだけで地力のムラを特定することができます。
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 pd-x20">
+            <div class="item--st2">
+              <div class="title-item fonts-20 fonts-md-26">2回クリックするだけ。<br class="m-sp575">すぐに確認できる </div>
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/10.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 lineheight-18">
+                地力マップを確認するための操作は、見たい圃場を選び、分析ボタンを押すだけの簡単2ステップ。<br> 自動でマップが生成されるため初級者でも簡単です。
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section class="section-how--video">
+      <div class="container container-option1130">
+        <div class="body-video">
+          <div class="title--head-vdeo mb-15 text-center">
+            <span class="fonts-14 fonts-17 fonts-lg-20">地力マップで</span><br>
+            <strong class="fonts-20 fonts-md-24 fonts-lg-30">＼ 米の収量が15％アップ！ ／</strong>
+          </div>
+          <div class="video-block mb-10">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/uuKOY4PgDzA"></iframe>
+          </div>
+          <div class="text-right fonts-13 fonts-md-14 font-w300">導入農家事例</div>
+        </div>
+      </div>
+    </section>
+    <section class="section-how--beginner style-2">
+      <div class="p-top__bg">
+        <img class="m-sp991" src="../img/other/can-bg3.svg" alt="">
+        <img class="m-pc991" src="../img/other/can-bg4.svg" alt="">
+      </div>
+      <div class="container container-option1130">
+        <div class="text-top-section fonts-20 fonts-md-22 text-center mb-25">初級者向け活用方法 その２</div>
+        <h2 class="head-title--h1 text-center mb-30">
+          <span><strong class="fonts-md-20 fonts-14">生育マップを使って<br class="m-sp767"></strong> ピンポイント追肥で<br class="m-sp575">コストダウン</span>
+        </h2>
+        <div class="text--note note-s2 fonts-md-18 fonts-16 font-w300 text-md-center text-left mb-55 mb-sp35">生育マップを活用すれば、肥料コストを最適化しながら追肥が行えます。</div>
+        <div class="row row-x20 row-col-4">
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/13.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                圃場内の生育が悪い場所や<br>生育が遅い圃場が分かる！
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/11.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                生育の悪い場所にだけ<br>ピンポイントで追肥を実施
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 pd-x20">
+            <div class="item--st1">
+              <div class="image-block">
+                <img class="img-fluid" src="../img/other/beginner/12.jpg" alt="">
+              </div>
+              <div class="text-content font-w300 fonts-md-18 fonts-16 text-center">
+                肥料代は抑えながら<br>収量を安定化
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-page--beginner beginner--style2">
+      <div class="container container-option1130">
+        <h2 class="head-title--h1 text-center mb-30"><span>簡単ご利用ガイド</span></h2>
+        <div class="text-des fonts-16 fonts-sm-18 text-md-center mb-55 mb-sp35 lineheight-18 font-w300 text-left">
+          これからザルビオ フィールドマネージャーを利用し始める方のために、<br>登録から初級者向け機能の使い方までの分かりやすく解説
+        </div>
+        <div class="row row-x17 row--btn-bottom text-center mb-60 mb-sp40">
+          <div class="col-md-6 pd-x17 mb-20">
+            <a href="#step1" class="btn-below link-to-bottom" data-mt="113" data-destination="step1">
+              <span class="font-Oswald">01.</span> 会員登録をする
+              <img src="../img/icon/icon-down2.svg" alt="">
+            </a>
+          </div>
+          <!--<div class="col-md-6 pd-x17 mb-20">
+            <a href="#step4" class="btn-below link-to-bottom" data-mt="113" data-destination="step2">
+              <span class="font-Oswald">02.</span> 有料プランの利用方法
+              <img src="../img/icon/icon-down2.svg" alt="">
+            </a>
+          </div>-->
+          <div class="col-md-6 pd-x17 mb-20">
+            <a href="#step2" class="btn-below link-to-bottom" data-mt="113" data-destination="step2">
+              <span class="font-Oswald">02.</span> ご利用の準備/圃場と作物<br class="m-sp991">の登録
+              <img src="../img/icon/icon-down2.svg" alt="">
+            </a>
+          </div>
+          <div class="col-md-6 pd-x17 mb-20">
+            <a href="#step3" class="btn-below link-to-bottom" data-mt="113" data-destination="step3">
+              <span class="font-Oswald">03.</span> 地力マップ・生育マップを<br class="m-sp991">使ってみましょう!
+              <img src="../img/icon/icon-down2.svg" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+
+            <div class="item--block" id="step1">
+              <div class="title-head"><span class="font-Oswald font-w300">01.</span>会員登録をする</div>
+              <div class="main-content">
+                <div class="row row-x27 mb-40 row-step1">
+                  <div class="col-lg-4 pd-x27">
+                    <div class="item-st1">
+                      <div class="image-block">
+                        <img class="img-fluid" src="../img/other/beginner/1.jpg" alt="">
+                      </div>
+                      <div class="text-content font-w300 fonts-md-18 fonts-16">
+                        名前・メールアドレス・電話番号を入力。
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 pd-x27">
+                    <div class="item-st1">
+                      <div class="image-block">
+                        <img class="img-fluid" src="../img/other/beginner/2.jpg" alt="">
+                      </div>
+                      <div class="text-content font-w300 fonts-md-18 fonts-16">
+                        登録メールアドレスにメールが届きます。
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 pd-x27">
+                    <div class="item-st1">
+                      <div class="image-block">
+                        <img class="img-fluid" src="../img/other/beginner/3.jpg" alt="">
+                      </div>
+                      <div class="text-content font-w300 fonts-md-18 fonts-16">
+                        登録は完了です!<br>すぐにご利用開始できます
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center btn--register">
+                  <a target="_blank" href="https://fm.xarvio.com/jp/ja_jp/registration" class="btn-below">
+                    <img src="../img/common/register.svg" alt="">会員登録（無料）
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!--<div class="item--block" id="step2">
+              <div class="title-head"><span class="font-Oswald font-w300">02.</span>有料プランの利用方法</div>
+              <div class="main-content">
+                <div class="slider-item">
+                  <div class="item">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">01</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10">ショップを開く</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 mb-25">
+                          ログイン後、上部のメニューより<br>ショップをクリックしてください。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="https://placedog.net/750/400" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">02</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">プランを選択</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 mb-25">
+                          利用する作物の基本料金プラン、<br>利用する圃場面積と機能に応じて追加料金プランを選択してください。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="https://placedog.net/750/400" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">03</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">決済を行う</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 mb-25">
+                          カートボタンからプラン内容の確認画面へ進み、決済を行います。<br>決済が完了すると各機能が利用開始できます。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="https://placedog.net/750/400" alt="">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>-->
+
+            <div class="item--block" id="step2">
+              <div class="title-head"><span class="font-Oswald font-w300">02.</span>ご利用の準備/<br class="m-sp575">圃場と作物の登録</div>
+              <div class="main-content">
+                <div class="slider-item slick-initialized slick-slider slick-dotted"><button type="button" class="slick-prev slick-arrow" style=""><i class="fas fa-chevron-circle-left"></i></button>
+                  <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 7395px; transform: translate3d(-1740px, 0px, 0px);"><div class="item slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">08</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物の登録完了</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          画面右下の“作物を保存”をクリックして、作物の登録が完了します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img08.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="0" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide00" aria-describedby="slick-slide-control00" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">01</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場の登録を開始</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          一番左の画像をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img01.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide01" aria-describedby="slick-slide-control01" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">02</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">地図から自分の圃場を検索</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          マウスをスクロールして地図を拡大して、自分の圃場を探してください。<br>住所検索も可能です。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img02.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide02" aria-describedby="slick-slide-control02" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">03</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場を選択または描く</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地図上で圃場をクリックして選択するか、“描く”ボタンを押して、マウスで圃場を選択してください。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img03.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-current slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" role="tabpanel" id="slick-slide03" aria-describedby="slick-slide-control03" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">04</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場名を入力して登録完了</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          圃場の名前を入力して、“保存”ボタンを押して、圃場の登録が完了します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img04.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="4" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide04" aria-describedby="slick-slide-control04" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">05</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物の登録を開始</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          登録した圃場を選択してください。<br>そして、“作物を登録”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img05.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="5" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide05" aria-describedby="slick-slide-control05" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">06</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物を選択</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          表示されている作物をクリックします。<br>例えば「稲」をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img06.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="6" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide06" aria-describedby="slick-slide-control06" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">07</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">栽培情報の登録</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          栽培情報を登録して、画面右下の“続行”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img07.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="7" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide07" aria-describedby="slick-slide-control07" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">08</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物の登録完了</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          画面右下の“作物を保存”をクリックして、作物の登録が完了します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img08.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="8" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">01</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場の登録を開始</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          一番左の画像をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img01.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="9" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">02</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">地図から自分の圃場を検索</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          マウスをスクロールして地図を拡大して、自分の圃場を探してください。<br>住所検索も可能です。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img02.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="10" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">03</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場を選択または描く</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地図上で圃場をクリックして選択するか、“描く”ボタンを押して、マウスで圃場を選択してください。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img03.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="11" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">04</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">圃場名を入力して登録完了</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          圃場の名前を入力して、“保存”ボタンを押して、圃場の登録が完了します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img04.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="12" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">05</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物の登録を開始</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          登録した圃場を選択してください。<br>そして、“作物を登録”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img05.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="13" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">06</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物を選択</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          表示されている作物をクリックします。<br>例えば「稲」をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img06.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="14" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">07</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">栽培情報の登録</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          栽培情報を登録して、画面右下の“続行”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img07.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="15" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">08</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">作物の登録完了</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          画面右下の“作物を保存”をクリックして、作物の登録が完了します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel02-img08.jpg" alt="">
+                      </div>
+                    </div>
+                  </div></div></div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+
+                <button type="button" class="slick-next slick-arrow" style=""><i class="fas fa-chevron-circle-right"></i></button><ul class="slick-dots" style="" role="tablist"><li class="" role="presentation"><button type="button" role="tab" id="slick-slide-control00" aria-controls="slick-slide00" aria-label="1 of 8" tabindex="-1">1</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control01" aria-controls="slick-slide01" aria-label="2 of 8" tabindex="-1">2</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control02" aria-controls="slick-slide02" aria-label="3 of 8" tabindex="-1">3</button></li><li role="presentation" class="slick-active"><button type="button" role="tab" id="slick-slide-control03" aria-controls="slick-slide03" aria-label="4 of 8" tabindex="0" aria-selected="true">4</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control04" aria-controls="slick-slide04" aria-label="5 of 8" tabindex="-1">5</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control05" aria-controls="slick-slide05" aria-label="6 of 8" tabindex="-1">6</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control06" aria-controls="slick-slide06" aria-label="7 of 8" tabindex="-1">7</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control07" aria-controls="slick-slide07" aria-label="8 of 8" tabindex="-1">8</button></li></ul></div>
+              </div>
+            </div>
+
+            <div class="item--block" id="step3">
+              <div class="title-head"><span class="font-Oswald font-w300">03.</span>地力マップ・生育マップを<br class="m-sp575">使ってみましょう!</div>
+              <div class="main-content">
+                <div class="slider-item slick-initialized slick-slider slick-dotted"><button type="button" class="slick-prev slick-arrow" style=""><i class="fas fa-chevron-circle-left"></i></button>
+                  <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 3915px; transform: translate3d(-1740px, 0px, 0px);"><div class="item slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">04</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【地力マップの確認】<br>【生育マップの確認】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地力マップは、圃場の地力を推定したマップです。圃場内の地力ムラを確認できます。生育マップは、圃場の生育状況を色分けで表示します。圃場内の生育ムラを確認できます。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel03-img04.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="0" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide10" aria-describedby="slick-slide-control10" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">01</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【見たい圃場を選択】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          “すべての圃場”をクリックして表示された登録圃場の一覧から圃場を選択します。<br>複数選択も可能です。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img01.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide11" aria-describedby="slick-slide-control11" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">02</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【マップ変更をクリック】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地図の右側に表示されているパネルから、“マップ変更”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img02.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" role="tabpanel" id="slick-slide12" aria-describedby="slick-slide-control12" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">03</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【地力マップを選択】<br>【生育マップを選択】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          マップの種類の中から、地力マップ、または生育マップを選択します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img03.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-current slick-active" data-slick-index="3" aria-hidden="false" tabindex="0" role="tabpanel" id="slick-slide13" aria-describedby="slick-slide-control13" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">04</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【地力マップの確認】<br>【生育マップの確認】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地力マップは、圃場の地力を推定したマップです。圃場内の地力ムラを確認できます。生育マップは、圃場の生育状況を色分けで表示します。圃場内の生育ムラを確認できます。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel03-img04.jpg" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="4" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">01</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【見たい圃場を選択】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          “すべての圃場”をクリックして表示された登録圃場の一覧から圃場を選択します。<br>複数選択も可能です。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img01.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="5" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">02</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【マップ変更をクリック】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地図の右側に表示されているパネルから、“マップ変更”をクリックします。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img02.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="6" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">03</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【地力マップを選択】<br>【生育マップを選択】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          マップの種類の中から、地力マップ、または生育マップを選択します。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="/img/other/beginner/Carousel03-img03.png" alt="">
+                      </div>
+                    </div>
+                  </div><div class="item slick-slide slick-cloned" data-slick-index="7" id="" aria-hidden="true" tabindex="-1" style="width: 435px;">
+                    <div class="row">
+                      <div class="col-lg-5">
+                        <div class="number-step mb-30 mb-sp20 fonts-26 d-flex align-items-end">
+                          Step<span class="">04</span>
+                        </div>
+                        <div class="title-item fonts-lg-22 fonts-md-20 fonts-18 mb-15 mb-sp10 lineheight-18">【地力マップの確認】<br>【生育マップの確認】</div>
+                        <div class="content-text font-w300 fonts-md-18 fonts-16 lineheight-18">
+                          地力マップは、圃場の地力を推定したマップです。圃場内の地力ムラを確認できます。生育マップは、圃場の生育状況を色分けで表示します。圃場内の生育ムラを確認できます。
+                        </div>
+                      </div>
+                      <div class="col-lg-7">
+                        <img class="img-fluid" src="../img/other/beginner/Carousel03-img04.jpg" alt="">
+                      </div>
+                    </div>
+                  </div></div></div>
+                  
+                  
+                  
+
+                <button type="button" class="slick-next slick-arrow" style=""><i class="fas fa-chevron-circle-right"></i></button><ul class="slick-dots" style="" role="tablist"><li class="" role="presentation"><button type="button" role="tab" id="slick-slide-control10" aria-controls="slick-slide10" aria-label="1 of 4" tabindex="-1">1</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control11" aria-controls="slick-slide11" aria-label="2 of 4" tabindex="-1">2</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control12" aria-controls="slick-slide12" aria-label="3 of 4" tabindex="-1">3</button></li><li role="presentation" class="slick-active"><button type="button" role="tab" id="slick-slide-control13" aria-controls="slick-slide13" aria-label="4 of 4" tabindex="0" aria-selected="true">4</button></li></ul></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-page--beginner beginner--style3">
+      <div class="container container-option1130">
+        <h2 class="head-title--h1 text-center mb-60 mb-sp40"><span>ザルビオなら<br class="m-sp575">いつでもどこでも使える</span>
+        </h2>
+        <div class="row row-x10">
+          <div class="col-lg-6 pd-x10">
+            <div class="item--row">
+              <div class="image-block "><img class="img-fluid" src="../img/other/beginner/beg-computer.jpg" alt="パソコンで"></div>
+              <div class="text-content">
+                <div class="title-head fonts-22 fonts-md-26 text-center mb-20 mb-sp10">パソコンで!</div>
+                <div class="text-h3 fonts-16 fonts-md-18 mb-10">利用シーン</div>
+                <ul class="font-w300 fonts-16 fonts-md-18">
+                  <li>・朝、圃場に出かける前に</li>
+                  <li>・事務所で作業の計画を立てる時に</li>
+                  <li>・作期全体を振り返る分析の時に</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="item--row">
+              <div class="image-block "><img class="img-fluid" src="../img/other/beginner/smartphone-app.jpg" alt="スマホアプリで"></div>
+              <div class="text-content">
+                <div class="title-head fonts-22 fonts-md-26 text-center mb-20 mb-sp10">スマホアプリで!</div>
+                <div class="text-h3 fonts-16 fonts-md-18 mb-10">利用シーン</div>
+                <ul class="font-w300 fonts-16 fonts-md-18 mb-25 mb-sp15">
+                  <li>・圃場での作業の合間に</li>
+                  <li>・外出先など農場から離れた所でも</li>
+                </ul>
+                <div class="store-app text-center">
+                  <div class="title-stores fonts-15 fonts-md-18 mb-20">
+                    無料アプリのダウンロード
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6 col-6">
+                      <a target="_blank" href="https://apps.apple.com/jp/app/xarvio-field-manager/id1344893065">
+                        <img class="img-fluid" src="../img/other/beginner/appstore.svg" alt="">
+                      </a>
+                    </div>
+                    <div class="col-lg-6 col-6">
+                      <a target="_blank" href="https://play.google.com/store/apps/details?id=com.bayer.cs.xarviofieldmanager">
+                        <img class="img-fluid" src="../img/other/beginner/playstore.svg" alt="">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="p-top section--try">
+      <div data-includehtml="/registration.html">      <div class="p-top__inner">
+        <div class="p-top__content">
+          <div class="p-top__below">
+            <div class="p-top__below-box">
+              <div class="p-top__below-ttl">
+                最先端の栽培管理支援システムを無料でお試しください
+              </div>
+              <div class="p-top__below-inner">
+                <div>
+                  <a href="https://fm.xarvio.com/jp/ja_jp/registration" class="p-top__below-btn">会員登録（無料）</a>
+                </div>
+                <div>
+                  <a href="https://xarvio-japan-form.spiral-site.com/" target="_blank" rel="noopener" class="p-top__below-btn -download">資料ダウンロード</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </section>
+  </main>
+  <footer class="c-footer">
+    <div data-includehtml="../footer.html"><div class="c-footer__inner">
+    <a href="/" class="c-footer__logo">
+        <img src="../img/common/footer-logo.svg" alt="">
+    </a>
+    <div class="c-footer__content">
+        <ul class="c-footer__nav">
+            <li class="c-footer__nav-item">
+                <a href="../beginner/index.html" class="c-footer__nav-txt">初級者向け</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../feature/index.html" class="c-footer__nav-txt">機能紹介</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../case/index.html" class="c-footer__nav-txt">導入事例</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../price/index.html" class="c-footer__nav-txt">料金プラン</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../guide/index.html" class="c-footer__nav-txt">活用コンテンツ</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../faq/index.html" class="c-footer__nav-txt">よくある質問</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../news/index.html" class="c-footer__nav-txt">新着情報</a>
+            </li>
+            <li class="c-footer__nav-item c-modal-open">
+                <a href="javascript:void(0)" class="c-footer__nav-txt">お問い合わせ</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5" -->
+<!-- Chatbody -->
+<df-messenger location="global" project-id="prj-basf-xarviobot-prod" agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238" language-code="ja" max-query-length="-1" url-allowlist="*" allow-feedback="all" intent="Start_Conversation">
+    <df-messenger-chat-bubble chat-title="チャットで相談" placeholder-text="メッセージを入力してください。" request-auth-text="test" bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif" chat-width="auto" chat-height="auto" chat-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-start.png" chat-close-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-close.png" allow-fullscreen="small">
+    </df-messenger-chat-bubble>
+</df-messenger>
+                
+<!--フィードバック回答スクリプト-->
+<script>
+  class CustomFeedbackElement extends HTMLElement {
+    constructor() {
+      super();
+      this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = 'irrelevant';
+    }
+ 
+    connectedCallback() {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
+ 
+      // 回答フォームを作成
+      const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
+ 
+      // 低評価の理由選択
+      const reasonLabel = document.createElement('label');
+      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white';
+      reasonSelect.style.cursor = 'pointer';
+      const reasonOptions = [
+        { value: 'irrelevant', label: '求めている回答ではない' },
+        { value: 'incorrect', label: '間違った情報' },
+        { value: 'not_enough_information', label: '情報が少ない' },
+        { value: 'other', label: 'その他' },
+      ];
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+ 
+        if (option.value === this.selectedReason) {
+          optionElement.selected = true;
+        }
+        reasonSelect.appendChild(optionElement);
+      });
+ 
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+ 
+      form.appendChild(reasonLabel);
+      form.appendChild(reasonSelect);
+ 
+      // フリーテキスト入力
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
+      const commentInput = document.createElement('textarea');
+      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
+      form.appendChild(commentLabel);
+      form.appendChild(commentInput);
+ 
+      // Submit ボタンを作成
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#009fe3';
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
+      });
+ 
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+ 
+      wrapper.appendChild(form);
+      wrapper.appendChild(submitButtonContainer);
+ 
+      this.renderRoot.appendChild(wrapper);
+ 
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        console.log('Feedback:', feedbackData);
+      });
+    }
+ 
+    _reasonSelected(value) {
+      this.selectedReason = value;
+    }
+ 
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          reason: this.selectedReason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+  }
+ 
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+  
+  const dfMessenger = document.querySelector('df-messenger');
+  dfMessenger.clearStorage();
+  
+  // An example of handling events: Navigate to the first suggested URL.
+  document.addEventListener('df-url-suggested', (event) => {
+    if (Array.isArray(event.detail.suggestedUrls) &&
+    event.detail.suggestedUrls.length) {
+    window.location.href = event.detail.suggestedUrls[0];
+  }
+});
+
+   window.onload = function () {
+     var currentUrl = window.location.href;
+     dfMessenger = document.querySelector('df-messenger');
+     dfMessenger.setAttribute("current-url", currentUrl);
+   };
+
+    // ページがロードされた後に5秒間待機
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log("ページが読み込まれました。6０秒後にチャットを自動的に開きます...");
+       
+        setTimeout(() => {
+            try {
+                const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+                if (dfMessengerBubble) {
+                    // チャットボットを開く処理
+                    dfMessengerBubble.openChat();
+                    console.log("チャットボットが自動的に開かれました。");
+                } else {
+                    console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                }
+            } catch (error) {
+                console.error("エラーが発生しました:", error);
+            }
+        }, 60000); // 6０秒間待機
+    });
+</script>
+<!-- End Chat body -->
+
+<!-- <div class="c-footer__inner">
+    <div class="c-footer__copyright d-flex justify-content-between">
+        <a href="https://www.xarvio.com/jp/ja/about-us.html">BASFジャパン株式会社</a><span>Copyright&copy;BASF Digital Farming GmbH</span>
+    </div>
+</div> --></div>
+    <div data-includehtml="../footer-copyright.html"><div class="footer-copyright">
+    <div class="row--footer">
+        <ul class="ul--copyright">
+            <li><a href="https://www.basf.com/jp/ja/legal/data-protection.html">プライバシーポリシー</a></li>
+            <li><a href="/terms-and-conditions/index.html">利用規約 </a></li>
+            <li><a href="https://agriculture.basf.com/jp/ja.html">BASFジャパン </a></li>
+            <li><a href="/about-us/index.html">BASFデジタルファーミング社 </a></li>
+        </ul>
+        <div class="lable--copy">Copyright © BASF SE 2023 </div>
+    </div>
+</div></div>
+  </footer>
+
+  <div class="modal"><div class="c-modal-overlay"></div>
+<div class="c-modal-container">
+    <div class="c-modal-body">
+        <!-- 閉じるボタン -->
+        <div class="c-modal-close">×</div>
+        <!-- モーダル内のコンテンツ -->
+        <div class="c-modal-content">
+            <h2 class="p-top__ttl">お問い合わせ</h2>
+            <div class="c-modal-body">
+                <div class="c-modal-txt">
+                    xarvio(ザルビオ)フィールドマネージャーに関するお問い合わせはメールかお電話にてお問い合せください。<br>営業時間：月曜ー金曜 9:00〜17:00　※土日祝・年末年始を除く
+                </div>
+                <div class="c-modal-info">
+                    <div class="c-modal-btn-wrap">
+                        <a href="mailto:japan@xarvio.info" class="c-modal-btn">japan@xarvio.info</a>
+                    </div>
+                    <div class="c-modal-btn-wrap">
+                        <a href="tel:080-0000-0115" class="c-modal-btn -call">080-0000-0115<br class="m-sp575"><span>（通話無料）</span></a>
+                    </div>
+                </div>
+                <div class="c-modal-close c-modal-btn -close">閉じる</div>
+            </div>
+        </div>
+    </div>
+</div></div>
+
+  <!-- JS -->
+  <script src="../js/jquery-3.6.0.min.js"></script>
+  <script src="../js/slick.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    $(document).ready(function ($) {
+      $('.slider-item').slick({
+        slidesToShow: 1,
+        arrows: true,
+        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-circle-left"></i></button>',
+        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-circle-right"></i></button>',
+        autoplay: true,
+        autoplaySpeed: 5000,
+        dots: true,
+        infinite: true
+
+      });
+    });
+  </script>
+
+
+
+
+
+<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","939015767099944");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=939015767099944&amp;ev=PageView&amp;noscript=1"></noscript><iframe allow="join-ad-interest-group" data-tagging-id="AW-621805554" data-load-time="1727315721688" height="0" width="0" src="https://td.doubleclick.net/td/rul/621805554?random=1727315721683&amp;cv=11&amp;fst=1727315721683&amp;fmt=3&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be49n0v897479820z8810401442za201zb810401442&amp;gcd=13l3l3l3l1l1&amp;dma=0&amp;tag_exp=101671035~101747727&amp;u_w=1536&amp;u_h=864&amp;url=https%3A%2F%2Fbasf-renew-001.digital-marketing.dev%2Fbeginner%2Findex.html&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%E5%88%9D%E7%B4%9A%E8%80%85%E5%90%91%E3%81%91%EF%BD%9Cxarvio%EF%BC%88%E3%82%B6%E3%83%AB%E3%83%93%E3%82%AA%EF%BC%89%E3%83%95%E3%82%A3%E3%83%BC%E3%83%AB%E3%83%89%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC&amp;npa=0&amp;pscdl=noapi&amp;uaa=x86&amp;uab=64&amp;uafvl=Chromium%3B128.0.6613.138%7CNot%253BA%253DBrand%3B24.0.0.0%7CMicrosoft%2520Edge%3B128.0.2739.79&amp;uamb=0&amp;uam=&amp;uap=Windows&amp;uapv=15.0.0&amp;uaw=0&amp;fledge=1" style="display: none; visibility: hidden;"></iframe>
+</body>
+</html>
