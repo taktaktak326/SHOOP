@@ -54,7 +54,28 @@
 </head>
 <body>
     <!-- Assume df-messenger is a custom element or iframe -->
-    <df-messenger
+
+    <df-messenger 
+        location="global" 
+        project-id="prj-basf-xarviobot-prod" 
+        agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238" 
+        language-code="ja" 
+        max-query-length="-1" 
+        url-allowlist="*" 
+        allow-feedback="all" 
+        intent="Start_Conversation">
+    <df-messenger-chat-bubble 
+        chat-title="チャットで相談" 
+        placeholder-text="メッセージを入力してください。" 
+        request-auth-text="test" 
+        bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif" 
+        chat-width="auto" chat-height="auto" chat-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-start.png" 
+        chat-close-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-close.png" 
+        allow-fullscreen="small">
+    </df-messenger-chat-bubble>
+</df-messenger>
+
+    <!--df-messenger
         project-id="prj-basf-xarviobot-prod"
         agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238"
         language-code="ja"
@@ -69,8 +90,9 @@
             chat-height="880"
             placeholder-text="メッセージを入力してください。">
         </df-messenger-chat-bubble>
-    </df-messenger>
+    </df-messenger-->
 
+    
     <script>       
   class CustomFeedbackElement extends HTMLElement {
     constructor() {
