@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minorasu</title>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-  <style>
-    /* ... その他のスタイル ... */
-
-    /* マイクボタンのスタイル */
-    #microphoneButton {
-      padding: 10px 15px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
   <div id="chat-container">
@@ -31,39 +18,222 @@
     <!-- マイクボタン -->
     <button id="microphoneButton">🎤</button>
   </div>
-
-  <script>
-    const dfMessenger = document.querySelector('df-messenger');
-    const microphoneButton = document.getElementById('microphoneButton');
-
-    // マイクボタンのクリックイベントリスナー
-    microphoneButton.addEventListener('click', () => {
-      recognizeSpeech()
-        .then(transcript => sendMessageToDialogflow(transcript))
-        .catch(error => console.error("音声認識エラー:", error));
-    });
-
-    // 音声認識処理
-    function recognizeSpeech() {
-      // ... (以前の回答と同じ) ...
-    }
-
-    // Dialogflowにメッセージを送信
-    function sendMessageToDialogflow(message) {
-      // Dialogflow Messenger にメッセージを表示
-      dfMessenger.addMessage({ text: message, sender: 'user' });
-
-      // Dialogflow CX の DetectIntent API を呼び出す
-      dfMessenger.detectIntent(message)
-        .then(response => {
-          // Dialogflow からの応答を処理
-          console.log('Dialogflow からの応答:', response);
-
-          // Dialogflow Messenger に応答メッセージを表示
-          dfMessenger.addMessage({ text: response.response.queryResult.fulfillmentText, sender: 'bot' });
-        })
-        .catch(error => console.error('Dialogflow API エラー:', error));
-    }
-  </script>
 </body>
+  <footer class="c-footer">
+    <div data-includehtml="../footer.html"><div class="c-footer__inner">
+    <a href="/" class="c-footer__logo">
+        <img src="../img/common/footer-logo.svg" alt="">
+    </a>
+    <div class="c-footer__content">
+        <ul class="c-footer__nav">
+            <li class="c-footer__nav-item">
+                <a href="../beginner/index.html" class="c-footer__nav-txt">初級者向け</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../feature/index.html" class="c-footer__nav-txt">機能紹介</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../case/index.html" class="c-footer__nav-txt">導入事例</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../price/index.html" class="c-footer__nav-txt">料金プラン</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../guide/index.html" class="c-footer__nav-txt">活用コンテンツ</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../faq/index.html" class="c-footer__nav-txt">よくある質問</a>
+            </li>
+            <li class="c-footer__nav-item">
+                <a href="../news/index.html" class="c-footer__nav-txt">新着情報</a>
+            </li>
+            <li class="c-footer__nav-item c-modal-open">
+                <a href="javascript:void(0)" class="c-footer__nav-txt">お問い合わせ</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5" -->
+<!-- Chatbody -->
+<df-messenger location="global" project-id="prj-basf-xarviobot-prod" agent-id="70e7b395-1db0-4ca2-bb3d-49dc0c222238" language-code="ja" max-query-length="-1" url-allowlist="*" allow-feedback="all" intent="Start_Conversation">
+    <df-messenger-chat-bubble chat-title="チャットで相談" placeholder-text="メッセージを入力してください。" request-auth-text="test" bot-writing-image="https://basf-renew-001.digital-marketing.dev/img/common/loading.gif" chat-width="auto" chat-height="auto" chat-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-start.png" chat-close-icon="https://basf-renew-001.digital-marketing.dev/img/common/chat-close.png" allow-fullscreen="small">
+    </df-messenger-chat-bubble>
+</df-messenger>
+                
+<!--フィードバック回答スクリプト-->
+<script>
+  class CustomFeedbackElement extends HTMLElement {
+    constructor() {
+      super();
+      this.renderRoot = this.attachShadow({ mode: 'open' });
+      this.selectedReason = 'irrelevant';
+    }
+ 
+    connectedCallback() {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.flexDirection = 'column';
+      wrapper.style.gap = '1rem';
+      wrapper.style.padding = '1rem';
+      wrapper.style.border = '1px solid #ccc';
+      wrapper.style.borderRadius = '4px';
+ 
+      // 回答フォームを作成
+      const form = document.createElement('form');
+      form.style.display = 'flex';
+      form.style.flexDirection = 'column';
+      form.style.gap = '1rem';
+ 
+      // 低評価の理由選択
+      const reasonLabel = document.createElement('label');
+      reasonLabel.textContent = 'この評価を選んだ理由をお聞かせください:';
+      const reasonSelect = document.createElement('select');
+      reasonSelect.style.padding = '0.8rem';
+      reasonSelect.style.border = '1px solid #ccc';
+      reasonSelect.style.borderRadius = '4px';
+      reasonSelect.style.backgroundColor = 'white';
+      reasonSelect.style.cursor = 'pointer';
+      const reasonOptions = [
+        { value: 'irrelevant', label: '求めている回答ではない' },
+        { value: 'incorrect', label: '間違った情報' },
+        { value: 'not_enough_information', label: '情報が少ない' },
+        { value: 'other', label: 'その他' },
+      ];
+      reasonOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+ 
+        if (option.value === this.selectedReason) {
+          optionElement.selected = true;
+        }
+        reasonSelect.appendChild(optionElement);
+      });
+ 
+      reasonSelect.addEventListener('change', () => {
+        this._reasonSelected(reasonSelect.value);
+      });
+ 
+      form.appendChild(reasonLabel);
+      form.appendChild(reasonSelect);
+ 
+      // フリーテキスト入力
+      const commentLabel = document.createElement('label');
+      commentLabel.textContent = 'ご意見をお聞かせください（任意）:';
+      const commentInput = document.createElement('textarea');
+      commentInput.placeholder = 'フィードバックがありましたら、入力してください';
+      commentInput.style.padding = '0.8rem';
+      commentInput.style.border = '1px solid #ccc';
+      commentInput.style.borderRadius = '4px';
+      commentInput.style.resize = 'vertical';
+      form.appendChild(commentLabel);
+      form.appendChild(commentInput);
+ 
+      // Submit ボタンを作成
+      const submitButton = document.createElement('button');
+      submitButton.innerText = '送信';
+      submitButton.style.padding = '0.6rem 1rem';
+      submitButton.style.border = 'none';
+      submitButton.style.borderRadius = '4px';
+      submitButton.style.backgroundColor = '#009fe3';
+      submitButton.style.color = 'white';
+      submitButton.style.cursor = 'pointer';
+      submitButton.addEventListener('click', () => {
+        this._onSubmitClick(this.selectedReason, commentInput.value);
+      });
+ 
+      const submitButtonContainer = document.createElement('div');
+      submitButtonContainer.style.display = 'flex';
+      submitButtonContainer.style.justifyContent = 'flex-start';
+      submitButtonContainer.appendChild(submitButton);
+ 
+      wrapper.appendChild(form);
+      wrapper.appendChild(submitButtonContainer);
+ 
+      this.renderRoot.appendChild(wrapper);
+ 
+      // イベントリスナーを追加
+      this.addEventListener('df-custom-submit-feedback-clicked', (event) => {
+        const feedbackData = JSON.parse(event.detail);
+        // サーバーに送信する処理を追加
+        console.log('Feedback:', feedbackData);
+      });
+    }
+ 
+    _reasonSelected(value) {
+      this.selectedReason = value;
+    }
+ 
+    _onSubmitClick(reason, comment) {
+      const event = new CustomEvent("df-custom-submit-feedback-clicked", {
+        detail: JSON.stringify({
+          reason: this.selectedReason,
+          comment: comment,
+        }),
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(event);
+    }
+  }
+ 
+  customElements.define('df-external-custom-feedback', CustomFeedbackElement);
+  
+  const dfMessenger = document.querySelector('df-messenger');
+  dfMessenger.clearStorage();
+  
+  // An example of handling events: Navigate to the first suggested URL.
+  document.addEventListener('df-url-suggested', (event) => {
+    if (Array.isArray(event.detail.suggestedUrls) &&
+    event.detail.suggestedUrls.length) {
+    window.location.href = event.detail.suggestedUrls[0];
+  }
+});
+
+   window.onload = function () {
+     var currentUrl = window.location.href;
+     dfMessenger = document.querySelector('df-messenger');
+     dfMessenger.setAttribute("current-url", currentUrl);
+   };
+
+    // ページがロードされた後に5秒間待機
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log("ページが読み込まれました。6０秒後にチャットを自動的に開きます...");
+       
+        setTimeout(() => {
+            try {
+                const dfMessengerBubble = document.querySelector('df-messenger-chat-bubble');
+                if (dfMessengerBubble) {
+                    // チャットボットを開く処理
+                    dfMessengerBubble.openChat();
+                    console.log("チャットボットが自動的に開かれました。");
+                } else {
+                    console.log("df-messenger-chat-bubbleが見つかりませんでした。");
+                }
+            } catch (error) {
+                console.error("エラーが発生しました:", error);
+            }
+        }, 60000); // 6０秒間待機
+    });
+</script>
+<!-- End Chat body -->
+
+<!-- <div class="c-footer__inner">
+    <div class="c-footer__copyright d-flex justify-content-between">
+        <a href="https://www.xarvio.com/jp/ja/about-us.html">BASFジャパン株式会社</a><span>Copyright&copy;BASF Digital Farming GmbH</span>
+    </div>
+</div> --></div>
+    <div data-includehtml="../footer-copyright.html"><div class="footer-copyright">
+    <div class="row--footer">
+        <ul class="ul--copyright">
+            <li><a href="https://www.basf.com/jp/ja/legal/data-protection.html">プライバシーポリシー</a></li>
+            <li><a href="/terms-and-conditions/index.html">利用規約 </a></li>
+            <li><a href="https://agriculture.basf.com/jp/ja.html">BASFジャパン </a></li>
+            <li><a href="/about-us/index.html">BASFデジタルファーミング社 </a></li>
+        </ul>
+        <div class="lable--copy">Copyright © BASF SE 2023 </div>
+    </div>
+</div></div>
+  </footer>
 </html>
