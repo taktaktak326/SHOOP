@@ -45,13 +45,17 @@
 
         .checkbox-group {
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* 改行して選択肢を表示 */
             margin-bottom: 20px;
         }
 
         .checkbox-group label {
             margin-bottom: 10px;
             font-weight: normal;
+        }
+
+        .checkbox-group input {
+            margin-right: 5px;
         }
 
         button {
@@ -172,14 +176,13 @@
             let includedGrowthMap = 0;
             let includedPrediction = 0;
 
-            // 各スタートプランに含まれる面積を計算
             plans.forEach(plan => {
                 baseCost += planCosts[plan].cost;
                 includedGrowthMap += planCosts[plan].includedGrowthMapHa;
                 includedPrediction += planCosts[plan].includedPredictionHa;
             });
 
-            // 含まれている面積を超えた場合の追加コストを計算
+            // スタートプランに含まれる面積を差し引いて、追加料金を計算
             const growthMapCost = additionalCosts.growthMap * Math.max(0, growthMapHa - includedGrowthMap);
             const predictionCost = additionalCosts.prediction * Math.max(0, predictionHa - includedPrediction);
             const variableFertilizationCost = additionalCosts.variableFertilization * variableFertilizationHa;
@@ -204,11 +207,12 @@
         }
 
         function displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization) {
+            // 合計金額とそれぞれの機能の合計面積を表示
             document.getElementById('result').innerHTML = `
                 <p>合計金額: ${totalCost} 円（税抜）</p>
-                <p>合計生育・地力マップ面積: ${totalGrowthMap} ha</p>
-                <p>合計予測機能面積: ${totalPrediction} ha</p>
-                <p>合計可変施肥機能面積: ${totalVariableFertilization} ha</p>
+                <p>生育・地力マップ面積（スタートプランに含まれる面積を考慮）: ${Math.max(0, totalGrowthMap)} ha</p>
+                <p>予測機能面積（スタートプランに含まれる面積を考慮）: ${Math.max(0, totalPrediction)} ha</p>
+                <p>可変施肥機能面積: ${totalVariableFertilization} ha</p>
             `;
 
             const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
