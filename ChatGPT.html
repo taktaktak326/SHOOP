@@ -235,6 +235,13 @@
 
         document.getElementById('calculate_button').addEventListener('click', () => {
             const selectedPlans = Array.from(document.querySelectorAll('.plan-checkbox:checked')).map(checkbox => checkbox.value);
+            
+            // スタートプランが選択されていない場合はアラートを表示し、計算を停止する
+            if (selectedPlans.length === 0) {
+                alert("少なくとも1つのスタートプランを選択してください。");
+                return;
+            }
+
             const growthMapHa = parseFloat(document.getElementById('growth_map_ha').value) || 0;
             const predictionHa = parseFloat(document.getElementById('prediction_ha').value) || 0;
             const variableFertilizationHa = parseFloat(document.getElementById('variable_fertilization_ha').value) || 0;
@@ -287,28 +294,6 @@
             document.getElementById('total_growth_map').innerText = `${growthMapHa} ha`;
             document.getElementById('total_prediction').innerText = `${predictionHa} ha`;
             document.getElementById('total_variable_fertilization').innerText = `${variableFertilizationHa} ha`;
-
-            const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
-            tableBody.innerHTML = '';
-
-            breakdown.plans.forEach(plan => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${plan}</td>
-                    <td>${planCosts[plan].cost} 円</td>
-                    <td>${planCosts[plan].includedGrowthMapHa} ha</td>
-                    <td>${planCosts[plan].includedPredictionHa} ha</td>
-                    <td></td>
-                `;
-                tableBody.appendChild(row);
-            });
-
-            const additionalRows = [
-                { name: '生育・地力マップ追加料金', cost: breakdown.growthMapCost, ha: growthMapHa },
-                { name: '予測機能追加料金', cost: breakdown.predictionCost, ha: predictionHa },
-                { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: variableFertilizationHa }
-            ];
-
         }
     </script>
 </body>
