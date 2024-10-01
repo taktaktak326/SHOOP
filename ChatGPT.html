@@ -109,7 +109,7 @@
 <body>
 
     <div class="container">
-        <h1>農業コスト計算機</h1>
+        <h1>ザルビオ計算機</h1>
 
         <div class="checkbox-group">
             <label><input type="checkbox" class="plan-checkbox" value="稲">スタートプラン 稲</label>
@@ -119,14 +119,14 @@
             <label><input type="checkbox" class="plan-checkbox" value="馬鈴薯・甜菜（北海道）">スタートプラン 馬鈴薯・甜菜（北海道）</label>
         </div>
 
-        <label for="growth_map_ha">生育・地力マップの面積 (ha):</label>
-        <input type="number" id="growth_map_ha" max="100000" placeholder="0">
+        <label for="growth_map_ha">必要な生育・地力マップの面積 (ha):</label>
+        <input type="number" id="growth_map_ha" max="10000" placeholder="0">
 
-        <label for="prediction_ha">予測機能の面積 (ha):</label>
-        <input type="number" id="prediction_ha" max="100000" placeholder="0">
+        <label for="prediction_ha">必要な予測機能の面積 (ha):</label>
+        <input type="number" id="prediction_ha" max="10000" placeholder="0">
 
-        <label for="variable_fertilization_ha">可変施肥機能の面積 (ha):</label>
-        <input type="number" id="variable_fertilization_ha" max="100000" placeholder="0">
+        <label for="variable_fertilization_ha">必要な可変施肥機能の面積 (ha):</label>
+        <input type="number" id="variable_fertilization_ha" max="10000" placeholder="0">
 
         <button id="calculate_button">計算</button>
 
@@ -135,10 +135,10 @@
         <table id="breakdown_table">
             <thead>
                 <tr>
-                    <th>項目</th>
+                    <th>内訳</th>
                     <th>料金</th>
-                    <th>スタートプランに含まれる<br>生育・地力マップ機能の面積</th>
-                    <th>スタートプランに含まれる<br>予測機能の面積</th>
+                    <th>スタートプランに含まれる生育・地力マップ機能の面積</th>
+                    <th>スタートプランに含まれる予測機能の面積</th>
                     <th>面積(ha)</th>
                 </tr>
             </thead>
@@ -215,8 +215,6 @@
                 <p>生育・地力マップ面積: ${totalGrowthMap} ha</p>
                 <p>予測機能面積: ${totalPrediction} ha</p>
                 <p>可変施肥機能面積: ${totalVariableFertilization} ha</p>
-                <p>スタートプランに含まれる生育・地力マップ機能の面積: ${totalIncludedGrowthMap} ha</p>
-                <p>スタートプランに含まれる予測機能の面積: ${totalIncludedPrediction} ha</p>
             `;
 
             const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
