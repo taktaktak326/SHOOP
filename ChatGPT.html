@@ -52,7 +52,7 @@
 
         .checkbox-group {
             display: flex;
-            flex-direction: column; /* 改行して選択肢を表示 */
+            flex-direction: column;
             margin-bottom: 20px;
         }
 
@@ -198,7 +198,6 @@
 
         <button id="calculate_button">計算</button>
 
-        <!-- 結果表示エリア -->
         <div class="result-cards">
             <div class="card">
                 <h3>合計金額</h3>
@@ -249,9 +248,9 @@
 
         document.getElementById('calculate_button').addEventListener('click', () => {
             const selectedPlans = Array.from(document.querySelectorAll('.plan-checkbox:checked')).map(checkbox => checkbox.value);
-            const growthMapHa = parseFloat(document.getElementById('growth_map_ha').value) || 0;
-            const predictionHa = parseFloat(document.getElementById('prediction_ha').value) || 0;
-            const variableFertilizationHa = parseFloat(document.getElementById('variable_fertilization_ha').value) || 0;
+            const growthMapHa = Math.min(parseFloat(document.getElementById('growth_map_ha').value) || 0, 100);
+            const predictionHa = Math.min(parseFloat(document.getElementById('prediction_ha').value) || 0, 100);
+            const variableFertilizationHa = Math.min(parseFloat(document.getElementById('variable_fertilization_ha').value) || 0, 100);
 
             const { totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction } = calculateCost(selectedPlans, growthMapHa, predictionHa, variableFertilizationHa);
             displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction);
@@ -268,10 +267,10 @@
                 includedPrediction += planCosts[plan].includedPredictionHa;
             });
 
-            // スタートプランに含まれる面積を差し引いて、追加料金を計算
-            const growthMapCost = additionalCosts.growthMap * Math.max(0, growthMapHa - includedGrowthMap);
-            const predictionCost = additionalCosts.prediction * Math.max(0, predictionHa - includedPrediction);
-            const variableFertilizationCost = additionalCosts.variableFertilization * variableFertilizationHa;
+            // スタートプランに含まれる面積を差し引いて、追加料金を計算（最大100ha）
+            const growthMapCost = additionalCosts.growthMap * Math.max(0, Math.min(growthMapHa, 100) - includedGrowthMap);
+            const predictionCost = additionalCosts.prediction * Math.max(0, Math.min(predictionHa, 100) - includedPrediction);
+            const variableFertilizationCost = additionalCosts.variableFertilization * Math.min(variableFertilizationHa, 100);
 
             const totalCost = baseCost + growthMapCost + predictionCost + variableFertilizationCost;
 
