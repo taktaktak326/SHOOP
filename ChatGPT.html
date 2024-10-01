@@ -36,6 +36,7 @@
 
         input[type="number"] {
             width: 100%;
+            max-width: 200px;
             padding: 8px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
@@ -60,7 +61,7 @@
 
         button {
             width: 100%;
-            background-color: #28a745;
+            background-color: #941d80;
             color: #fff;
             padding: 12px;
             font-size: 16px;
@@ -71,7 +72,7 @@
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #7a1566;
         }
 
         h3 {
@@ -97,6 +98,17 @@
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
+        @media (max-width: 600px) {
+            .checkbox-group {
+                display: block;
+            }
+
+            input[type="number"] {
+                width: 100%;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -113,13 +125,13 @@
         </div>
 
         <label for="growth_map_ha">生育・地力マップの面積 (ha):</label>
-        <input type="number" id="growth_map_ha" placeholder="0">
+        <input type="number" id="growth_map_ha" max="100000" placeholder="0">
 
         <label for="prediction_ha">予測機能の面積 (ha):</label>
-        <input type="number" id="prediction_ha" placeholder="0">
+        <input type="number" id="prediction_ha" max="100000" placeholder="0">
 
         <label for="variable_fertilization_ha">可変施肥機能の面積 (ha):</label>
-        <input type="number" id="variable_fertilization_ha" placeholder="0">
+        <input type="number" id="variable_fertilization_ha" max="100000" placeholder="0">
 
         <button id="calculate_button">計算</button>
 
