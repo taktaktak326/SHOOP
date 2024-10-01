@@ -45,17 +45,13 @@
 
         .checkbox-group {
             display: flex;
-            flex-direction: column; /* 改行して選択肢を表示 */
+            flex-direction: column;
             margin-bottom: 20px;
         }
 
         .checkbox-group label {
             margin-bottom: 10px;
             font-weight: normal;
-        }
-
-        .checkbox-group input {
-            margin-right: 5px;
         }
 
         button {
@@ -176,12 +172,14 @@
             let includedGrowthMap = 0;
             let includedPrediction = 0;
 
+            // 各スタートプランに含まれる面積を計算
             plans.forEach(plan => {
                 baseCost += planCosts[plan].cost;
                 includedGrowthMap += planCosts[plan].includedGrowthMapHa;
                 includedPrediction += planCosts[plan].includedPredictionHa;
             });
 
+            // 含まれている面積を超えた場合の追加コストを計算
             const growthMapCost = additionalCosts.growthMap * Math.max(0, growthMapHa - includedGrowthMap);
             const predictionCost = additionalCosts.prediction * Math.max(0, predictionHa - includedPrediction);
             const variableFertilizationCost = additionalCosts.variableFertilization * variableFertilizationHa;
