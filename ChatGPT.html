@@ -200,7 +200,7 @@
 
         <div class="result-cards">
             <div class="card">
-                <h3>合計金額</h3>
+                <h3>合計金額(税抜)</h3>
                 <p id="total_cost">0 円</p>
             </div>
             <div class="card">
@@ -216,19 +216,6 @@
                 <p id="total_variable_fertilization">0 ha</p>
             </div>
         </div>
-
-        <table id="breakdown_table">
-            <thead>
-                <tr>
-                    <th>内訳</th>
-                    <th>料金</th>
-                    <th>スタートプランに含まれる生育・地力マップ機能の面積</th>
-                    <th>スタートプランに含まれる予測機能の面積</th>
-                    <th>面積(ha)</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
 
     <script>
@@ -322,17 +309,6 @@
                 { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: variableFertilizationHa }
             ];
 
-            additionalRows.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.cost} 円</td>
-                    <td></td>
-                    <td></td>
-                    <td>${item.ha} ha</td>
-                `;
-                tableBody.appendChild(row);
-            });
         }
     </script>
 </body>
