@@ -91,9 +91,33 @@
             transform: translateY(0);
         }
 
-        h3 {
-            margin-top: 30px;
-            font-size: 20px;
+        .result-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 45%;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #941d80;
+        }
+
+        .card p {
+            font-size: 24px;
+            margin: 10px 0 0;
             color: #333;
         }
 
@@ -139,6 +163,14 @@
             th, td {
                 font-size: 14px;
             }
+
+            .result-cards {
+                flex-direction: column;
+            }
+
+            .card {
+                min-width: 100%;
+            }
         }
     </style>
 </head>
@@ -166,7 +198,25 @@
 
         <button id="calculate_button">計算</button>
 
-        <h3 id="result"></h3>
+        <!-- 結果表示エリア -->
+        <div class="result-cards">
+            <div class="card">
+                <h3>合計金額</h3>
+                <p id="total_cost">0 円</p>
+            </div>
+            <div class="card">
+                <h3>生育・地力マップ面積</h3>
+                <p id="total_growth_map">0 ha</p>
+            </div>
+            <div class="card">
+                <h3>予測機能面積</h3>
+                <p id="total_prediction">0 ha</p>
+            </div>
+            <div class="card">
+                <h3>可変施肥機能面積</h3>
+                <p id="total_variable_fertilization">0 ha</p>
+            </div>
+        </div>
 
         <table id="breakdown_table">
             <thead>
@@ -246,12 +296,10 @@
 
         function displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction) {
             // 合計金額とそれぞれの機能の合計面積を表示
-            document.getElementById('result').innerHTML = `
-                <p>合計金額: ${totalCost} 円（税抜）</p>
-                <p>生育・地力マップ面積: ${totalGrowthMap} ha</p>
-                <p>予測機能面積: ${totalPrediction} ha</p>
-                <p>可変施肥機能面積: ${totalVariableFertilization} ha</p>
-            `;
+            document.getElementById('total_cost').textContent = `${totalCost} 円`;
+            document.getElementById('total_growth_map').textContent = `${totalGrowthMap} ha`;
+            document.getElementById('total_prediction').textContent = `${totalPrediction} ha`;
+            document.getElementById('total_variable_fertilization').textContent = `${totalVariableFertilization} ha`;
 
             const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
             tableBody.innerHTML = '';
