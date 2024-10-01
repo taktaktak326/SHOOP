@@ -45,12 +45,11 @@
 
         .checkbox-group {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column; /* 改行して選択肢を表示 */
             margin-bottom: 20px;
         }
 
         .checkbox-group label {
-            margin-right: 10px;
             margin-bottom: 10px;
             font-weight: normal;
         }
@@ -100,10 +99,6 @@
         }
 
         @media (max-width: 600px) {
-            .checkbox-group {
-                display: block;
-            }
-
             input[type="number"] {
                 width: 100%;
                 max-width: none;
@@ -172,8 +167,8 @@
             const predictionHa = parseFloat(document.getElementById('prediction_ha').value) || 0;
             const variableFertilizationHa = parseFloat(document.getElementById('variable_fertilization_ha').value) || 0;
 
-            const { totalCost, breakdown } = calculateCost(selectedPlans, growthMapHa, predictionHa, variableFertilizationHa);
-            displayResult(totalCost, breakdown);
+            const { totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization } = calculateCost(selectedPlans, growthMapHa, predictionHa, variableFertilizationHa);
+            displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization);
         });
 
         function calculateCost(plans, growthMapHa, predictionHa, variableFertilizationHa) {
@@ -201,11 +196,22 @@
                 variableFertilizationCost: variableFertilizationCost
             };
 
-            return { totalCost, breakdown };
+            return {
+                totalCost,
+                breakdown,
+                totalGrowthMap: growthMapHa,
+                totalPrediction: predictionHa,
+                totalVariableFertilization: variableFertilizationHa
+            };
         }
 
-        function displayResult(totalCost, breakdown) {
-            document.getElementById('result').textContent = `合計金額: ${totalCost} 円（税抜）です。`;
+        function displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization) {
+            document.getElementById('result').innerHTML = `
+                <p>合計金額: ${totalCost} 円（税抜）</p>
+                <p>合計生育・地力マップ面積: ${totalGrowthMap} ha</p>
+                <p>合計予測機能面積: ${totalPrediction} ha</p>
+                <p>合計可変施肥機能面積: ${totalVariableFertilization} ha</p>
+            `;
 
             const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
             tableBody.innerHTML = '';
@@ -223,9 +229,9 @@
             });
 
             const additionalRows = [
-                { name: '生育・地力マップ追加料金', cost: breakdown.growthMapCost, ha: document.getElementById('growth_map_ha').value },
-                { name: '予測機能追加料金', cost: breakdown.predictionCost, ha: document.getElementById('prediction_ha').value },
-                { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: document.getElementById('variable_fertilization_ha').value }
+                { name: '生育・地力マップ追加料金', cost: breakdown.growthMapCost, ha: totalGrowthMap },
+                { name: '予測機能追加料金', cost: breakdown.predictionCost, ha: totalPrediction },
+                { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: totalVariableFertilization }
             ];
 
             additionalRows.forEach(item => {
