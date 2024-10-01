@@ -248,12 +248,12 @@
 
         document.getElementById('calculate_button').addEventListener('click', () => {
             const selectedPlans = Array.from(document.querySelectorAll('.plan-checkbox:checked')).map(checkbox => checkbox.value);
-            const growthMapHa = Math.min(parseFloat(document.getElementById('growth_map_ha').value) || 0, 100);
-            const predictionHa = Math.min(parseFloat(document.getElementById('prediction_ha').value) || 0, 100);
-            const variableFertilizationHa = Math.min(parseFloat(document.getElementById('variable_fertilization_ha').value) || 0, 100);
+            const growthMapHa = parseFloat(document.getElementById('growth_map_ha').value) || 0;
+            const predictionHa = parseFloat(document.getElementById('prediction_ha').value) || 0;
+            const variableFertilizationHa = parseFloat(document.getElementById('variable_fertilization_ha').value) || 0;
 
             const { totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction } = calculateCost(selectedPlans, growthMapHa, predictionHa, variableFertilizationHa);
-            displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction);
+            displayResult(totalCost, breakdown, growthMapHa, predictionHa, variableFertilizationHa, totalIncludedGrowthMap, totalIncludedPrediction);
         });
 
         function calculateCost(plans, growthMapHa, predictionHa, variableFertilizationHa) {
@@ -267,10 +267,14 @@
                 includedPrediction += planCosts[plan].includedPredictionHa;
             });
 
-            // スタートプランに含まれる面積を差し引いて、追加料金を計算（最大100ha）
-            const growthMapCost = additionalCosts.growthMap * Math.max(0, Math.min(growthMapHa, 100) - includedGrowthMap);
-            const predictionCost = additionalCosts.prediction * Math.max(0, Math.min(predictionHa, 100) - includedPrediction);
-            const variableFertilizationCost = additionalCosts.variableFertilization * Math.min(variableFertilizationHa, 100);
+            // スタートプランに含まれる面積を差し引いて、追加料金を計算。ただし上限は100ha
+            const cappedGrowthMapHa = Math.min(growthMapHa, 100);
+            const cappedPredictionHa = Math.min(predictionHa, 100);
+            const cappedVariableFertilizationHa = Math.min(variableFertilizationHa, 100);
+
+            const growthMapCost = additionalCosts.growthMap * Math.max(0, cappedGrowthMapHa - includedGrowthMap);
+            const predictionCost = additionalCosts.prediction * Math.max(0, cappedPredictionHa - includedPrediction);
+            const variableFertilizationCost = additionalCosts.variableFertilization * cappedVariableFertilizationHa;
 
             const totalCost = baseCost + growthMapCost + predictionCost + variableFertilizationCost;
 
@@ -285,20 +289,17 @@
             return {
                 totalCost,
                 breakdown,
-                totalGrowthMap: growthMapHa,
-                totalPrediction: predictionHa,
-                totalVariableFertilization: variableFertilizationHa,
                 totalIncludedGrowthMap: includedGrowthMap,
                 totalIncludedPrediction: includedPrediction
             };
         }
 
-        function displayResult(totalCost, breakdown, totalGrowthMap, totalPrediction, totalVariableFertilization, totalIncludedGrowthMap, totalIncludedPrediction) {
+        function displayResult(totalCost, breakdown, growthMapHa, predictionHa, variableFertilizationHa, totalIncludedGrowthMap, totalIncludedPrediction) {
             // 合計金額とそれぞれの機能の合計面積を表示
-            document.getElementById('total_cost').textContent = `${totalCost} 円`;
-            document.getElementById('total_growth_map').textContent = `${totalGrowthMap} ha`;
-            document.getElementById('total_prediction').textContent = `${totalPrediction} ha`;
-            document.getElementById('total_variable_fertilization').textContent = `${totalVariableFertilization} ha`;
+            document.getElementById('total_cost').innerText = `${totalCost} 円`;
+            document.getElementById('total_growth_map').innerText = `${growthMapHa} ha`;
+            document.getElementById('total_prediction').innerText = `${predictionHa} ha`;
+            document.getElementById('total_variable_fertilization').innerText = `${variableFertilizationHa} ha`;
 
             const tableBody = document.getElementById('breakdown_table').querySelector('tbody');
             tableBody.innerHTML = '';
@@ -316,9 +317,9 @@
             });
 
             const additionalRows = [
-                { name: '生育・地力マップ追加料金', cost: breakdown.growthMapCost, ha: totalGrowthMap },
-                { name: '予測機能追加料金', cost: breakdown.predictionCost, ha: totalPrediction },
-                { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: totalVariableFertilization }
+                { name: '生育・地力マップ追加料金', cost: breakdown.growthMapCost, ha: growthMapHa },
+                { name: '予測機能追加料金', cost: breakdown.predictionCost, ha: predictionHa },
+                { name: '可変施肥機能追加料金', cost: breakdown.variableFertilizationCost, ha: variableFertilizationHa }
             ];
 
             additionalRows.forEach(item => {
