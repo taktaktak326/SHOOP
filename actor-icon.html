@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JS</title>
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+</head>
+<body>
+    <df-messenger
+        id="df-messenger"
+        location="asia-northeast1"
+        project-id="prj-basf-minorasu-prod"
+        agent-id="12ea9554-dc66-486e-a288-47c70db6e751"
+        language-code="ja"
+        max-query-length="-1"
+        allow-feedback="all"
+        url-allowlist="*"
+        intent="Start_Conversation">
+        <df-messenger-chat
+            id="df-messenger-chat"
+            chat-title="Minorasu Dentsu"
+            placeholder-text="minorasuテストです">
+        </df-messenger-chat>
+    </df-messenger>
+
+    <script>
+        // アイコンの画像URL配列
+        const botIcons = [
+            "DALL·E 2024-08-27 19.38.14.png",
+            "DALL·E 2024-08-27 19.38.jpg",
+            "DALL·E 2024-08-27 19.38.png"
+        ];
+
+        // ランダムにアイコンを選択
+        const randomIcon = botIcons[Math.floor(Math.random() * botIcons.length)];
+
+        // ページが読み込まれたら `bot-actor-image` 属性を設定
+        window.addEventListener('DOMContentLoaded', () => {
+            const chatElement = document.getElementById('df-messenger-chat');
+            chatElement.setAttribute('bot-actor-image', randomIcon);
+        });
+    </script>
+</body>
+</html>
