@@ -1,0 +1,180 @@
+:root {
+    --chatbotui-border-radius-small: 0.3rem;
+    --chatbotui-border-radius-medium: 1rem;
+    --chatbotui-border-radius-large: 1.5rem;
+
+    --chatbotui-text-primary: black;
+    --chatbotui-background-primary: #f5ecf4;
+    --chatbotui-text-secondary: #111;
+    --chatbotui-background-secondary: white;
+
+    --chatbotui-background-primary-dark: #941c80;
+}
+
+div.botui {
+    border: 2px solid #ccc;
+    margin-top: 3rem;
+}
+
+div.botui:before {
+    content: "チャットで相談";
+    display: block;
+    background-color: var(--chatbotui-background-primary-dark);
+    color: white;
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-weight: 400;
+}
+
+div#main {
+    padding: 1rem;
+}
+
+div#chatbar {
+    padding: 1rem;
+    background-color: #f5f5f5;
+}
+
+
+div[data-chatbotui-message-role] {
+    clear: both;
+    margin-bottom: 1.5rem;
+    color: var(--chatbotui-text-primary);
+    line-height: 1.8;
+    text-align: left;
+}
+
+div[data-chatbotui-message-role="user"] {
+    border-radius: var(--chatbotui-border-radius-medium) 0 var(--chatbotui-border-radius-medium) var(--chatbotui-border-radius-medium);
+    background-color: var(--chatbotui-background-primary);
+    color: var(--chatbotui-text-secondary);
+    display: inline-block;
+    float: right;
+    min-width: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    white-space: pre-wrap;
+}
+
+div[data-chatbotui-message-role="assistant"] {
+    padding: 1rem;
+    position: relative;
+    background-color: #f5f5f5;
+    border-radius: .5rem;
+    width: calc(100% - 2rem);
+}
+
+div[data-chatbotui-message-item-type="b64image"] {
+    display: none;
+}
+
+div[data-chatbotui-type="MessageItem"] {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+div[data-chatbotui-message-role="assistant"]:not(:has(div[data-chatbotui-type="MessageItem"]))::after {
+    content: " ";
+    display: inline-block;
+    margin-left: 0.45rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 0.5rem;
+    vertical-align: middle;
+    margin-bottom: 0.15rem;
+    background-color: transparent;
+    opacity: 1;
+    background-image: url('./auxiliary/loading.gif');
+    background-size: cover;
+    background-position: center;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+div[data-chatbotui-type="ChatBar"] {
+    display: flex;
+    border-radius: var(--chatbotui-border-radius-large);
+    background-color: var(--chatbotui-background-secondary);
+    color: var(--chatbotui-text-secondary);
+    position: relative;
+    line-height: 1.2;
+    text-align: left;
+    border: 2px solid black;
+    width: calc(100% - 3.2rem);
+}
+
+div[data-chatbotui-type="ChatInput"] {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-left: 1rem;
+    padding-right: 0.4rem;
+    flex-grow: 1;
+}
+
+div[data-chatbotui-type="ChatInput"]:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+div[data-chatbotui-type="ChatInput"]:empty::after {
+    content: attr(data-chatbotui-input-placeholder);
+    cursor: text;
+    color: var(--chatbotui-text-secondary);
+    opacity: 0.5;
+}
+
+button[data-chatbotui-type="ChatSendButton"]:disabled {
+    opacity: 0.3;
+}
+
+button[data-chatbotui-type="ChatSendButton"] {
+    max-width: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    margin-bottom: 0.5rem;
+    margin-top: auto;
+    margin-right: 0.5rem;
+    border-radius: 1rem;
+    border: none;
+    background-color: var(--chatbotui-background-secondary-accent);
+    font-size: 0;
+    position: absolute;
+    right: -3.2rem;
+    top: .5rem;
+    opacity: 0.5;
+}
+
+button[data-chatbotui-type="ChatSendButton"]::after {
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--chatbotui-text-secondary);
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Icon (Public Domain) from https://www.svgrepo.com/svg/499571/arrow-up */
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIj48cGF0aCBkPSJNMTIwLTE2MHYtMjQwbDMyMC04MC0zMjAtODB2LTI0MGw3NjAgMzIwLTc2MCAzMjBaIi8+PC9zdmc+Cg==');
+    -webkit-mask-size: 100%;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+}
+
+div[data-chatbotui-type="ChatBar"][data-chatbotui-running="true"] button[data-chatbotui-type="ChatSendButton"]::after {
+    /*
+   * Background Image from: https://uxwing.com/square-icon/
+   * License allows commercial use, does not require attribution
+   */
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxMjIuODgzIiBoZWlnaHQ9IjEyMi44ODIiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjAwMiAwaDk2Ljg3OGM3LjE1IDAgMTMuMDAyIDUuODUxIDEzLjAwMiAxMy4wMDJ2OTYuODc3YzAgNy4xNTEtNS44NTIgMTMuMDAyLTEzLjAwMiAxMy4wMDJIMTMuMDAyQzUuODUxIDEyMi44ODIgMCAxMTcuMDMxIDAgMTA5Ljg4VjEzLjAwMkMwIDUuODUxIDUuODUxIDAgMTMuMDAyIDAiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==');
+    -webkit-mask-size: 40%;
+}
