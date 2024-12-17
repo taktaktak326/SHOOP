@@ -330,10 +330,12 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* ハンバーガーメニューのスタイル */
 .hamburger-menu {
-    position: relative;
-    top: 10px;
-    right: 10px; /* botui内の右端に配置 */
-    z-index: 1000; /* 前面に表示 */
+    position: relative; /* 親要素として基準を作成 */
+    display: flex;
+    justify-content: flex-end; /* 右端に配置 */
+    align-items: center;
+    padding: 10px;
+    z-index: 1000; /* 最前面に表示 */
 }
 
 .hamburger-menu button {
