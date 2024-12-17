@@ -320,24 +320,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menu-toggle');
     const menuContent = document.getElementById('menu-content');
 
-    console.log("menuToggle:", menuToggle); // デバッグ: ボタンが取得されているか確認
-    console.log("menuContent:", menuContent); // デバッグ: メニューが取得されているか確認
-
     // メニューの表示・非表示を切り替える
-    menuToggle.addEventListener('click', function () {
-        console.log("ボタンがクリックされました");
-        menuContent.classList.toggle('visible');
-        menuContent.classList.toggle('hidden');
+    menuToggle.addEventListener('click', function (event) {
+        event.stopPropagation(); // クリックイベントが親要素に伝播するのを防ぐ
+
+        if (menuContent.classList.contains('visible')) {
+            menuContent.classList.remove('visible');
+            menuContent.classList.add('hidden');
+        } else {
+            menuContent.classList.add('visible');
+            menuContent.classList.remove('hidden');
+        }
     });
 
     // メニュー外をクリックすると閉じる
     document.addEventListener('click', function (event) {
         if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
-            menuContent.classList.add('hidden');
             menuContent.classList.remove('visible');
+            menuContent.classList.add('hidden');
         }
     });
 });
+
 
 
 
