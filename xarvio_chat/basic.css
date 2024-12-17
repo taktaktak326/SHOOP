@@ -11,6 +11,13 @@
     --chatbotui-background-primary-dark: #941c80;
 }
 
+/* ローディングアイコン非表示 */
+div[data-chatbotui-message-role="assistant"].no-loading::after {
+    display: none !important;
+    content: none;
+}
+
+
 div.botui {
     border: 1px solid #ccc;
     margin-top: 3rem;
