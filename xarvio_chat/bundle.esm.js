@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (messagesDiv) {
         const assistantMessage = document.createElement("div");
-        assistantMessage.dataset.chatbotuiMessageRole = "assistant"; // アシスタント用のクラス
+        assistantMessage.dataset.chatbotuiMessageRole = "assistant";
+        assistantMessage.classList.add("no-loading"); // 初期メッセージ専用クラスを追加
         assistantMessage.innerText = initialMessage;
 
         messagesDiv.appendChild(assistantMessage);
