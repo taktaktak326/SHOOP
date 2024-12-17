@@ -330,13 +330,12 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* ハンバーガーメニューのスタイル */
 .hamburger-menu {
-    position: relative; /* メニュー内容の位置基準 */
+    position: relative;
+    left: 94%; /* 右端に配置 */
     display: flex;
-    justify-content: flex-end; /* 右端に配置 */
-    align-items: center;
-    padding: 10px;
-    z-index: 1000; /* 前面に表示 */
+    z-index: 1000;
 }
+
 
 .hamburger-menu button {
     background-color: #941c80; /* メニューの背景色 */
