@@ -305,7 +305,7 @@ async function fetchAISuggestions(responseContent) {
             type: "generate-suggestions"
         };
 
-        console.log("質問候補生成リクエスト:", requestBody);
+        console.log("質問候補生成リクエスト:", requestBody); // デバッグ: リクエスト内容を確認
 
         const response = await fetch("https://api-xarvio-chat-jp.basf.com/suggestions", {
             method: "POST",
@@ -319,7 +319,7 @@ async function fetchAISuggestions(responseContent) {
         if (!response.ok) throw new Error("AI Suggestion API failed");
 
         const result = await response.json();
-        console.log("AIから取得した質問候補:", result);
+        console.log("AIから取得した質問候補:", result); // デバッグ: サーバーのレスポンス内容を確認
 
         return result.suggestions || []; // AIが生成した質問候補
 
@@ -328,6 +328,7 @@ async function fetchAISuggestions(responseContent) {
         return [];
     }
 }
+
 
 
 async function processResponse(responseStream) {
@@ -344,10 +345,15 @@ async function processResponse(responseStream) {
         }
     }
 
+    console.log("ストリーミング完了後のレスポンス:", fullResponse); // デバッグ: 完全なレスポンス内容を確認
+
     // ストリーミング完了後、AIに質問候補をリクエスト
     const suggestions = await fetchAISuggestions(fullResponse);
+    console.log("取得した質問候補:", suggestions); // デバッグ: 質問候補の内容を確認
+
     showSuggestions(suggestions);
 }
+
 
 // 質問候補を表示する関数
 function showSuggestions(suggestions) {
