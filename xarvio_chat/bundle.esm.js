@@ -247,6 +247,7 @@ const showError = (msg) => {
     }, 3000);
 };
 
+
 function showErrorInUserInput(errorMessage) {
 
     let chatInputElement = document.querySelector('[data-chatbotui-type="ChatInput"]');
