@@ -320,8 +320,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menu-toggle');
     const menuContent = document.getElementById('menu-content');
 
+    console.log("menuToggle:", menuToggle); // デバッグ: ボタンが取得されているか確認
+    console.log("menuContent:", menuContent); // デバッグ: メニューが取得されているか確認
+
     // メニューの表示・非表示を切り替える
     menuToggle.addEventListener('click', function () {
+        console.log("ボタンがクリックされました");
         menuContent.classList.toggle('visible');
         menuContent.classList.toggle('hidden');
     });
@@ -334,6 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 
 // ChatbotUI integration here
