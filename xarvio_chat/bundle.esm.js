@@ -15,28 +15,40 @@ function generateSessionId() {
 let sessionId = generateSessionId();
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 初期メッセージを追加
-    const initialMessage = "こんにちは！お困りのことがあればご相談ください😊";
+document.addEventListener('DOMContentLoaded', async function() {
     const messagesDiv = document.querySelector("#messages");
 
-    if (messagesDiv) {
+    // 初期メッセージ用のリクエストを送信
+    try {
+        const responseStream = await stream({
+            "chat-input": "初期メッセージリクエスト" // 特定の初期クエリ
+        });
+
+        // レスポンスの処理
         const assistantMessage = document.createElement("div");
         assistantMessage.dataset.chatbotuiMessageRole = "assistant";
-        assistantMessage.classList.add("no-loading"); // 初期メッセージ専用クラスを追加
-        assistantMessage.innerText = initialMessage;
 
+        let messageContent = ""; // APIレスポンスの内容を保持
+
+        for await (const chunk of responseStream) {
+            if (chunk.constructor.name === "MessageItemResponse" || chunk.constructor.name === "MessageItemResponseChunk") {
+                messageContent += chunk.content; // レスポンスの内容を連結
+            }
+        }
+
+        // レスポンスをUIに追加
+        assistantMessage.innerText = messageContent || "初期メッセージの取得に失敗しました。";
         messagesDiv.appendChild(assistantMessage);
-    }
 
-    // Clear chat session.
-    const clearButton = document.getElementById('clear-storage-button');
-    clearButton.addEventListener('click', function() {
-        alert('会話の履歴を削除します');
-        sessionId = generateSessionId();
-        messagesDiv.innerHTML = ''; // チャット履歴をクリア
-    });
+    } catch (error) {
+        console.error("初期メッセージの取得に失敗:", error);
+        const errorMessage = document.createElement("div");
+        errorMessage.dataset.chatbotuiMessageRole = "assistant";
+        errorMessage.innerText = "初期メッセージを取得できませんでした。";
+        messagesDiv.appendChild(errorMessage);
+    }
 });
+
 
 
 // User data
