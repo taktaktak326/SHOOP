@@ -14,16 +14,29 @@ function generateSessionId() {
 
 let sessionId = generateSessionId();
 
-// Clear chat session.
+
 document.addEventListener('DOMContentLoaded', function() {
+    // 初期メッセージを追加
+    const initialMessage = "こんにちは！お困りのことがあればご相談ください😊";
+    const messagesDiv = document.querySelector("#messages");
+
+    if (messagesDiv) {
+        const assistantMessage = document.createElement("div");
+        assistantMessage.dataset.chatbotuiMessageRole = "assistant"; // アシスタント用のクラス
+        assistantMessage.innerText = initialMessage;
+
+        messagesDiv.appendChild(assistantMessage);
+    }
+
+    // Clear chat session.
     const clearButton = document.getElementById('clear-storage-button');
     clearButton.addEventListener('click', function() {
         alert('会話の履歴を削除します');
         sessionId = generateSessionId();
-        const messagesDiv = document.querySelector("#messages");
-        messagesDiv.innerHTML = '';
+        messagesDiv.innerHTML = ''; // チャット履歴をクリア
     });
 });
+
 
 // User data
 
@@ -141,41 +154,8 @@ async function* streamResponse(body) {
  * @returns {MessageItemResponse} Response with error message.
  */
 async function* forwardError(message) {
-    // メッセージアイテムを追加する
     yield new MessageItemResponse("text", message);
-
-    // 再試行ボタンの追加
-    const retryButton = document.createElement("button");
-    retryButton.innerText = "再試行";
-    retryButton.style.margin = "10px";
-    retryButton.style.padding = "5px 10px";
-    retryButton.style.cursor = "pointer";
-    retryButton.style.backgroundColor = "#941c80";
-    retryButton.style.color = "#fff";
-    retryButton.style.border = "none";
-    retryButton.style.borderRadius = "5px";
-
-    // ボタンクリックで再試行する処理
-    retryButton.onclick = () => {
-        retryButton.remove(); // ボタンを削除
-        stream({ "chat-input": chatInputElement.textContent }); // 再試行
-    };
-
-    // エラーメッセージとボタンを表示
-    const errorDiv = document.createElement("div");
-    errorDiv.style.marginTop = "10px";
-    errorDiv.style.padding = "10px";
-    errorDiv.style.border = "1px solid red";
-    errorDiv.style.borderRadius = "5px";
-    errorDiv.style.backgroundColor = "#ffe6e6";
-
-    errorDiv.appendChild(document.createTextNode(message));
-    errorDiv.appendChild(retryButton);
-
-    document.querySelector("#messages").appendChild(errorDiv);
 }
-
-
 
 const stream = async (input) => {
     const content = input["chat-input"];
@@ -279,7 +259,6 @@ const showError = (msg) => {
         alertDiv.remove();
     }, 3000);
 };
-
 
 function showErrorInUserInput(errorMessage) {
 
