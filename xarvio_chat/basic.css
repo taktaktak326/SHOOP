@@ -359,7 +359,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* メニュー内容のスタイル */
 #menu-content {
-    position: absolute; /* ハンバーガーメニューを基準に表示 */
+    position: relative; /* ハンバーガーメニューを基準に表示 */
     top: 5%; /* ボタンの中央位置に合わせる */
     right: 0; /* ボタンの左側に表示 */
     transform: translateY(-10%); /* 上下中央に揃える */
