@@ -329,16 +329,35 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 }
 
 /* ハンバーガーメニューのスタイル */
-.hamburger-menu {
-    position: relative; /* 基準の位置設定 */
-    display: flex; /* Flexbox を有効化 */
-    justify-content: flex-end; /* 右端に配置 */
-    align-items: center; /* 縦方向中央揃え */
-    margin-left: auto; /* 左側の余白を自動設定し右端に寄せる */
-    padding: 10px 20px; /* 上下左右の余白 */
-    z-index: 1000;
-    max-width: 1200px; /* 最大幅を設定 */
+.parent-container {
+    position: relative; /* 配置の基準 */
+    width: 100%;
+    margin: 0 auto;
 }
+
+.hamburger-menu {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto; /* 自動的に右端に配置 */
+    padding: 10px 20px;
+    z-index: 1000;
+    max-width: 1200px;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    .hamburger-menu {
+        padding: 10px 40px;
+    }
+}
+
 
 
 
