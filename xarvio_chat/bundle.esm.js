@@ -14,6 +14,16 @@ function generateSessionId() {
 
 let sessionId = generateSessionId();
 
+// Clear chat session.
+document.addEventListener('DOMContentLoaded', function() {
+    const clearButton = document.getElementById('clear-storage-button');
+    clearButton.addEventListener('click', function() {
+        alert('会話の履歴を削除します');
+        sessionId = generateSessionId();
+        const messagesDiv = document.querySelector("#messages");
+        messagesDiv.innerHTML = '';
+    });
+});
 
 document.addEventListener('DOMContentLoaded', async function () {
     const messagesDiv = document.querySelector("#messages");
