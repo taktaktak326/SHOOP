@@ -300,12 +300,12 @@ function showErrorInUserInput(errorMessage) {
 
 async function fetchAISuggestions(responseContent) {
     try {
+        console.log("fetchAISuggestions が呼び出されました。リクエスト内容:", responseContent);
+
         const requestBody = {
             query: responseContent,
             type: "generate-suggestions"
         };
-
-        console.log("質問候補生成リクエスト:", requestBody); // デバッグ: リクエスト内容を確認
 
         const response = await fetch("https://api-xarvio-chat-jp.basf.com/suggestions", {
             method: "POST",
@@ -316,12 +316,14 @@ async function fetchAISuggestions(responseContent) {
             body: JSON.stringify(requestBody)
         });
 
+        console.log("APIレスポンスのステータス:", response.status);
+
         if (!response.ok) throw new Error("AI Suggestion API failed");
 
         const result = await response.json();
-        console.log("AIから取得した質問候補:", result); // デバッグ: サーバーのレスポンス内容を確認
+        console.log("AIから取得した質問候補:", result);
 
-        return result.suggestions || []; // AIが生成した質問候補
+        return result.suggestions || [];
 
     } catch (error) {
         console.error("質問候補の取得に失敗:", error);
@@ -331,7 +333,10 @@ async function fetchAISuggestions(responseContent) {
 
 
 
+
 async function processResponse(responseStream) {
+    console.log("processResponse が呼び出されました。");
+
     const assistantMessage = document.createElement("div");
     assistantMessage.dataset.chatbotuiMessageRole = "assistant";
     document.querySelector("#messages").appendChild(assistantMessage);
@@ -340,12 +345,13 @@ async function processResponse(responseStream) {
 
     for await (const chunk of responseStream) {
         if (chunk.content) {
+            console.log("チャンクデータ:", chunk.content); // チャンク内容を確認
             fullResponse += chunk.content;
             assistantMessage.innerHTML += chunk.content;
         }
     }
 
-    console.log("ストリーミング完了後のレスポンス:", fullResponse); // デバッグ: 完全なレスポンス内容を確認
+    console.log("ストリーミング完了後のレスポンス:", fullResponse);
 
     // ストリーミング完了後、AIに質問候補をリクエスト
     const suggestions = await fetchAISuggestions(fullResponse);
@@ -353,6 +359,7 @@ async function processResponse(responseStream) {
 
     showSuggestions(suggestions);
 }
+
 
 
 // 質問候補を表示する関数
@@ -382,6 +389,14 @@ function showSuggestions(suggestions) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (!document.getElementById("suggestions-container")) {
+        const container = document.createElement("div");
+        container.id = "suggestions-container";
+        document.body.appendChild(container);
+        console.log("suggestions-container が作成されました。");
+    }
+});
 
 
 
