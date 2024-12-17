@@ -264,6 +264,38 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
+const suggestions = ["作物の管理方法", "天気予報", "収穫時期", "農薬の種類", "土壌の診断"];
+
+// 補助入力を表示する関数
+function showSuggestions(inputElement) {
+    const suggestionBox = document.createElement("div");
+    suggestionBox.classList.add("suggestion-box");
+    suggestionBox.style.position = "absolute";
+    suggestionBox.style.backgroundColor = "white";
+    suggestionBox.style.border = "1px solid #ccc";
+    suggestionBox.style.zIndex = "1000";
+    suggestionBox.style.padding = "5px";
+
+    suggestionBox.innerHTML = suggestions.map(item => `<div class="suggestion-item">${item}</div>`).join("");
+
+    inputElement.parentNode.appendChild(suggestionBox);
+
+    // 補助キーワードクリック時の挙動
+    suggestionBox.addEventListener("click", (e) => {
+        if (e.target.classList.contains("suggestion-item")) {
+            inputElement.textContent = e.target.innerText;
+            suggestionBox.remove();
+        }
+    });
+
+    // 外部クリックで候補を閉じる
+    document.addEventListener("click", () => suggestionBox.remove(), { once: true });
+}
+
+// 入力エリアへのイベント追加
+const chatInputElement = document.querySelector('[data-chatbotui-type="ChatInput"]');
+chatInputElement.addEventListener("focus", () => showSuggestions(chatInputElement));
+
 // ChatbotUI integration here
 
 const msgDiv = document.querySelector("#messages");
