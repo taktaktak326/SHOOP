@@ -17,12 +17,10 @@ let sessionId = generateSessionId();
 // Clear chat session.
 document.addEventListener('DOMContentLoaded', function () {
     const clearHistoryLink = document.getElementById('clear-history-link');
-    const clearButton = document.getElementById('clear-storage-button'); // 既存のボタン
 
     clearHistoryLink.addEventListener('click', function (event) {
         event.preventDefault(); // デフォルトのリンク動作を無効化
 
-        // 既存のclear-storage-buttonと同じ動きを実行
         const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
         if (userConfirmed) {
             alert('会話の履歴を削除します。');
