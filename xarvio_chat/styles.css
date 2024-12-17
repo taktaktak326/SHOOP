@@ -46,18 +46,24 @@
 }
 
 #clear-storage-button {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: #941c80;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     color: #fff;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+    background: #941c80;
+    background: linear-gradient(90deg, rgb(148, 28, 128) 0%, rgb(186, 67, 166) 100%);
+    border-radius: 100px;
+    margin-right: 10px;
+    min-width: 180px;
+    transition: .2s;
+    height: 40px;
 }
 
 #clear-storage-button:hover {
-    background-color: #db75ca;
+    background: #db75ca;
+    background: linear-gradient(90deg, rgb(219, 117, 202) 0%, rgb(245, 165, 231) 100%);
+    cursor: pointer;
 }
 
 
