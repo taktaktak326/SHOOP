@@ -1,0 +1,143 @@
+/* styles.css*/
+
+
+/* Voice Assistant Customizations */
+
+#record-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: #009fe3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+#record-button:hover {
+    background: #a8e5ff;
+}
+
+#record-button.recording {
+    background-color: red;
+}
+
+#record-button.recording:hover {
+    background-color: #ff9d9d;
+}
+
+#record-button img {
+    width: 22px;
+    height: 22px;
+
+}
+
+#record-button.recording img {
+    content: url('https://img.icons8.com/ios-filled/50/ffffff/stop.png');
+}
+
+#custom-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 40px;
+}
+
+#clear-storage-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: #fff;
+    background: #941c80;
+    background: linear-gradient(90deg, rgb(148, 28, 128) 0%, rgb(186, 67, 166) 100%);
+    border-radius: 100px;
+    margin-right: 10px;
+    min-width: 180px;
+    transition: .2s;
+    height: 40px;
+}
+
+#clear-storage-button:hover {
+    background: #db75ca;
+    background: linear-gradient(90deg, rgb(219, 117, 202) 0%, rgb(245, 165, 231) 100%);
+    cursor: pointer;
+}
+
+
+/* Chatbot UI Styling */
+
+#documentModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.doc-box {
+    width: 2rem;
+    position: absolute;
+    top: 2.5rem;
+    left: 0rem;
+}
+
+div.doc-div {
+    text-align: center;
+    cursor: pointer;
+}
+
+#messages {
+    margin-top: 3rem;
+}
+
+.alert {
+    position: relative;
+    top: -5rem;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    z-index: 1;
+}
+
+div.alert div {
+    display: inline;
+    background-color: #faa;
+    border: 1px solid #f00;
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+}
+
+div[data-chatbotui-type="ChatBar"].error {
+    border: 2px solid #ff3100 !important;
+    color: #ff3100;
+}
