@@ -15,22 +15,25 @@ function generateSessionId() {
 let sessionId = generateSessionId();
 
 // Clear chat session.
-document.addEventListener('DOMContentLoaded', function() {
-    const clearButton = document.getElementById('clear-storage-button');
+document.addEventListener('DOMContentLoaded', function () {
+    const clearHistoryLink = document.getElementById('clear-history-link');
+    const clearButton = document.getElementById('clear-storage-button'); // 既存のボタン
 
-    clearButton.addEventListener('click', function() {
-        // 確認ダイアログを表示
+    clearHistoryLink.addEventListener('click', function (event) {
+        event.preventDefault(); // デフォルトのリンク動作を無効化
+
+        // 既存のclear-storage-buttonと同じ動きを実行
         const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
-
         if (userConfirmed) {
-            // OKが選択された場合のみ処理を実行
             alert('会話の履歴を削除します。');
             sessionId = generateSessionId(); // 新しいセッションIDを生成
             const messagesDiv = document.querySelector("#messages");
             messagesDiv.innerHTML = ''; // チャット履歴をクリア
-        } 
+        }
     });
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', async function () {
