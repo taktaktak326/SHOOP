@@ -47,11 +47,10 @@
 
 #clear-storage-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    bottom: 10px;
+    left: 10px;
     background-color: #941c80;
     color: #fff;
-    border: none;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
@@ -60,6 +59,7 @@
 #clear-storage-button:hover {
     background-color: #db75ca;
 }
+
 
 
 
