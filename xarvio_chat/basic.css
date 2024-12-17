@@ -330,7 +330,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* ハンバーガーメニューのスタイル */
 .hamburger-menu {
-    position: relative; /* 親要素として基準を作成 */
+    position: relative; /* メニューの基準点をこの要素に設定 */
     display: flex;
     justify-content: flex-end; /* 右端に配置 */
     align-items: center;
@@ -359,9 +359,9 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* メニュー内容のスタイル */
 #menu-content {
-    position: relative;
-    top: 50px;
-    right: 0;
+    position: absolute; /* ハンバーガーメニューのボタンに対する位置調整 */
+    top: 50px; /* ボタンの下に表示 */
+    right: 10px; /* ボタンの右端に揃える */
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -371,7 +371,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     visibility: hidden; /* 初期状態で非表示 */
     transform: translateY(-10px);
     transition: all 0.3s ease-in-out; /* アニメーション効果 */
-    z-index: 1001;
+    z-index: 1001; /* ボタンよりも手前に表示 */
 }
 
 /* 表示状態 */
@@ -386,6 +386,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     visibility: hidden;
     transform: translateY(-10px);
 }
+
 
 
 
