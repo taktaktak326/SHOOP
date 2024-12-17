@@ -34,17 +34,16 @@ document.addEventListener('DOMContentLoaded', async function() {
         for await (const chunk of responseStream) {
             console.log("受信データ:", chunk); // 受信データをコンソールで確認
 
-            // 正しいデータ形式に対応
-            if (chunk.data && chunk.data.content) {
-                messageContent += chunk.data.content; // 正常なレスポンス内容を取得
-            } else if (chunk.content) {
-                messageContent += chunk.content; // 既存の形式もサポート
+            // content プロパティがある場合のみ処理
+            if (chunk.content) {
+                messageContent += chunk.content; // content を連結
             }
         }
 
         // メッセージが存在する場合にUIに反映
         if (messageContent.trim() !== "") {
-            assistantMessage.innerText = messageContent;
+            // innerHTMLを使用してHTMLタグも反映
+            assistantMessage.innerHTML = messageContent;
         } else {
             assistantMessage.innerText = "初期メッセージの内容が空です。";
         }
@@ -59,7 +58,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         messagesDiv.appendChild(errorMessage);
     }
 });
-
 
 
 
