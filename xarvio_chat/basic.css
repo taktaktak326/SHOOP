@@ -327,3 +327,85 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     display: inline;
     border: 1px solid black;
 }
+
+/* ハンバーガーメニューのスタイル */
+.hamburger-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* botui内の右端に配置 */
+    z-index: 1000; /* 前面に表示 */
+}
+
+.hamburger-menu button {
+    background-color: #941c80; /* メニューの背景色 */
+    color: white; /* テキスト色 */
+    border: none;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-menu button:hover {
+    background-color: #db75ca;
+}
+
+/* メニュー内容のスタイル */
+#menu-content {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 180px;
+    display: none; /* 初期状態では非表示 */
+    z-index: 1001;
+}
+
+#menu-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-content li {
+    border-bottom: 1px solid #eee;
+}
+
+#menu-content li:last-child {
+    border-bottom: none;
+}
+
+#menu-content a,
+#menu-content button {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: black;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+#menu-content a:hover,
+#menu-content button:hover {
+    background-color: #f5f5f5;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
