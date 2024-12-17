@@ -367,49 +367,25 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     width: 180px;
-    display: none !important; /* 初期状態で非表示 */
+    opacity: 0; /* 初期状態で透明に */
+    visibility: hidden; /* 初期状態で非表示 */
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out; /* アニメーション効果 */
     z-index: 1001;
 }
 
-#menu-content ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* 表示状態 */
+#menu-content.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* 元の位置に戻る */
 }
 
-#menu-content li {
-    border-bottom: 1px solid #eee;
+#menu-content.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
 }
 
-#menu-content li:last-child {
-    border-bottom: none;
-}
-
-#menu-content a,
-#menu-content button {
-    display: block;
-    padding: 10px 15px;
-    text-decoration: none;
-    color: black;
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-}
-
-#menu-content a:hover,
-#menu-content button:hover {
-    background-color: #f5f5f5;
-}
-
-/* 表示と非表示の切り替え */
-.hidden {
-    display: none !important; /* 確実に非表示に */
-}
-
-.visible {
-    display: block !important; /* 確実に表示する */
-}
 
 
