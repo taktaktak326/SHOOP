@@ -14,50 +14,43 @@ function generateSessionId() {
 
 let sessionId = generateSessionId();
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     const messagesDiv = document.querySelector("#messages");
 
     try {
-        console.log("初期メッセージをAPIから取得します...");
+        console.log("初期メッセージをAPIからストリーミングで取得します...");
 
+        // 初期メッセージ用リクエスト
         const responseStream = await stream({
-            "chat-input": "初期メッセージリクエスト" // 初期メッセージ用リクエスト
+            "chat-input": "初期メッセージリクエスト" // 固定リクエストとして初期メッセージを取得
         });
 
-        // 初期メッセージの要素を作成
+        // 初期メッセージ表示用の要素を作成
         const assistantMessage = document.createElement("div");
         assistantMessage.dataset.chatbotuiMessageRole = "assistant";
-
-        let messageContent = ""; // APIレスポンスの内容を保持
-
-        // ストリーミングレスポンスを処理
-        for await (const chunk of responseStream) {
-            console.log("受信データ:", chunk); // 受信データをコンソールで確認
-
-            // content プロパティがある場合のみ処理
-            if (chunk.content) {
-                messageContent += chunk.content; // content を連結
-            }
-        }
-
-        // メッセージが存在する場合にUIに反映
-        if (messageContent.trim() !== "") {
-            // innerHTMLを使用してHTMLタグも反映
-            assistantMessage.innerHTML = messageContent;
-        } else {
-            assistantMessage.innerText = "初期メッセージの内容が空です。";
-        }
-
+        assistantMessage.classList.add("no-loading"); // ローディングアイコン非表示用クラス
         messagesDiv.appendChild(assistantMessage);
 
+        // ストリーミングデータを処理
+        for await (const chunk of responseStream) {
+            console.log("受信データ:", chunk); // デバッグ: 受信データ確認
+
+            if (chunk.content) {
+                // リアルタイムにメッセージ内容を追加
+                assistantMessage.innerHTML += chunk.content;
+                assistantMessage.scrollIntoView({ behavior: "smooth" }); // 自動スクロール
+            }
+        }
     } catch (error) {
         console.error("初期メッセージの取得に失敗:", error);
+
         const errorMessage = document.createElement("div");
         errorMessage.dataset.chatbotuiMessageRole = "assistant";
         errorMessage.innerText = "初期メッセージの取得に失敗しました。";
         messagesDiv.appendChild(errorMessage);
     }
 });
+
 
 
 
