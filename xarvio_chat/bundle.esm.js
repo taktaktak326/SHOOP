@@ -298,48 +298,39 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
-// 質問候補の表示関数
-function showSuggestions(suggestions) {
-    const container = document.getElementById("suggestions-container");
-    container.innerHTML = ""; // 既存の候補をクリア
+async function fetchAISuggestions(responseContent) {
+    try {
+        const requestBody = {
+            query: responseContent,
+            type: "generate-suggestions"
+        };
 
-    suggestions.forEach(suggestion => {
-        const button = document.createElement("button");
-        button.classList.add("suggestion-button");
-        button.innerText = suggestion;
-
-        // クリック時にメッセージ送信
-        button.addEventListener("click", () => {
-            sendSuggestion(suggestion);
+        // 質問候補生成用APIリクエスト
+        const response = await fetch("https://api-xarvio-chat-jp.basf.com/suggestions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Custom-Header": "Xarvio-JP-Chat"
+            },
+            body: JSON.stringify(requestBody)
         });
 
-        container.appendChild(button);
-    });
-}
+        if (!response.ok) throw new Error("AI Suggestion API failed");
 
-// クリックされた質問候補を送信
-function sendSuggestion(message) {
-    const chatInput = document.querySelector('[data-chatbotui-type="ChatInput"]');
-    chatInput.innerText = message; // 入力欄に反映
-    const event = new KeyboardEvent("keydown", { key: "Enter" }); // Enterキーイベントを発火
-    chatInput.dispatchEvent(event);
-}
+        const result = await response.json();
+        return result.suggestions || []; // AIが生成した質問候補
 
-// レスポンスに基づく質問候補の生成
-function generateSuggestions(response) {
-    // レスポンスに応じた質問候補（例）
-    if (response.includes("天気")) {
-        return ["今日の天気は？", "明日の天気は？", "週間予報は？"];
-    } else if (response.includes("価格")) {
-        return ["最新の価格を教えて", "割引はありますか？", "商品の詳細は？"];
-    } else {
-        return ["詳しく教えて", "サポートについて知りたい", "もっと例を表示して"];
+    } catch (error) {
+        console.error("質問候補の取得に失敗:", error);
+        return [];
     }
 }
 
-// チャットレスポンス処理に組み込み
 async function processResponse(responseStream) {
-    const assistantMessage = new n("assistant");
+    const assistantMessage = document.createElement("div");
+    assistantMessage.dataset.chatbotuiMessageRole = "assistant";
+    document.querySelector("#messages").appendChild(assistantMessage);
+
     let fullResponse = ""; // レスポンスの全体を保持
 
     for await (const chunk of responseStream) {
@@ -349,10 +340,30 @@ async function processResponse(responseStream) {
         }
     }
 
-    // レスポンス完了後に質問候補を表示
-    const suggestions = generateSuggestions(fullResponse);
+    // ストリーミング完了後、AIに質問候補をリクエスト
+    const suggestions = await fetchAISuggestions(fullResponse);
     showSuggestions(suggestions);
 }
+
+// 質問候補を表示する関数
+function showSuggestions(suggestions) {
+    const container = document.getElementById("suggestions-container");
+    container.innerHTML = ""; // 既存の候補をクリア
+
+    suggestions.forEach(suggestion => {
+        const button = document.createElement("button");
+        button.classList.add("suggestion-button");
+        button.innerText = suggestion;
+
+        // クリック時にメッセージを送信
+        button.addEventListener("click", () => {
+            sendSuggestion(suggestion);
+        });
+
+        container.appendChild(button);
+    });
+}
+
 
 
 // ChatbotUI integration here
