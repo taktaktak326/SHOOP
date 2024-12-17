@@ -362,7 +362,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     position: absolute; /* ハンバーガーメニューを基準に表示 */
     top: 50%; /* ボタンの中央位置に合わせる */
     right: 0; /* ボタンの左側に表示 */
-    transform: translateY(-50%); /* 上下中央に揃える */
+    transform: translateY(-10%); /* 上下中央に揃える */
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -378,13 +378,13 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 #menu-content.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-50%); /* 表示時に上下中央に揃える */
+    transform: translateY(-10%); /* 表示時に上下中央に揃える */
 }
 
 #menu-content.hidden {
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-50%); /* 非表示時にも上下中央を維持 */
+    transform: translateY(-10%); /* 非表示時にも上下中央を維持 */
 }
 
 
