@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // 初期メッセージ用のリクエストを送信
     try {
+        console.log("初期メッセージをAPIから取得します...");
+        
         const responseStream = await stream({
             "chat-input": "初期メッセージリクエスト" // 特定の初期クエリ
         });
@@ -31,23 +33,29 @@ document.addEventListener('DOMContentLoaded', async function() {
         let messageContent = ""; // APIレスポンスの内容を保持
 
         for await (const chunk of responseStream) {
+            console.log("受信データ:", chunk); // デバッグ用に受信データを表示
+
             if (chunk.constructor.name === "MessageItemResponse" || chunk.constructor.name === "MessageItemResponseChunk") {
                 messageContent += chunk.content; // レスポンスの内容を連結
             }
         }
 
-        // レスポンスをUIに追加
-        assistantMessage.innerText = messageContent || "初期メッセージの取得に失敗しました。";
+        if (messageContent) {
+            assistantMessage.innerText = messageContent;
+        } else {
+            assistantMessage.innerText = "初期メッセージが空です。";
+        }
         messagesDiv.appendChild(assistantMessage);
 
     } catch (error) {
         console.error("初期メッセージの取得に失敗:", error);
         const errorMessage = document.createElement("div");
         errorMessage.dataset.chatbotuiMessageRole = "assistant";
-        errorMessage.innerText = "初期メッセージを取得できませんでした。";
+        errorMessage.innerText = "初期メッセージの取得に失敗しました。";
         messagesDiv.appendChild(errorMessage);
     }
 });
+
 
 
 
