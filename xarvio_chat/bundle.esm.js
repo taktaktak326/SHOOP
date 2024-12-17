@@ -316,6 +316,25 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
+document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuContent = document.getElementById('menu-content');
+
+    // メニューの表示・非表示を切り替える
+    menuToggle.addEventListener('click', function () {
+        menuContent.classList.toggle('visible');
+        menuContent.classList.toggle('hidden');
+    });
+
+    // メニュー外をクリックすると閉じる
+    document.addEventListener('click', function (event) {
+        if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
+            menuContent.classList.add('hidden');
+            menuContent.classList.remove('visible');
+        }
+    });
+});
+
 
 // ChatbotUI integration here
 
