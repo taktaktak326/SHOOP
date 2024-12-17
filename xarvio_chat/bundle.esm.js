@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
 
         const responseStream = await stream({
-            "chat-input": "挨拶をして、今日は何の日か教えてください。挨拶は、お疲れ様です！と言ってください。" // 初期メッセージ用リクエスト
+            "chat-input": "挨拶をして、今日は何の日か教えてください。挨拶は、お疲れ様です！と言ってください。日付は間違えないように注意してください。間違えるとペナルティが与えられます。" // 初期メッセージ用リクエスト
         });
 
         // ストリーミングデータを処理
