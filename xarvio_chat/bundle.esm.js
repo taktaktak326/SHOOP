@@ -14,33 +14,39 @@ function generateSessionId() {
 
 let sessionId = generateSessionId();
 
+
 document.addEventListener('DOMContentLoaded', async function () {
     const messagesDiv = document.querySelector("#messages");
 
     try {
         console.log("初期メッセージをAPIからストリーミングで取得します...");
 
-        // 初期メッセージ用リクエスト
-        const responseStream = await stream({
-            "chat-input": "初期メッセージリクエスト" // 固定リクエストとして初期メッセージを取得
-        });
-
         // 初期メッセージ表示用の要素を作成
         const assistantMessage = document.createElement("div");
         assistantMessage.dataset.chatbotuiMessageRole = "assistant";
-        assistantMessage.classList.add("no-loading"); // ローディングアイコン非表示用クラス
         messagesDiv.appendChild(assistantMessage);
+
+        // 初期メッセージ取得開始: ローディング状態
+        assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
+
+        const responseStream = await stream({
+            "chat-input": "初期メッセージリクエスト" // 初期メッセージ用リクエスト
+        });
 
         // ストリーミングデータを処理
         for await (const chunk of responseStream) {
-            console.log("受信データ:", chunk); // デバッグ: 受信データ確認
+            console.log("受信データ:", chunk);
 
             if (chunk.content) {
                 // リアルタイムにメッセージ内容を追加
                 assistantMessage.innerHTML += chunk.content;
-                assistantMessage.scrollIntoView({ behavior: "smooth" }); // 自動スクロール
+                assistantMessage.scrollIntoView({ behavior: "smooth" });
             }
         }
+
+        // ストリーミング終了後: ローディングアイコンを非表示にする
+        assistantMessage.classList.add("no-loading");
+
     } catch (error) {
         console.error("初期メッセージの取得に失敗:", error);
 
@@ -50,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         messagesDiv.appendChild(errorMessage);
     }
 });
-
 
 
 
