@@ -217,6 +217,11 @@ button[data-chatbotui-type="ChatSendButton"]::after {
     background-color: #941c80;
 }
 
+/* ローディングアイコンを非表示にする */
+div[data-chatbotui-message-role="assistant"].no-loading::after {
+    display: none;
+}
+
 button[data-chatbotui-type="ChatSendButton"]:not(:disabled):hover {
     background-color: grey;
     opacity: 0.3;
