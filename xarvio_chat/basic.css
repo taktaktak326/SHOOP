@@ -328,21 +328,16 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     border: 1px solid black;
 }
 
-/* Humberger menu style */
+/* ハンバーガーメニューのスタイル */
 .hamburger-menu {
-    position: absolute; /* 絶対位置指定 */
-    top: 0px; /* 上端からの距離を0に設定 */
-    right: 10px; /* 右端に配置 */
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px;
-    z-index: 1000; /* 最前面に表示 */
+    position: absolute;
+    top: 10px;
+    right: 10px; /* botui内の右端に配置 */
+    z-index: 1000; /* 前面に表示 */
 }
 
-
 .hamburger-menu button {
-    background-color: #941c80; /* ボタン背景色 */
+    background-color: #941c80; /* メニューの背景色 */
     color: white; /* テキスト色 */
     border: none;
     font-size: 24px;
@@ -389,6 +384,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     visibility: hidden;
     transform: translateY(-10px);
 }
+
 
 
 
