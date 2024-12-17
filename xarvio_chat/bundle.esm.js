@@ -264,8 +264,6 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
-
-
 // ChatbotUI integration here
 
 const msgDiv = document.querySelector("#messages");
