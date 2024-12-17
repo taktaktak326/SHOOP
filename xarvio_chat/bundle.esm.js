@@ -298,6 +298,63 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
+// 質問候補の表示関数
+function showSuggestions(suggestions) {
+    const container = document.getElementById("suggestions-container");
+    container.innerHTML = ""; // 既存の候補をクリア
+
+    suggestions.forEach(suggestion => {
+        const button = document.createElement("button");
+        button.classList.add("suggestion-button");
+        button.innerText = suggestion;
+
+        // クリック時にメッセージ送信
+        button.addEventListener("click", () => {
+            sendSuggestion(suggestion);
+        });
+
+        container.appendChild(button);
+    });
+}
+
+// クリックされた質問候補を送信
+function sendSuggestion(message) {
+    const chatInput = document.querySelector('[data-chatbotui-type="ChatInput"]');
+    chatInput.innerText = message; // 入力欄に反映
+    const event = new KeyboardEvent("keydown", { key: "Enter" }); // Enterキーイベントを発火
+    chatInput.dispatchEvent(event);
+}
+
+// レスポンスに基づく質問候補の生成
+function generateSuggestions(response) {
+    // レスポンスに応じた質問候補（例）
+    if (response.includes("天気")) {
+        return ["今日の天気は？", "明日の天気は？", "週間予報は？"];
+    } else if (response.includes("価格")) {
+        return ["最新の価格を教えて", "割引はありますか？", "商品の詳細は？"];
+    } else {
+        return ["詳しく教えて", "サポートについて知りたい", "もっと例を表示して"];
+    }
+}
+
+// チャットレスポンス処理に組み込み
+async function processResponse(responseStream) {
+    const assistantMessage = new n("assistant");
+    let fullResponse = ""; // レスポンスの全体を保持
+
+    for await (const chunk of responseStream) {
+        if (chunk.content) {
+            fullResponse += chunk.content;
+            assistantMessage.innerHTML += chunk.content;
+        }
+    }
+
+    // レスポンス完了後に質問候補を表示
+    const suggestions = generateSuggestions(fullResponse);
+    showSuggestions(suggestions);
+}
+
+
 // ChatbotUI integration here
 
 const msgDiv = document.querySelector("#messages");
