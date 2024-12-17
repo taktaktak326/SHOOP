@@ -330,12 +330,12 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* ハンバーガーメニューのスタイル */
 .hamburger-menu {
-    position: relative; /* メニューの基準点をこの要素に設定 */
+    position: relative; /* メニュー内容の位置基準 */
     display: flex;
     justify-content: flex-end; /* 右端に配置 */
     align-items: center;
     padding: 10px;
-    z-index: 1000; /* 最前面に表示 */
+    z-index: 1000; /* 前面に表示 */
 }
 
 .hamburger-menu button {
@@ -359,26 +359,26 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* メニュー内容のスタイル */
 #menu-content {
-    position: absolute; /* ハンバーガーメニューのボタンに対する位置調整 */
-    top: 50px; /* ボタンの下に表示 */
-    right: 10px; /* ボタンの右端に揃える */
+    position: absolute; /* ハンバーガーメニューを基準に表示 */
+    top: 100%; /* ボタンの真下に表示 */
+    right: 0; /* ボタンの右端に揃える */
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     width: 180px;
-    opacity: 0; /* 初期状態で透明に */
-    visibility: hidden; /* 初期状態で非表示 */
-    transform: translateY(-10px);
-    transition: all 0.3s ease-in-out; /* アニメーション効果 */
-    z-index: 1001; /* ボタンよりも手前に表示 */
+    opacity: 0; /* 初期状態では透明 */
+    visibility: hidden; /* 初期状態では非表示 */
+    transform: translateY(-10px); /* 軽く上にオフセット */
+    transition: all 0.3s ease-in-out;
+    z-index: 1001; /* メニューを前面に表示 */
 }
 
 /* 表示状態 */
 #menu-content.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); /* 元の位置に戻る */
+    transform: translateY(0); /* 表示時に元の位置へ */
 }
 
 #menu-content.hidden {
@@ -386,6 +386,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     visibility: hidden;
     transform: translateY(-10px);
 }
+
 
 
 
