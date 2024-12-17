@@ -17,7 +17,18 @@
 
 <body>
     <header class="c-header">
-        <div class="c-header__inner"><a href="https://basf-renew-001.digital-marketing.dev/" class="c-header__logo"><img src="./auxiliary/logo.svg" alt=""></a></div>
+        <div class="c-header__inner"><a href="https://basf-renew-001.digital-marketing.dev/" class="c-header__logo"><img src="./auxiliary/logo.svg" alt=""></a>
+        <!-- ハンバーガーメニューを追加 -->
+        <div id="hamburger-menu">
+            <button id="menu-toggle" aria-label="メニューを開く">☰</button>
+            <div id="menu-content" class="hidden">
+                <ul>
+                    <li><button id="clear-storage-button">会話履歴を削除</button></li>
+                    <li><a href="#">設定</a></li>
+                    <li><a href="#">ヘルプ</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
     <main class="">
         <section class="section-page--case">
