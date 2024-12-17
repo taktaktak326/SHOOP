@@ -28,10 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sessionId = generateSessionId(); // 新しいセッションIDを生成
             const messagesDiv = document.querySelector("#messages");
             messagesDiv.innerHTML = ''; // チャット履歴をクリア
-        } else {
-            // キャンセルが選択された場合
-            alert('会話履歴の削除をキャンセルしました。');
-        }
+        } 
     });
 });
 
