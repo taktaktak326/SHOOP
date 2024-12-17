@@ -14,37 +14,41 @@ function generateSessionId() {
 
 let sessionId = generateSessionId();
 
-
 document.addEventListener('DOMContentLoaded', async function() {
     const messagesDiv = document.querySelector("#messages");
 
-    // 初期メッセージ用のリクエストを送信
     try {
         console.log("初期メッセージをAPIから取得します...");
-        
+
         const responseStream = await stream({
-            "chat-input": "初期メッセージリクエスト" // 特定の初期クエリ
+            "chat-input": "初期メッセージリクエスト" // 初期メッセージ用リクエスト
         });
 
-        // レスポンスの処理
+        // 初期メッセージの要素を作成
         const assistantMessage = document.createElement("div");
         assistantMessage.dataset.chatbotuiMessageRole = "assistant";
 
         let messageContent = ""; // APIレスポンスの内容を保持
 
+        // ストリーミングレスポンスを処理
         for await (const chunk of responseStream) {
-            console.log("受信データ:", chunk); // デバッグ用に受信データを表示
+            console.log("受信データ:", chunk); // 受信データをコンソールで確認
 
-            if (chunk.constructor.name === "MessageItemResponse" || chunk.constructor.name === "MessageItemResponseChunk") {
-                messageContent += chunk.content; // レスポンスの内容を連結
+            // 正しいデータ形式に対応
+            if (chunk.data && chunk.data.content) {
+                messageContent += chunk.data.content; // 正常なレスポンス内容を取得
+            } else if (chunk.content) {
+                messageContent += chunk.content; // 既存の形式もサポート
             }
         }
 
-        if (messageContent) {
+        // メッセージが存在する場合にUIに反映
+        if (messageContent.trim() !== "") {
             assistantMessage.innerText = messageContent;
         } else {
-            assistantMessage.innerText = "初期メッセージが空です。";
+            assistantMessage.innerText = "初期メッセージの内容が空です。";
         }
+
         messagesDiv.appendChild(assistantMessage);
 
     } catch (error) {
