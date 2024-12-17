@@ -17,13 +17,24 @@ let sessionId = generateSessionId();
 // Clear chat session.
 document.addEventListener('DOMContentLoaded', function() {
     const clearButton = document.getElementById('clear-storage-button');
+
     clearButton.addEventListener('click', function() {
-        alert('会話の履歴を削除します');
-        sessionId = generateSessionId();
-        const messagesDiv = document.querySelector("#messages");
-        messagesDiv.innerHTML = '';
+        // 確認ダイアログを表示
+        const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
+
+        if (userConfirmed) {
+            // OKが選択された場合のみ処理を実行
+            alert('会話の履歴を削除します。');
+            sessionId = generateSessionId(); // 新しいセッションIDを生成
+            const messagesDiv = document.querySelector("#messages");
+            messagesDiv.innerHTML = ''; // チャット履歴をクリア
+        } else {
+            // キャンセルが選択された場合
+            alert('会話履歴の削除をキャンセルしました。');
+        }
     });
 });
+
 
 document.addEventListener('DOMContentLoaded', async function () {
     const messagesDiv = document.querySelector("#messages");
