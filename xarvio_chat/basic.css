@@ -361,8 +361,8 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 #menu-content {
     position: relative; /* ハンバーガーメニューを基準に表示 */
     top: 0%; /* ボタンの中央位置に合わせる */
-    right: 100%; /* ボタンの左側に表示 */
-    transform: translateY(-10%); /* 上下中央に揃える */
+    right: 0%; /* ボタンの左側に表示 */
+    transform: translateY(10%); /* 上下中央に揃える */
     background-color: white;
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
