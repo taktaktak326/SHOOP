@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
 
         const responseStream = await stream({
-            "chat-input": "今日は何の日？" // 初期メッセージ用リクエスト
+            "chat-input": "やあ、今日は何の日？" // 初期メッセージ用リクエスト
         });
 
         // ストリーミングデータを処理
