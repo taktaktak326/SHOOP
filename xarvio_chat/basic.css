@@ -35,18 +35,6 @@ div.botui:before {
     font-weight: 400;
 }
 
-div.botui:after {
-    content: "めにゅ";
-    display: block;
-    background-color: var(--chatbotui-background-primary-dark);
-    color: white;
-    text-align: left;
-    padding: 1rem;
-    font-size: 1.2rem;
-    line-height: 1.2rem;
-    font-weight: 400;
-}
-
 div#main {
     padding: 1rem;
 }
