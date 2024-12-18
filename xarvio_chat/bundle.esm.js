@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
         if (userConfirmed) {
-            alert('会話の履歴を削除します。');
             sessionId = generateSessionId(); // 新しいセッションIDを生成
             const messagesDiv = document.querySelector("#messages");
             messagesDiv.innerHTML = ''; // チャット履歴をクリア
