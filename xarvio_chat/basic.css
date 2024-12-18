@@ -379,7 +379,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 #menu-content {
     position: relative; /* ハンバーガーメニューを基準に表示 */
     top: 50%; /* ボタンの中央位置に合わせる */
-    right: 0%; /* ボタンの左側に表示 */
+    right: 22%; /* ボタンの左側に表示 */
     transform: translateY(10%); /* 上下中央に揃える */
     background-color: white;
     border: 1px solid #ddd;
@@ -403,6 +403,20 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10%); 
+}
+
+/* リンクのスタイル */
+.menu-link {
+    display: block; /* クリック可能範囲をブロック要素に */
+    color: #333;
+    text-decoration: none; /* 下線を削除 */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* ホバー時のスタイル */
+.menu-link:hover {
+    background-color: purple; /* 背景色を紫に変更 */
+    color: white; /* テキスト色を白に変更 */
 }
 
 
