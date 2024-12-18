@@ -34,47 +34,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-document.addEventListener('DOMContentLoaded', async function () {
-    const messagesDiv = document.querySelector("#messages");
+//document.addEventListener('DOMContentLoaded', async function () {
+//    const messagesDiv = document.querySelector("#messages");
 
-    try {
-        console.log("初期メッセージをAPIからストリーミングで取得します...");
+//    try {
+//        console.log("初期メッセージをAPIからストリーミングで取得します...");
 
         // 初期メッセージ表示用の要素を作成
-        const assistantMessage = document.createElement("div");
-        assistantMessage.dataset.chatbotuiMessageRole = "assistant";
-        messagesDiv.appendChild(assistantMessage);
+//        const assistantMessage = document.createElement("div");
+//        assistantMessage.dataset.chatbotuiMessageRole = "assistant";
+//        messagesDiv.appendChild(assistantMessage);
 
         // 初期メッセージ取得開始: ローディング状態
-        assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
+//        assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
 
-        const responseStream = await stream({
-            "chat-input": "今日は何の日ですか？挨拶は、お疲れ様です！と言ってください。ハルシネーションはしないでください。" // 初期メッセージ用リクエスト
-        });
+//        const responseStream = await stream({
+//            "chat-input": "今日は何の日ですか？挨拶は、お疲れ様です！と言ってください。ハルシネーションはしないでください。" // 初期メッセージ用リクエスト
+//        });
 
         // ストリーミングデータを処理
-        for await (const chunk of responseStream) {
-            console.log("受信データ:", chunk);
+//        for await (const chunk of responseStream) {
+//            console.log("受信データ:", chunk);
 
-            if (chunk.content) {
+//            if (chunk.content) {
                 // リアルタイムにメッセージ内容を追加
-                assistantMessage.innerHTML += chunk.content;
-                assistantMessage.scrollIntoView({ behavior: "smooth" });
-            }
-        }
+//                assistantMessage.innerHTML += chunk.content;
+//                assistantMessage.scrollIntoView({ behavior: "smooth" });
+//            }
+//        }
 
         // ストリーミング終了後: ローディングアイコンを非表示にする
-        assistantMessage.classList.add("no-loading");
+//        assistantMessage.classList.add("no-loading");
 
-    } catch (error) {
-        console.error("初期メッセージの取得に失敗:", error);
+//    } catch (error) {
+//        console.error("初期メッセージの取得に失敗:", error);
 
-        const errorMessage = document.createElement("div");
-        errorMessage.dataset.chatbotuiMessageRole = "assistant";
-        errorMessage.innerText = "初期メッセージの取得に失敗しました。";
-        messagesDiv.appendChild(errorMessage);
-    }
-});
+//        const errorMessage = document.createElement("div");
+//        errorMessage.dataset.chatbotuiMessageRole = "assistant";
+//        errorMessage.innerText = "初期メッセージの取得に失敗しました。";
+//        messagesDiv.appendChild(errorMessage);
+//    }
+// });
 
 
 
