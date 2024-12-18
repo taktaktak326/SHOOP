@@ -329,8 +329,9 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 }
 
 /* ハンバーガーメニューのスタイル */
+/* 共通スタイル（PC画面用） */
 .parent-container {
-    position: relative; /* 配置の基準 */
+    position: relative;
     width: 100%;
     margin: 0 auto;
 }
@@ -344,21 +345,11 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     padding: 10px 20px;
     z-index: 1000;
     max-width: 1200px;
-    transform: translateX(180px); /* PC画面で右に移動 */
 }
-
-/* スマホ画面用のスタイル */
-@media (max-width: 768px) { /* スマホの画面幅に合わせる */
-    .hamburger-menu {
-        transform: translateX(180px); /* スマホ画面で右に20px移動 */
-        padding: 10px 15px; /* 必要ならパディングも調整 */
-    }
-}
-
 
 .hamburger-menu button {
-    background-color: #941c80; /* メニューの背景色 */
-    color: white; /* テキスト色 */
+    background-color: #941c80;
+    color: white;
     border: none;
     font-size: 24px;
     width: 40px;
@@ -377,48 +368,61 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
 
 /* メニュー内容のスタイル */
 #menu-content {
-    position: relative; /* ハンバーガーメニューを基準に表示 */
-    top: 50%; /* ボタンの中央位置に合わせる */
-    right: 22%; /* ボタンの左側に表示 */
-    transform: translateY(10%); /* 上下中央に揃える */
+    position: absolute; /* 基準位置を絶対位置に変更 */
+    top: 50px; /* ハンバーガーボタンの下に表示 */
+    right: 20px; /* 画面の右側に配置 */
+    transform: translateY(0); /* 初期状態で上下揃えをリセット */
     background-color: white;
     border: 1px solid #ddd;
+    font-size: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    width: 180px;
-    opacity: 0; /* 初期状態では透明 */
-    visibility: hidden; /* 初期状態では非表示 */
+    width: 140px; /* スマホ画面用に少し広げる */
+    opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease-in-out;
-    z-index: 1001; /* メニューを前面に表示 */
+    z-index: 1001;
 }
 
 /* 表示状態 */
 #menu-content.visible {
     opacity: 1;
     visibility: visible;
-    transform: translateY(-10%); 
+    transform: translateY(0);
 }
 
-#menu-content.hidden {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10%); 
+/* スマホ画面用のスタイル */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        transform: translateX(0); /* スマホ画面では中央寄せに */
+    }
+
+    #menu-content {
+        top: 60px; /* ハンバーガーボタンの下に表示 */
+        right: 10px; /* 画面右端に合わせる */
+        width: 180px; /* 幅を調整 */
+    }
+
+    .hamburger-menu button {
+        width: 50px; /* ボタンを少し大きく */
+        height: 50px;
+        font-size: 20px;
+    }
 }
 
 /* リンクのスタイル */
 .menu-link {
-    display: block; /* クリック可能範囲をブロック要素に */
+    display: block;
     color: #333;
-    text-decoration: none; /* 下線を削除 */
+    text-decoration: none;
+    padding: 10px;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* ホバー時のスタイル */
 .menu-link:hover {
-    background-color: purple; /* 背景色を紫に変更 */
-    color: white; /* テキスト色を白に変更 */
+    background-color: purple;
+    color: white;
 }
-
 
 
 
