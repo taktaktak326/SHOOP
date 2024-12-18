@@ -340,25 +340,20 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-left: auto; /* 自動的に右端に配置 */
+    margin-left: auto;
     padding: 10px 20px;
     z-index: 1000;
     max-width: 1200px;
+    transform: translateX(180px); /* PC画面で右に移動 */
 }
 
-@media (max-width: 768px) {
+/* スマホ画面用のスタイル */
+@media (max-width: 768px) { /* スマホの画面幅に合わせる */
     .hamburger-menu {
-        padding: 10px;
+        transform: translateX(180px); /* スマホ画面で右に20px移動 */
+        padding: 10px 15px; /* 必要ならパディングも調整 */
     }
 }
-
-@media (min-width: 769px) {
-    .hamburger-menu {
-        padding: 10px 40px;
-    }
-}
-
-
 
 
 .hamburger-menu button {
