@@ -145,3 +145,11 @@ div[data-chatbotui-type="ChatBar"].error {
     border: 2px solid #ff3100 !important;
     color: #ff3100;
 }
+
+.bg--lightpurple {
+    font-size: 14px; 
+    line-height: 1.5; 
+    padding: 10px; 
+    display: block; 
+    text-align: center; 
+}
