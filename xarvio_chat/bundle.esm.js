@@ -343,12 +343,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // 新しいウィンドウでURLを開く
-<script>
-    function openPopup(url, title) {
+function openPopup(url, title) {
         window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
         return false; // クリックイベントのデフォルト動作を無効化
-    }
-</script>
+};
 
 
 // ChatbotUI integration here
