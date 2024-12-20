@@ -342,6 +342,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function openPopup(url, title) {
+        // 新しいウィンドウでURLを開く
+        window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
+        return false; // クリックイベントのデフォルト動作を無効化
+};
 
 // ChatbotUI integration here
 
