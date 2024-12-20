@@ -404,7 +404,7 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     }
 
     .hamburger-menu button {
-        width: 28px; /* ボタンを少し大きく */
+        width: 25px; /* ボタンを少し大きく */
         height: 30px;
         font-size: 20px;
     }
