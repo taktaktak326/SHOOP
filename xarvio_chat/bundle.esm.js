@@ -412,3 +412,22 @@ fontSizeLink.addEventListener("click", (event) => {
     fontSizeDropdown.classList.toggle("hidden");
     fontSizeDropdown.classList.toggle("show");
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const settingsMenuToggle = document.getElementById('settings-menu-toggle');
+    const settingsDropdown = document.getElementById('settings-dropdown');
+
+    settingsMenuToggle.addEventListener('click', (event) => {
+        event.preventDefault(); // デフォルト動作を防止
+        settingsDropdown.classList.toggle('hidden');
+        settingsDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!settingsMenuToggle.contains(event.target) && !settingsDropdown.contains(event.target)) {
+            settingsDropdown.classList.add('hidden');
+            settingsDropdown.classList.remove('show');
+        }
+    });
+});
+
