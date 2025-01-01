@@ -46,14 +46,20 @@
         <a href="https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja" class="menu-link" onclick="return openPopup('https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja', 'Help')">ヘルプ</a>
     </li>
     <li class="menu-item">
-        <a id="font-size-link" class="menu-link">文字サイズ設定</a>
-        <div id="font-size-dropdown" class="dropdown hidden">
-            <label for="font-size-selector" class="dropdown-label">文字サイズを選択:</label>
-            <select id="font-size-selector" class="dropdown-select">
-                <option value="small">小</option>
-                <option value="medium" selected>中</option>
-                <option value="large">大</option>
-            </select>
+        <button id="settings-menu-toggle" class="menu-link" aria-expanded="false">設定</button>
+        <div id="settings-dropdown" class="dropdown hidden" role="menu">
+            <!-- 他の設定項目 -->
+            <div role="menuitem" class="menu-item">
+                <button id="font-size-toggle" class="menu-link" aria-expanded="false">文字サイズ設定</button>
+                <div id="font-size-dropdown" class="dropdown hidden">
+                    <label for="font-size-selector">サイズを選択:</label>
+                    <select id="font-size-selector">
+                        <option value="small">小</option>
+                        <option value="medium" selected>中</option>
+                        <option value="large">大</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </li>
 </ul>
