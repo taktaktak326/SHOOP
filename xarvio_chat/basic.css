@@ -424,16 +424,22 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     color: white;
 }
 
+body {
+    transition: font-size 0.3s ease-in-out;
+}
+
 body.font-size-small {
     font-size: 12px;
 }
 
 body.font-size-medium {
-    font-size: 16px; /* デフォルト */
+    font-size: 16px;
 }
 
 body.font-size-large {
     font-size: 20px;
+}
+ font-size: 20px;
 }
 
 
