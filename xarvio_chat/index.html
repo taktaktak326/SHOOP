@@ -35,15 +35,28 @@
     <div id="hamburger-menu" class="hamburger-menu">
     <button id="menu-toggle" aria-label="メニューを開く">☰</button>
         <div id="menu-content" class="menu hidden">
-    <ul class="menu-list">
-        <li class="menu-item"><a id="clear-history-link" class="menu-link">会話履歴を削除</a></li>
-        <li class="menu-item">
-            <a href="https://www.youtube.com/@BASF_Agro" class="menu-link" onclick="return openPopup('https://www.youtube.com/@BASF_Agro', 'BASF')">BASF</a>
-        </li>
-        <li class="menu-item">
-            <a href="https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja" class="menu-link" onclick="return openPopup('https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja', 'Help')">ヘルプ</a>
-        </li>
-    </ul>
+<ul class="menu-list">
+    <li class="menu-item">
+        <a id="clear-history-link" class="menu-link">会話履歴を削除</a>
+    </li>
+    <li class="menu-item">
+        <a href="https://www.youtube.com/@BASF_Agro" class="menu-link" onclick="return openPopup('https://www.youtube.com/@BASF_Agro', 'BASF')">BASF</a>
+    </li>
+    <li class="menu-item">
+        <a href="https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja" class="menu-link" onclick="return openPopup('https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja', 'Help')">ヘルプ</a>
+    </li>
+    <li class="menu-item">
+        <label for="font-size-selector" class="menu-link">文字サイズ:
+            <select id="font-size-selector">
+                <option value="small">小</option>
+                <option value="medium" selected>中</option>
+                <option value="large">大</option>
+            </select>
+        </label>
+    </li>
+</ul>
+
+            
 </div>
 </div>
     <div id="chatbar" data-chatbotui-note="Xarviobot UI" data-chatbotui-input-placeholder="質問を入力してください"></div>
