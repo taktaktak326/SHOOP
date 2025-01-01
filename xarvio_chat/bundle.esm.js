@@ -389,4 +389,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
+fontSizeSelector.addEventListener('change', (event) => {
+    const selectedSize = event.target.value;
+    body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    body.classList.add(`font-size-${selectedSize}`);
+    console.log(`現在のクラス: font-size-${selectedSize}`);
+});
