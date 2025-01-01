@@ -365,33 +365,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSizeSelector = document.getElementById('font-size-selector');
     const body = document.body;
 
-    let savedFontSize = 'medium'; // デフォルト値
-    try {
-        savedFontSize = localStorage.getItem('fontSize') || 'medium';
-    } catch (error) {
-        console.warn('ローカルストレージが利用できません。デフォルト文字サイズを使用します。');
-    }
-
+    // 保存済みの文字サイズを読み込む
+    const savedFontSize = localStorage.getItem('fontSize') || 'medium';
     body.classList.add(`font-size-${savedFontSize}`);
     fontSizeSelector.value = savedFontSize;
 
+    // フォントサイズ変更イベント
     fontSizeSelector.addEventListener('change', (event) => {
         const selectedSize = event.target.value;
 
+        // 既存のクラスを削除
         body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+
+        // 新しいクラスを追加
         body.classList.add(`font-size-${selectedSize}`);
 
-        try {
-            localStorage.setItem('fontSize', selectedSize);
-        } catch (error) {
-            console.warn('ローカルストレージへの保存に失敗しました。');
-        }
+        // 選択を保存
+        localStorage.setItem('fontSize', selectedSize);
     });
 });
 
-fontSizeSelector.addEventListener('change', (event) => {
-    const selectedSize = event.target.value;
-    body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-    body.classList.add(`font-size-${selectedSize}`);
-    console.log(`現在のクラス: font-size-${selectedSize}`);
-});
