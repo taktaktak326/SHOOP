@@ -360,3 +360,28 @@ const chatbotUI = new ChatbotUIWithFiles(stream, attachFileToInput, detachFileFr
     .attachTo(msgDiv, chatbarDiv);
 
 chatbotUI.focus();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const fontSizeSelector = document.getElementById('font-size-selector');
+    const body = document.body;
+
+    // ローカルストレージから保存済みの文字サイズを読み込み
+    const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+    body.classList.add(`font-size-${savedFontSize}`);
+    fontSizeSelector.value = savedFontSize;
+
+    // フォントサイズ変更イベント
+    fontSizeSelector.addEventListener('change', (event) => {
+        const selectedSize = event.target.value;
+
+        // 既存のフォントサイズクラスを削除
+        body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+
+        // 新しいフォントサイズクラスを追加
+        body.classList.add(`font-size-${selectedSize}`);
+
+        // ユーザーの選択をローカルストレージに保存
+        localStorage.setItem('fontSize', selectedSize);
+    });
+});
+
