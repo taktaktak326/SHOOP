@@ -407,3 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+fontSizeLink.addEventListener("click", (event) => {
+    event.preventDefault(); // デフォルトのリンク動作を防ぐ
+    fontSizeDropdown.classList.toggle("hidden");
+    fontSizeDropdown.classList.toggle("show");
+});
