@@ -365,23 +365,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const fontSizeSelector = document.getElementById('font-size-selector');
     const body = document.body;
 
-    // ローカルストレージから保存済みの文字サイズを読み込み
-    const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+    let savedFontSize = 'medium'; // デフォルト値
+    try {
+        savedFontSize = localStorage.getItem('fontSize') || 'medium';
+    } catch (error) {
+        console.warn('ローカルストレージが利用できません。デフォルト文字サイズを使用します。');
+    }
+
     body.classList.add(`font-size-${savedFontSize}`);
     fontSizeSelector.value = savedFontSize;
 
-    // フォントサイズ変更イベント
     fontSizeSelector.addEventListener('change', (event) => {
         const selectedSize = event.target.value;
 
-        // 既存のフォントサイズクラスを削除
         body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-
-        // 新しいフォントサイズクラスを追加
         body.classList.add(`font-size-${selectedSize}`);
 
-        // ユーザーの選択をローカルストレージに保存
-        localStorage.setItem('fontSize', selectedSize);
+        try {
+            localStorage.setItem('fontSize', selectedSize);
+        } catch (error) {
+            console.warn('ローカルストレージへの保存に失敗しました。');
+        }
     });
 });
+
 
