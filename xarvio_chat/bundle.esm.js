@@ -161,30 +161,52 @@ async function* streamResponse(body) {
     const decoder = new TextDecoder();
     let buffer = "";
     while (true) {
-        const {
-            value,
-            done
-        } = await reader.read();
+        const { value, done } = await reader.read();
         if (done) {
             break;
         }
-        const chunk = decoder.decode(value, {
-            stream: true
-        });
+        const chunk = decoder.decode(value, { stream: true });
         buffer += chunk;
         let eolIndex;
         while ((eolIndex = buffer.indexOf("\n")) >= 0) {
             const line = buffer.slice(0, eolIndex);
             buffer = buffer.slice(eolIndex + 1);
             if (line) {
-                yield fromJSON(line);
+                yield JSON.parse(line); // 必要に応じてデータをパース
             }
         }
     }
     if (buffer) {
-        yield fromJSON(buffer);
+        yield JSON.parse(buffer);
     }
 }
+
+document.getElementById("font-size-selector").addEventListener("change", (event) => {
+    const selectedSize = event.target.value;
+    localStorage.setItem("fontSize", selectedSize);
+
+    // 既存のメッセージのサイズを更新
+    const messages = document.querySelectorAll("#messages div");
+    messages.forEach((message) => {
+        message.classList.remove("message-small", "message-medium", "message-large");
+        message.classList.add(`message-${selectedSize}`);
+    });
+});
+
+// メッセージの表示処理
+async function displayMessages(apiResponseBody) {
+    for await (const chunk of streamResponse(apiResponseBody)) {
+        const messageElement = document.createElement("div");
+        messageElement.innerText = chunk.content;
+
+        // フォントサイズに対応するクラスを適用
+        const currentFontSize = localStorage.getItem("fontSize") || "medium";
+        messageElement.classList.add(`message-${currentFontSize}`);
+
+        document.getElementById("messages").appendChild(messageElement);
+    }
+}
+
 
 /**
  * Print processing error to user.
