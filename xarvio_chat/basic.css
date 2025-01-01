@@ -442,6 +442,23 @@ body.font-size-large div[data-chatbotui-message-role="assistant"] {
     font-size: 20px;
 }
 
+.dropdown {
+    display: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    width: 200px;
+    z-index: 1000;
+    position: relative;
+}
+
+.dropdown.show {
+    display: block;
+}
+
 
 
 
