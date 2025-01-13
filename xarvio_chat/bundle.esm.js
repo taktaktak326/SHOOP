@@ -15,67 +15,15 @@ function generateSessionId() {
 let sessionId = generateSessionId();
 
 // Clear chat session.
-document.addEventListener('DOMContentLoaded', function () {
-    const clearHistoryLink = document.getElementById('clear-history-link');
-
-    clearHistoryLink.addEventListener('click', function (event) {
-        event.preventDefault(); // デフォルトのリンク動作を無効化
-
-        const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
-        if (userConfirmed) {
-            sessionId = generateSessionId(); // 新しいセッションIDを生成
-            const messagesDiv = document.querySelector("#messages");
-            messagesDiv.innerHTML = ''; // チャット履歴をクリア
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    const clearButton = document.getElementById('clear-storage-button');
+    clearButton.addEventListener('click', function() {
+        alert('会話の履歴を削除します');
+        sessionId = generateSessionId();
+        const messagesDiv = document.querySelector("#messages");
+        messagesDiv.innerHTML = '';
     });
 });
-
-
-
-
-//document.addEventListener('DOMContentLoaded', async function () {
-//    const messagesDiv = document.querySelector("#messages");
-
-//    try {
-//        console.log("初期メッセージをAPIからストリーミングで取得します...");
-
-        // 初期メッセージ表示用の要素を作成
-//        const assistantMessage = document.createElement("div");
-//        assistantMessage.dataset.chatbotuiMessageRole = "assistant";
-//        messagesDiv.appendChild(assistantMessage);
-
-        // 初期メッセージ取得開始: ローディング状態
-//        assistantMessage.classList.remove("no-loading"); // ローディングアイコンを一旦表示
-
-//        const responseStream = await stream({
-//            "chat-input": "今日は何の日ですか？挨拶は、お疲れ様です！と言ってください。ハルシネーションはしないでください。" // 初期メッセージ用リクエスト
-//        });
-
-        // ストリーミングデータを処理
-//        for await (const chunk of responseStream) {
-//            console.log("受信データ:", chunk);
-
-//            if (chunk.content) {
-                // リアルタイムにメッセージ内容を追加
-//                assistantMessage.innerHTML += chunk.content;
-//                assistantMessage.scrollIntoView({ behavior: "smooth" });
-//            }
-//        }
-
-        // ストリーミング終了後: ローディングアイコンを非表示にする
-//        assistantMessage.classList.add("no-loading");
-
-//    } catch (error) {
-//        console.error("初期メッセージの取得に失敗:", error);
-
-//        const errorMessage = document.createElement("div");
-//        errorMessage.dataset.chatbotuiMessageRole = "assistant";
-//        errorMessage.innerText = "初期メッセージの取得に失敗しました。";
-//        messagesDiv.appendChild(errorMessage);
-//    }
-// });
-
-
 
 // User data
 
@@ -161,52 +109,30 @@ async function* streamResponse(body) {
     const decoder = new TextDecoder();
     let buffer = "";
     while (true) {
-        const { value, done } = await reader.read();
+        const {
+            value,
+            done
+        } = await reader.read();
         if (done) {
             break;
         }
-        const chunk = decoder.decode(value, { stream: true });
+        const chunk = decoder.decode(value, {
+            stream: true
+        });
         buffer += chunk;
         let eolIndex;
         while ((eolIndex = buffer.indexOf("\n")) >= 0) {
             const line = buffer.slice(0, eolIndex);
             buffer = buffer.slice(eolIndex + 1);
             if (line) {
-                yield JSON.parse(line); // 必要に応じてデータをパース
+                yield fromJSON(line);
             }
         }
     }
     if (buffer) {
-        yield JSON.parse(buffer);
+        yield fromJSON(buffer);
     }
 }
-
-document.getElementById("font-size-selector").addEventListener("change", (event) => {
-    const selectedSize = event.target.value;
-    localStorage.setItem("fontSize", selectedSize);
-
-    // 既存のメッセージのサイズを更新
-    const messages = document.querySelectorAll("#messages div");
-    messages.forEach((message) => {
-        message.classList.remove("message-small", "message-medium", "message-large");
-        message.classList.add(`message-${selectedSize}`);
-    });
-});
-
-// メッセージの表示処理
-async function displayMessages(apiResponseBody) {
-    for await (const chunk of streamResponse(apiResponseBody)) {
-        const messageElement = document.createElement("div");
-        messageElement.innerText = chunk.content;
-
-        // フォントサイズに対応するクラスを適用
-        const currentFontSize = localStorage.getItem("fontSize") || "medium";
-        messageElement.classList.add(`message-${currentFontSize}`);
-
-        document.getElementById("messages").appendChild(messageElement);
-    }
-}
-
 
 /**
  * Print processing error to user.
@@ -338,38 +264,6 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menu-toggle');
-    const menuContent = document.getElementById('menu-content');
-
-    // メニューの表示・非表示を切り替える
-    menuToggle.addEventListener('click', function (event) {
-        event.stopPropagation(); // クリックイベントが親要素に伝播するのを防ぐ
-
-        if (menuContent.classList.contains('visible')) {
-            menuContent.classList.remove('visible');
-            menuContent.classList.add('hidden');
-        } else {
-            menuContent.classList.add('visible');
-            menuContent.classList.remove('hidden');
-        }
-    });
-
-    // メニュー外をクリックすると閉じる
-    document.addEventListener('click', function (event) {
-        if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
-            menuContent.classList.remove('visible');
-            menuContent.classList.add('hidden');
-        }
-    });
-});
-
-window.openPopup = function (url, title) {
-    // 新しいウィンドウを開く
-    window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
-    return false; // クリックイベントのデフォルト動作を無効化
-};
-
 // ChatbotUI integration here
 
 const msgDiv = document.querySelector("#messages");
@@ -382,52 +276,3 @@ const chatbotUI = new ChatbotUIWithFiles(stream, attachFileToInput, detachFileFr
     .attachTo(msgDiv, chatbarDiv);
 
 chatbotUI.focus();
-
-document.addEventListener('DOMContentLoaded', () => {
-    const fontSizeSelector = document.getElementById('font-size-selector');
-    const body = document.body;
-
-    // 保存済みの文字サイズを読み込む
-    const savedFontSize = localStorage.getItem('fontSize') || 'medium';
-    body.classList.add(`font-size-${savedFontSize}`);
-    fontSizeSelector.value = savedFontSize;
-
-    // フォントサイズ変更イベント
-    fontSizeSelector.addEventListener('change', (event) => {
-        const selectedSize = event.target.value;
-
-        // 既存のクラスを削除
-        body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
-
-        // 新しいクラスを追加
-        body.classList.add(`font-size-${selectedSize}`);
-
-        // 選択を保存
-        localStorage.setItem('fontSize', selectedSize);
-    });
-});
-
-fontSizeLink.addEventListener("click", (event) => {
-    event.preventDefault(); // デフォルトのリンク動作を防ぐ
-    fontSizeDropdown.classList.toggle("hidden");
-    fontSizeDropdown.classList.toggle("show");
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const settingsMenuToggle = document.getElementById('settings-menu-toggle');
-    const settingsDropdown = document.getElementById('settings-dropdown');
-
-    settingsMenuToggle.addEventListener('click', (event) => {
-        event.preventDefault(); // デフォルト動作を防止
-        settingsDropdown.classList.toggle('hidden');
-        settingsDropdown.classList.toggle('show');
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!settingsMenuToggle.contains(event.target) && !settingsDropdown.contains(event.target)) {
-            settingsDropdown.classList.add('hidden');
-            settingsDropdown.classList.remove('show');
-        }
-    });
-});
-
