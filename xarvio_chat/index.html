@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="jp">
+
 <head>
     <link rel="stylesheet" href="styles.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,92 +17,27 @@
 
 <body>
     <header class="c-header">
-        <div class="c-header__inner">
-            <a href="https://basf-renew-001.digital-marketing.dev/" class="c-header__logo">
-                <img src="./auxiliary/logo.svg" alt="">
-            </a>
-        </div>
+        <div class="c-header__inner"><a href="https://basf-renew-001.digital-marketing.dev/" class="c-header__logo"><img src="./auxiliary/logo.svg" alt=""></a></div>
     </header>
-    <main>
+    <main class="">
         <section class="section-page--case">
             <div class="container container-option1130">
-                <h1 class="head-title--h1 text-center mb-30">
-                    <span>お困りごとは何ですか。</span>
-                </h1>
+                <h1 class="head-title--h1 text-center mb-30"><span>お困りごとは何ですか。</span></h1>
                 <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
                     AIがあなたの質問に24時間365日、お答えいたします。
-                    
                     <div class="botui">
                         <div id="main">
                             <div id="messages"></div>
                         </div>
-                        <div id="hamburger-menu" class="hamburger-menu">
-                            <button id="menu-toggle" aria-label="メニューを開く">☰</button>
-                            <div id="menu-content" class="menu hidden">
-                                <ul class="menu-list">
-                                    <li class="menu-item">
-                                        <a id="clear-history-link" class="menu-link">会話履歴を削除</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="https://www.youtube.com/@BASF_Agro" class="menu-link"
-                                           onclick="return openPopup('https://www.youtube.com/@BASF_Agro', 'BASF')">
-                                           BASF
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja"
-                                           class="menu-link"
-                                           onclick="return openPopup('https://userguides.xarvio.com/s/main-category?category=FIELD%20MANAGER&language=ja', 'Help')">
-                                           ヘルプ
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a id="settings-menu-toggle" class="menu-link" aria-expanded="false">設定</a>
-                                        <div id="settings-dropdown" class="dropdown hidden" role="menu">
-                                            <div role="menuitem" class="menu-item">
-                                                <a id="font-size-toggle" class="menu-link">文字サイズ設定</a>
-                                                <div id="font-size-dropdown" class="dropdown hidden">
-                                                    <label for="font-size-selector">サイズを選択:</label>
-                                                    <select id="font-size-selector">
-                                                        <option value="small">小</option>
-                                                        <option value="medium" selected>中</option>
-                                                        <option value="large">大</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p id="text"></p>
+                        <div id="chatbar" data-chatbotui-note="Xarviobot UI" data-chatbotui-input-placeholder="Send a message to Xarviobot"></div>
                     </div>
-                    <div id="chatbar" data-chatbotui-note="Xarviobot UI" data-chatbotui-input-placeholder="質問を入力してください"></div>
+                    <div id="custom-button-container"><button id="clear-storage-button">会話履歴を削除</button></div>
+                    <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp"><span class="bg--lightpurple">※Gemini は不正確な情報（人物に関する情報など）を表示することがあるため、生成された回答を再確認するようにしてください。</span></div>
                 </div>
-                <div class="text-des fonts-16 fonts-md-18 text-center mb-50 lineheight-18 font-w300 text-left-sp">
-                    <span class="bg--lightpurple">
-                        ※生成AIの回答は必ずしも正しいとは限りません。重要な情報は確認するようにしてください。
-                    </span>
-                </div>
-            </div>
         </section>
     </main>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script type="module" src="bundle.esm.js" defer></script>
-
-    <!-- ここにクリックイベント設定用のスクリプトを追記 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 「設定」ボタン押下時に #text 要素のテキストを変更
-            const settingsMenuToggle = document.getElementById("settings-menu-toggle");
-            settingsMenuToggle.onclick = function() {
-                const textElement = document.getElementById("text");
-                if (textElement) {
-                    textElement.innerHTML = "クリックされた！";
-                }
-            };
-        });
-    </script>
 </body>
+
 </html>
