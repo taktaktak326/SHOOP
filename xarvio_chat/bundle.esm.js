@@ -15,15 +15,21 @@ function generateSessionId() {
 let sessionId = generateSessionId();
 
 // Clear chat session.
-document.addEventListener('DOMContentLoaded', function() {
-    const clearButton = document.getElementById('clear-storage-button');
-    clearButton.addEventListener('click', function() {
-        alert('会話の履歴を削除します');
-        sessionId = generateSessionId();
-        const messagesDiv = document.querySelector("#messages");
-        messagesDiv.innerHTML = '';
+document.addEventListener('DOMContentLoaded', function () {
+    const clearHistoryLink = document.getElementById('clear-history-link');
+
+    clearHistoryLink.addEventListener('click', function (event) {
+        event.preventDefault(); // デフォルトのリンク動作を無効化
+
+        const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
+        if (userConfirmed) {
+            sessionId = generateSessionId(); // 新しいセッションIDを生成
+            const messagesDiv = document.querySelector("#messages");
+            messagesDiv.innerHTML = ''; // チャット履歴をクリア
+        }
     });
 });
+
 
 // User data
 
@@ -109,30 +115,89 @@ async function* streamResponse(body) {
     const decoder = new TextDecoder();
     let buffer = "";
     while (true) {
-        const {
-            value,
-            done
-        } = await reader.read();
+        const { value, done } = await reader.read();
         if (done) {
             break;
         }
-        const chunk = decoder.decode(value, {
-            stream: true
-        });
+        const chunk = decoder.decode(value, { stream: true });
         buffer += chunk;
         let eolIndex;
         while ((eolIndex = buffer.indexOf("\n")) >= 0) {
             const line = buffer.slice(0, eolIndex);
             buffer = buffer.slice(eolIndex + 1);
             if (line) {
-                yield fromJSON(line);
+                yield JSON.parse(line); // 必要に応じてデータをパース
             }
         }
     }
     if (buffer) {
-        yield fromJSON(buffer);
+        yield JSON.parse(buffer);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const fontSizeSlider = document.getElementById('font-size-slider');
+    const fontSizeValue = document.getElementById('font-size-value');
+    const textPreview = document.getElementById('text-preview');
+    const messagesContainer = document.getElementById("messages");
+
+    // 保存済みの文字サイズを読み込む
+    const savedFontSize = localStorage.getItem('fontSize') || '16'; // デフォルトは16px
+    console.log(`[DEBUG] 読み込まれたフォントサイズ: ${savedFontSize}`); // デバッグ用ログ
+    textPreview.style.fontSize = `${savedFontSize}px`;
+    fontSizeSlider.value = savedFontSize;
+    fontSizeValue.textContent = savedFontSize;
+
+    // 既存のメッセージ要素にフォントサイズを適用
+    const existingMessages = document.querySelectorAll("#messages div");
+    existingMessages.forEach((message) => {
+        message.style.fontSize = `${savedFontSize}px`;
+    });
+
+    // スライダー変更イベント
+    fontSizeSlider.addEventListener('input', (event) => {
+        const selectedSize = event.target.value;
+
+        // スライダーの値をプレビューに適用
+        textPreview.style.fontSize = `${selectedSize}px`;
+        fontSizeValue.textContent = selectedSize;
+
+        // 保存
+        localStorage.setItem('fontSize', selectedSize);
+        console.log(`[DEBUG] 保存されたフォントサイズ: ${selectedSize}`); // デバッグ用ログ
+
+        // 既存メッセージのフォントサイズを更新
+        const messages = document.querySelectorAll("#messages div");
+        messages.forEach((message) => {
+            message.style.fontSize = `${selectedSize}px`;
+        });
+    });
+});
+
+// メッセージの表示処理
+async function displayMessages(apiResponseBody) {
+    const currentFontSize = localStorage.getItem("fontSize") || "16"; // デフォルト値を16pxに設定
+    console.log(`[DEBUG] メッセージ表示時のフォントサイズ: ${currentFontSize}`); // デバッグ用ログ
+    console.log(`[DEBUG] 適用されるフォントサイズ: ${currentFontSize}`);
+    console.log(`[DEBUG] メッセージ内容: ${chunk.content}`);
+    
+    for await (const chunk of streamResponse(apiResponseBody)) {
+        const messageElement = document.createElement("div");
+        messageElement.innerText = chunk.content;
+
+        // フォントサイズを直接適用
+        messageElement.style.fontSize = `${currentFontSize}px`;
+        
+        document.getElementById("messages").appendChild(messageElement);
+    }
+}
+
+
+
+
+
+
+
 
 /**
  * Print processing error to user.
@@ -264,6 +329,38 @@ function showErrorInUserInput(errorMessage) {
     }, 3000);
 };
 
+document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuContent = document.getElementById('menu-content');
+
+    // メニューの表示・非表示を切り替える
+    menuToggle.addEventListener('click', function (event) {
+        event.stopPropagation(); // クリックイベントが親要素に伝播するのを防ぐ
+
+        if (menuContent.classList.contains('visible')) {
+            menuContent.classList.remove('visible');
+            menuContent.classList.add('hidden');
+        } else {
+            menuContent.classList.add('visible');
+            menuContent.classList.remove('hidden');
+        }
+    });
+
+    // メニュー外をクリックすると閉じる
+    document.addEventListener('click', function (event) {
+        if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
+            menuContent.classList.remove('visible');
+            menuContent.classList.add('hidden');
+        }
+    });
+});
+
+window.openPopup = function (url, title) {
+    // 新しいウィンドウを開く
+    window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
+    return false; // クリックイベントのデフォルト動作を無効化
+};
+
 // ChatbotUI integration here
 
 const msgDiv = document.querySelector("#messages");
@@ -276,3 +373,40 @@ const chatbotUI = new ChatbotUIWithFiles(stream, attachFileToInput, detachFileFr
     .attachTo(msgDiv, chatbarDiv);
 
 chatbotUI.focus();
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 設定メニューの開閉ロジック
+    const settingsMenuToggle = document.getElementById("settings-menu-toggle");
+    const settingsDropdown = document.getElementById("settings-dropdown");
+
+    settingsMenuToggle.addEventListener("click", (event) => {
+        event.preventDefault(); // デフォルト動作を無効化
+        const isExpanded = settingsMenuToggle.getAttribute("aria-expanded") === "true";
+        settingsMenuToggle.setAttribute("aria-expanded", !isExpanded); 
+        settingsDropdown.classList.toggle("show");
+    });
+
+    // メニュー外クリックで閉じる
+    document.addEventListener("click", (event) => {
+        if (
+            !settingsDropdown.contains(event.target) &&
+            !settingsMenuToggle.contains(event.target)
+        ) {
+            settingsDropdown.classList.add("hide");
+            settingsMenuToggle.setAttribute("aria-expanded", true); // 閉じた状態にする
+        }
+    });
+
+    // スライダーで文字サイズを変更
+    const fontSizeSlider = document.getElementById("font-size-slider");
+    const fontSizeValue = document.getElementById("font-size-value");
+    const textPreview = document.getElementById("text-preview");
+
+    fontSizeSlider.addEventListener("input", () => {
+        const size = fontSizeSlider.value;
+        fontSizeValue.textContent = size; // 現在の値を表示
+        textPreview.style.fontSize = `${size}px`; // プレビューを更新
+    });
+});
