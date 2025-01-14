@@ -174,29 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// メッセージの表示処理
-async function displayMessages(apiResponseBody) {
-    const currentFontSize = localStorage.getItem("fontSize") || "16"; // デフォルト値を16pxに設定
-    console.log(`[DEBUG] メッセージ表示時のフォントサイズ: ${currentFontSize}`); // デバッグ用ログ
-    console.log(`[DEBUG] 適用されるフォントサイズ: ${currentFontSize}`);
-    console.log(`[DEBUG] メッセージ内容: ${chunk.content}`);
-    
-    for await (const chunk of streamResponse(apiResponseBody)) {
-        const messageElement = document.createElement("div");
-        messageElement.innerText = chunk.content;
-
-        // フォントサイズを直接適用
-        messageElement.style.fontSize = `${currentFontSize}px`;
-        
-        document.getElementById("messages").appendChild(messageElement);
-    }
-}
-
-
-
-
-
-
 
 
 /**
@@ -333,9 +310,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menu-toggle');
     const menuContent = document.getElementById('menu-content');
 
-    // メニューの表示・非表示を切り替える
     menuToggle.addEventListener('click', function (event) {
-        event.stopPropagation(); // クリックイベントが親要素に伝播するのを防ぐ
+        event.stopPropagation(); 
 
         if (menuContent.classList.contains('visible')) {
             menuContent.classList.remove('visible');
@@ -346,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // メニュー外をクリックすると閉じる
     document.addEventListener('click', function (event) {
         if (!menuToggle.contains(event.target) && !menuContent.contains(event.target)) {
             menuContent.classList.remove('visible');
@@ -356,9 +331,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 window.openPopup = function (url, title) {
-    // 新しいウィンドウを開く
     window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
-    return false; // クリックイベントのデフォルト動作を無効化
+    return false; 
 };
 
 // ChatbotUI integration here
@@ -377,36 +351,34 @@ chatbotUI.focus();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 設定メニューの開閉ロジック
     const settingsMenuToggle = document.getElementById("settings-menu-toggle");
     const settingsDropdown = document.getElementById("settings-dropdown");
 
     settingsMenuToggle.addEventListener("click", (event) => {
-        event.preventDefault(); // デフォルト動作を無効化
+        event.preventDefault(); 
         const isExpanded = settingsMenuToggle.getAttribute("aria-expanded") === "true";
         settingsMenuToggle.setAttribute("aria-expanded", !isExpanded); 
         settingsDropdown.classList.toggle("show");
     });
 
-    // メニュー外クリックで閉じる
     document.addEventListener("click", (event) => {
         if (
             !settingsDropdown.contains(event.target) &&
             !settingsMenuToggle.contains(event.target)
         ) {
             settingsDropdown.classList.add("hide");
-            settingsMenuToggle.setAttribute("aria-expanded", true); // 閉じた状態にする
+            settingsMenuToggle.setAttribute("aria-expanded", true); 
         }
     });
 
-    // スライダーで文字サイズを変更
+    // Change Font Size
     const fontSizeSlider = document.getElementById("font-size-slider");
     const fontSizeValue = document.getElementById("font-size-value");
     const textPreview = document.getElementById("text-preview");
 
     fontSizeSlider.addEventListener("input", () => {
         const size = fontSizeSlider.value;
-        fontSizeValue.textContent = size; // 現在の値を表示
-        textPreview.style.fontSize = `${size}px`; // プレビューを更新
+        fontSizeValue.textContent = size; 
+        textPreview.style.fontSize = `${size}px`; // Preview
     });
 });
