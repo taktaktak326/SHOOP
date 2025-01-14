@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const clearHistoryLink = document.getElementById('clear-history-link');
 
     clearHistoryLink.addEventListener('click', function (event) {
-        event.preventDefault(); // デフォルトのリンク動作を無効化
+        event.preventDefault();
 
         const userConfirmed = confirm('会話履歴を削除しますか？この操作は取り消せません。');
         if (userConfirmed) {
-            sessionId = generateSessionId(); // 新しいセッションIDを生成
+            sessionId = generateSessionId(); // new session ID
             const messagesDiv = document.querySelector("#messages");
-            messagesDiv.innerHTML = ''; // チャット履歴をクリア
+            messagesDiv.innerHTML = ''; // Clear chat
         }
     });
 });
@@ -135,15 +135,14 @@ async function* streamResponse(body) {
     }
 }
 
+// Change Font Size
 document.addEventListener('DOMContentLoaded', () => {
     const fontSizeSlider = document.getElementById('font-size-slider');
     const fontSizeValue = document.getElementById('font-size-value');
     const textPreview = document.getElementById('text-preview');
     const messagesContainer = document.getElementById("messages");
 
-    // 保存済みの文字サイズを読み込む
-    const savedFontSize = localStorage.getItem('fontSize') || '16'; // デフォルトは16px
-    console.log(`[DEBUG] 読み込まれたフォントサイズ: ${savedFontSize}`); // デバッグ用ログ
+    const savedFontSize = localStorage.getItem('fontSize') || '16'; 
     textPreview.style.fontSize = `${savedFontSize}px`;
     fontSizeSlider.value = savedFontSize;
     fontSizeValue.textContent = savedFontSize;
@@ -164,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 保存
         localStorage.setItem('fontSize', selectedSize);
-        console.log(`[DEBUG] 保存されたフォントサイズ: ${selectedSize}`); // デバッグ用ログ
 
         // 既存メッセージのフォントサイズを更新
         const messages = document.querySelectorAll("#messages div");
@@ -173,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
 
 
 /**
@@ -311,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const menuContent = document.getElementById('menu-content');
 
     menuToggle.addEventListener('click', function (event) {
-        event.stopPropagation(); 
+        event.stopPropagation();
 
         if (menuContent.classList.contains('visible')) {
             menuContent.classList.remove('visible');
@@ -332,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 window.openPopup = function (url, title) {
     window.open(url, title, 'width=800,height=600,resizable=yes,scrollbars=yes');
-    return false; 
+    return false;
 };
 
 // ChatbotUI integration here
@@ -343,7 +340,7 @@ const chatbarDiv = document.querySelector("#chatbar");
 const chatbotUI = new ChatbotUIWithFiles(stream, attachFileToInput, detachFileFromInput, ["png"])
     .withRender((content) => content)
     .withDocumentCallback(docCallback)
-    .withErrorCallback(showErrorInUserInput) // showError)
+    .withErrorCallback(showErrorInUserInput)
     .attachTo(msgDiv, chatbarDiv);
 
 chatbotUI.focus();
@@ -355,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsDropdown = document.getElementById("settings-dropdown");
 
     settingsMenuToggle.addEventListener("click", (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         const isExpanded = settingsMenuToggle.getAttribute("aria-expanded") === "true";
         settingsMenuToggle.setAttribute("aria-expanded", !isExpanded); 
         settingsDropdown.classList.toggle("show");
@@ -371,14 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Change Font Size
+    // Setup font size by slider
     const fontSizeSlider = document.getElementById("font-size-slider");
     const fontSizeValue = document.getElementById("font-size-value");
     const textPreview = document.getElementById("text-preview");
 
     fontSizeSlider.addEventListener("input", () => {
         const size = fontSizeSlider.value;
-        fontSizeValue.textContent = size; 
-        textPreview.style.fontSize = `${size}px`; // Preview
+        fontSizeValue.textContent = size;
+        textPreview.style.fontSize = `${size}px`; // Update preview
     });
 });
