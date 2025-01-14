@@ -424,24 +424,6 @@ button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:h
     color: white;
 }
 
-/* 小サイズ */
-body.font-size-small div[data-chatbotui-message-role="user"],
-body.font-size-small div[data-chatbotui-message-role="assistant"] {
-    font-size: 12px;
-}
-
-/* 中サイズ (デフォルト) */
-body.font-size-medium div[data-chatbotui-message-role="user"],
-body.font-size-medium div[data-chatbotui-message-role="assistant"] {
-    font-size: 16px;
-}
-
-/* 大サイズ */
-body.font-size-large div[data-chatbotui-message-role="user"],
-body.font-size-large div[data-chatbotui-message-role="assistant"] {
-    font-size: 20px;
-}
-
 .dropdown {
     display: none;
     background-color: white;
@@ -459,8 +441,10 @@ body.font-size-large div[data-chatbotui-message-role="assistant"] {
     display: block;
 }
 
+.hidden {
+    display: none;
+}
 
-
-
-
-
+a {
+    cursor:pointer
+  }
