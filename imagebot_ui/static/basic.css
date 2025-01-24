@@ -51,7 +51,7 @@ div[data-chatbotui-type="ChatBar"] {
 }
 
 div[data-chatbotui-type="ChatBar"]:focus-within {
-    outline: 2px solid black;
+    outline: 1px solid black;
 }
 
 #messages {
