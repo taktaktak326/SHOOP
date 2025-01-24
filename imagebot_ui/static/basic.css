@@ -1,0 +1,321 @@
+:root {
+    --chatbotui-border-radius-small: 0.3rem;
+    --chatbotui-border-radius-medium: 1rem;
+    --chatbotui-border-radius-large: 1.5rem;
+
+    --chatbotui-text-primary: black;
+    --chatbotui-background-primary: #f5ecf4;
+    --chatbotui-text-secondary: #111;
+    --chatbotui-background-secondary: white;
+
+    --chatbotui-background-primary-dark: #941c80;
+}
+
+div.botui {
+    border: 1px solid #ccc;
+    margin-top: 3rem;
+}
+
+div.botui:before {
+    content: "チャットで相談";
+    display: block;
+    background-color: var(--chatbotui-background-primary-dark);
+    color: white;
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    font-weight: 400;
+}
+
+div#main {
+    padding: 1rem;
+}
+
+div#chatbar {
+    padding: 1rem;
+    background-color: #f5f5f5;
+}
+
+div[data-chatbotui-type="ChatBar"] {
+    display: flex;
+    border-radius: var(--chatbotui-border-radius-large);
+    background-color: var(--chatbotui-background-secondary);
+    color: var(--chatbotui-text-secondary);
+    position: relative;
+    line-height: 1.2;
+    text-align: left;
+    border: 1px solid grey;
+    width: calc(100% - 3.2rem);
+    z-index: 1;
+}
+
+div[data-chatbotui-type="ChatBar"]:focus-within {
+    outline: 2px solid black;
+}
+
+#messages {
+    width: 100%;
+}
+
+#messages::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+div[data-chatbotui-message-role] {
+    clear: both;
+    margin-bottom: 1.5rem;
+    color: var(--chatbotui-text-primary);
+    line-height: 1.8;
+    text-align: left;
+}
+
+div[data-chatbotui-message-role="user"] {
+    border-radius: var(--chatbotui-border-radius-medium) 0 var(--chatbotui-border-radius-medium) var(--chatbotui-border-radius-medium);
+    background-color: var(--chatbotui-background-primary);
+    color: var(--chatbotui-text-secondary);
+    float: right;
+    min-width: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    white-space: pre-wrap;
+    font-size: 16px;
+}
+
+div[data-chatbotui-message-role="assistant"] {
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: .5rem;
+    white-space: pre-wrap;
+    font-size: 16px;
+    text-align: left;
+    float: left;
+}
+
+
+div[data-chatbotui-message-item-type="b64image"] {
+    display: none;
+}
+
+div[data-chatbotui-type="MessageItem"] {
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+div[data-chatbotui-message-role="assistant"]:not(:has(div[data-chatbotui-type="MessageItem"]))::after {
+    content: " ";
+    display: inline-block;
+    margin-left: 0.45rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 0.5rem;
+    vertical-align: middle;
+    margin-bottom: 0.15rem;
+    background-color: transparent;
+    opacity: 1;
+    background-image: url('./auxiliary/loading.gif');
+    background-size: cover;
+    background-position: center;
+}
+
+.message-file-area {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.message-file-area .file-preview {
+    height: 10rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex: 1 0 auto;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+div[data-chatbotui-type="ChatButtonsContainer"] {
+    flex-shrink: 0;
+    display: flex;
+}
+
+div[data-chatbotui-type="ChatInput"] {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-left: 1rem;
+    padding-right: 8rem;
+    flex-grow: 1;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font-size: 18;
+    z-index: 1;
+}
+
+div[data-chatbotui-type="ChatInput"]:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+div[data-chatbotui-type="ChatInput"]:empty::after {
+    content: attr(data-chatbotui-input-placeholder);
+    cursor: text;
+    color: var(--chatbotui-text-secondary);
+    opacity: 0.5;
+}
+
+button[data-chatbotui-type="ChatSendButton"]:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+button[data-chatbotui-type="ChatSendButton"]:disabled::after {
+    background-color: black;
+}
+
+button[data-chatbotui-type="ChatSendButton"] {
+    max-width: 3rem;
+    min-width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    margin-top: auto;
+    margin-right: 0.5rem;
+    border-radius: 1.5rem;
+    border: none;
+    background-color: var(--chatbotui-background-secondary-accent);
+    font-size: 0;
+    position: absolute;
+    right: -3.7rem;
+    top: 0rem;
+    opacity: 1;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+button[data-chatbotui-type="ChatSendButton"]::after {
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--chatbotui-text-secondary);
+    display: block;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Icon (Public Domain) from https://www.svgrepo.com/svg/499571/arrow-up */
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIj48cGF0aCBkPSJNMTIwLTE2MHYtMjQwbDMyMC04MC0zMjAtODB2LTI0MGw3NjAgMzIwLTc2MCAzMjBaIi8+PC9zdmc+Cg==');
+    -webkit-mask-size: 100%;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #941c80;
+}
+
+button[data-chatbotui-type="ChatSendButton"]:not(:disabled):hover {
+    background-color: grey;
+    opacity: 0.3;
+}
+
+button[data-chatbotui-type="ChatSendButton"]:not(:disabled):hover::after {
+    background-color: white;
+}
+
+div[data-chatbotui-type="ChatBar"][data-chatbotui-running="true"] button[data-chatbotui-type="ChatSendButton"]::after {
+    /*
+   * Background Image from: https://uxwing.com/square-icon/
+   * License allows commercial use, does not require attribution
+   */
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxMjIuODgzIiBoZWlnaHQ9IjEyMi44ODIiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEzLjAwMiAwaDk2Ljg3OGM3LjE1IDAgMTMuMDAyIDUuODUxIDEzLjAwMiAxMy4wMDJ2OTYuODc3YzAgNy4xNTEtNS44NTIgMTMuMDAyLTEzLjAwMiAxMy4wMDJIMTMuMDAyQzUuODUxIDEyMi44ODIgMCAxMTcuMDMxIDAgMTA5Ljg4VjEzLjAwMkMwIDUuODUxIDUuODUxIDAgMTMuMDAyIDAiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==');
+    -webkit-mask-size: 40%;
+}
+
+button[data-chatbotui-type=ChatFilesButton] {
+    background-color: transparent;
+    border: none;
+    font-size: 0;
+    height: 2rem;
+    margin-bottom: .5rem;
+    margin-left: .5rem;
+    margin-top: auto;
+    padding: 0;
+    width: 2rem;
+    overflow: hidden;
+    z-index: 2;
+}
+
+button[data-chatbotui-type=ChatFilesButton]:before {
+    background-color: var(--chatbotui-text-secondary);
+    content: "";
+    display: block;
+    height: 2rem;
+    -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIGZpbGw9IiNmZmYiIHZpZXdCb3g9IjAgMCA0ODUuNTYxIDQ4NS41NjEiPjxwYXRoIGQ9Ik0zNjkuNjk3IDM1OS4wNTNWMTE2LjY4MkMzNjkuNjk3IDQ3Ljk4MiAzMjYuNzY1IDAgMjY1LjI5NyAwaC00Ny40OTNDMTU2LjgzIDAgMTE1Ljg2MiA0Ni44OSAxMTUuODYyIDExNi42ODJ2MjY5LjhjMCA1My4zNDEgNDMuNDM5IDk5LjA3OCA5Ny4wMzEgOTkuMDI1LjY4NC4wMTQgMS4zNi4wNTMgMi4wNDcuMDUzIDUzLjgwOSAwIDk3LjcwMy00My4xMjUgOTkuMDc4LTk2LjYyVjIwMC42MTJjMC0zOS40ODctMjkuODUyLTcwLjQxOS02Ny45NjMtNzAuNDE5aC03LjM2OGMtMzcuMzQ1IDAtNjUuNTA4IDMwLjI3NC02NS41MDggNzAuNDE5djE1Ni4zOTRoMzYuODQ3VjIwMC42MTJjMC0xNi43MTEgOC44NjEtMzMuNTczIDI4LjY1OC0zMy41NzNoNy4zN2MxNy43MzggMCAzMS4xMTUgMTQuNDMzIDMxLjExNSAzMy41NzN2MTg1Ljg3YzAgMzQuMzEzLTI3LjkxNiA2Mi4yMy02Mi4yMyA2Mi4yMy0xOC40MDUgMC0zNC45NjItOC4wMzgtNDYuMzY3LTIwLjc4MS05LjE3Ny0xMS44NzctMTUuODYyLTMwLjM1NC0xNS44NjItNTkuMDUzdi0yNTIuMmMwLTU4Ljg2MyAzMy42MjctNzkuODMzIDY1LjA5Ny03OS44MzNoNDcuNDkyYzQ2LjY2MyAwIDY3LjU1MyA0MC4wOTYgNjcuNTUzIDc5LjgzM1YzNTkuMDVoMzYuODQ5di4wMDJ6Ii8+PC9zdmc+");
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 70%;
+    width: 2rem;
+    z-index: 1;
+    cursor: pointer
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFileArea] {
+    display: flex;
+    left: 2rem;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -1.8rem
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile] {
+    cursor: not-allowed;
+    position: relative
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile][data-chatbotui-input-file-id] {
+    cursor: pointer
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:before {
+    content: "📄";
+    font-size: 2rem
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:hover:after {
+    background-color: hsla(0, 0%, 86%, .7);
+    border-radius: .2rem;
+    content: attr(data-chatbotui-input-file-name) " ";
+    font-size: .5rem;
+    left: 0;
+    padding: .2rem;
+    position: absolute;
+    top: -2rem;
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile][data-chatbotui-input-file-id]:hover:before {
+    content: "❌";
+    font-size: 2rem
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:not([data-chatbotui-input-file-id]) {
+    opacity: 1
+}
+
+button[data-chatbotui-type=ChatFilesButton] .file-preview {
+    height: 10rem;
+    object-fit: contain;
+    margin-right: 0.5rem;
+    vertical-align: top;
+    display: none;
+    z-index: 2;
+}
+
+button[data-chatbotui-type=ChatFilesButton] div[data-chatbotui-type=InputFile]:hover .file-preview {
+    display: inline;
+    border: 1px solid black;
+}
