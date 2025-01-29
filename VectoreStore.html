@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Search Widget</title>
+    <script src="https://cloud.google.com/ai/gen-app-builder/client?hl=en_US" defer></script>
 </head>
 <body>
 
-<!-- Widget JavaScript bundle -->
-<script src="https://cloud.google.com/ai/gen-app-builder/client?hl=en_US"></script>
+    <!-- Search widget element -->
+    <gen-search-widget 
+      configId="4c7a0677-5b68-4925-829b-dd2a26aed902"
+      triggerId="searchWidgetTrigger"
+      style="display: block;">
+    </gen-search-widget>
 
-<!-- Search widget element is not visible by default -->
-<gen-search-widget
-  configId="4c7a0677-5b68-4925-829b-dd2a26aed902"
-  triggerId="searchWidgetTrigger">
-</gen-search-widget>
-
-<!-- Element that opens the widget on click. It does not have to be an input -->
-<input placeholder="Search here" id="searchWidgetTrigger" />
+    <!-- Button to trigger the widget -->
+    <button id="searchWidgetTrigger">検索する</button>
 
 </body>
 </html>
