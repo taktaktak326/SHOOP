@@ -52,35 +52,17 @@
 </head>
 <body>
 
-    <!-- 検索バー（クリックするとウィジェットが開く） -->
-    <input type="text" placeholder="Search here..." id="searchWidgetTrigger">
+   <!-- Widget JavaScript bundle -->
+<script src="https://cloud.google.com/ai/gen-app-builder/client?hl=en_US"></script>
 
-    <!-- 追加の検索コントロールボタン -->
-    <div class="search-buttons">
-        <button id="openSearch">Open Search</button>
-        <button id="closeSearch">Close Search</button>
-    </div>
+<!-- Search widget element is not visible by default -->
+<gen-search-widget
+  configId="4c7a0677-5b68-4925-829b-dd2a26aed902"
+  triggerId="searchWidgetTrigger">
+</gen-search-widget>
 
-    <!-- Google Cloud AI Search Widget -->
-    <gen-search-widget 
-        configId="4c7a0677-5b68-4925-829b-dd2a26aed902"
-        triggerId="searchWidgetTrigger">
-    </gen-search-widget>
-
-    <!-- JavaScript for Widget Control -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchWidget = document.querySelector('gen-search-widget');
-
-            document.getElementById('openSearch').addEventListener('click', function() {
-                searchWidget.open();
-            });
-
-            document.getElementById('closeSearch').addEventListener('click', function() {
-                searchWidget.close();
-            });
-        });
-    </script>
+<!-- Element that opens the widget on click. It does not have to be an input -->
+<input placeholder="Search here" id="searchWidgetTrigger" />
 
 </body>
 </html>
