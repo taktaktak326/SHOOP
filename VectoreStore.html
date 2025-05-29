@@ -17,19 +17,6 @@
       triggerId="searchWidgetTrigger">
     </gen-search-widget>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Wait for the element to be available in the DOM
-            const searchWidget = document.querySelector("gen-search-widget");
-
-            if (searchWidget) {
-                // Set authorization token (Replace with your actual JWT or OAuth token)
-                searchWidget.authToken = "<JWT or OAuth token provided by your backend>";
-            } else {
-                console.error("Search widget not found!");
-            }
-        });
-    </script>
 
 </body>
 </html>
