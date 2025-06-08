@@ -1,0 +1,8 @@
+
+{
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "name": "Agri-chan Support Chat",
+  "description": "An AI-powered dashboard to assist with farming tasks and queries, featuring voice input and screen sharing."
+}

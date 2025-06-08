@@ -1,145 +1,27 @@
+
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>メインレイアウト</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 20%;
-      background-color: #f4f4f4;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-      transition: width 0.3s ease;
-    }
-    .sidebar.hidden {
-      width: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .header {
-      background-color: #007bff;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .main-content {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
-    .link {
-      margin: 10px 0;
-    }
-    .link a {
-      text-decoration: none;
-      color: #007bff;
-    }
-
-    .toggle-btn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: left 0.3s ease;
-    }
-    .sidebar.hidden + .content .toggle-btn {
-      left: 0;
-    }
-
-    df-messenger {
-      z-index: 999;
-      position: fixed;
-      --df-messenger-font-color: #000;
-      --df-messenger-font-family: Google Sans;
-      --df-messenger-chat-background: #f3f6fc;
-      --df-messenger-message-user-background: #d3e3fd;
-      --df-messenger-message-bot-background: #fff;
-      --df-messenger-message-actor-image-size: 60px; 
-      bottom: 16px;
-      right: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Support AI Chat Dashboard</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/htm@3/dist/htm.umd.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.4.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body>
-  <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
-  <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
-
-  <df-messenger
-
-      project-id="prj-basf-xarviobot-dev"
-  agent-id="961269a7-0404-4be1-a4ed-fbc413dc40c5"
-    language-code="ja"
-    max-query-length="-1"
-    allow-feedback="all"
-    url-allowlist="*"
-    intent="Start_Conversation">
-    <df-messenger-chat-bubble
-      chat-title="04 Feature Test (former creative)"
-      bot-actor-image="DALL·E 2024-08-27 19.38.14.png"
-      chat-width="620"
-      chat-height="880"
-      placeholder-text="メッセージを入力してください。">
-    </df-messenger-chat-bubble>
-  </df-messenger>
-
-  <button class="toggle-btn" onclick="toggleMenu()">三</button>
-
-  <div class="sidebar" id="sidebar">
-    <h3>メニュー</h3>
-    <div class="link"><a href="plan.html" target="contentFrame">プラン・機能を購入する</a></div>
-    <div class="link"><a href="current_shop.html" target="contentFrame">プラン・機能を追加する</a></div>
-    <div class="link"><a href="purchased_plan.html" target="contentFrame">購入済みプラン・機能</a></div>
-    <div class="link"><a href="purchase_history.html" target="contentFrame">購入履歴</a></div>
-    <div class="link"><a href="Chat.html" target="contentFrame">チャットボット</a></div>
-    <div class="link"><a href="renew.html" target="contentFrame">自動更新</a></div>
-    <div class="link"><a href="https://fm.xarvio.com/docs/shop-additional-tc/ja_jp.html" target="contentFrame">特定商取引法に基づく表記</a></div>
-    <div class="link"><a href="#" onclick="openPopup()">料金計算</a></div>
-    <div class="link"><a href="minorasu.html">ミノラスチャットTTテスト</a></div>
-    <div class="link"><a href="minorasu2.html" target="contentFrame">ミノラスチャットoriginal</a></div>
-  </div>
-
-  <div class="content">
-    <div class="header">
-      <h2>ショップ</h2>
-    </div>
-    <div class="main-content">
-      <iframe name="contentFrame" src="plan.html" style="width: 100%; height: 100%; border: none;"></iframe>
-    </div>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('hidden');
-    }
-
-    function openPopup() {
-      // ポップアップウィンドウを開く
-      window.open(
-        'https://taktaktak326.github.io/SHOOP/ChatGPT.html', // 開くページのURL
-        'popUpWindow', 
-        'width=800,height=600,top=100,left=100,scrollbars=no,toolbar=no,menubar=no,resizable=yes,status=no'
-      );
-    }
-  </script>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>
