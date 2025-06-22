@@ -1,0 +1,144 @@
+/* Header styles */
+.header-container {
+    background-color: #003366;
+    padding: 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.header-title {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.header-subtitle {
+    color: #cccccc;
+}
+
+/* KPI cards container */
+.kpi-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.kpi-card {
+    flex: 1;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.kpi-card-red {
+    background: #fef4f4;
+    border-left: 8px solid red;
+}
+
+.kpi-card-orange {
+    background: #fff4e5;
+    border-left: 8px solid orange;
+}
+
+.kpi-card-blue {
+    background: #f0f4ff;
+    border-left: 8px solid blue;
+}
+
+.kpi-card-green {
+    background: #e6f4ea;
+    border-left: 8px solid green;
+}
+
+.kpi-value {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.kpi-change-red {
+    color: red;
+}
+
+.kpi-change-gray {
+    color: gray;
+}
+
+.kpi-change-green {
+    color: green;
+}
+
+/* Table styles */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.custom-table th {
+    background-color: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.custom-table td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.progress-bar-container {
+    width: 60px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 0;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    font-size: 12px;
+}
+
+.risk-cell {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.risk-value {
+    min-width: 30px;
+    text-align: center;
+}
+
+.priority-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 40px;
+}
+
+/* Action banner styles */
+.action-banner {
+    background-color: #fff3cd;
+    border-left: 8px solid #ffa502;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.action-list {
+    padding-left: 20px;
+    margin: 10px 0 0 0;
+} 
